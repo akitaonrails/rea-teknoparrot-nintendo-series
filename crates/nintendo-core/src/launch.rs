@@ -322,14 +322,62 @@ pub fn gcpad_windows_ini(wheel: Option<&DolphinWheel>) -> String {
     pad_section("XInput/0/Gamepad", &lines)
 }
 
+/// windowsarcadeloader's default `prefix_tricks` (its `defaults.yaml` at the
+/// pinned commit) without `dmusic32` and `gmdls`: those two download
+/// Microsoft's April 2006 DirectX package from web.archive.org, which was
+/// unreachable when this was set up and stopped the first start. The rest
+/// come from Microsoft, GitHub and SourceForge. With only the game's own
+/// `tricks` Mario Kart DX crashed a second after its window opened.
+pub const WAL_PREFIX_TRICKS: &[&str] = &[
+    "dmband",
+    "dmcompos",
+    "dmime",
+    "dmloader",
+    "dmscript",
+    "dmstyle",
+    "dmsynth",
+    "dmusic",
+    "dsound",
+    "dswave",
+    "dsdmo",
+    "d3dcompiler_42",
+    "d3dcompiler_43",
+    "d3dcompiler_47",
+    "d3dx9_31",
+    "d3dx9_33",
+    "d3dx9_37",
+    "d3dx9_42",
+    "d3dx9_43",
+    "xact",
+    "fakejapanese",
+    "directplay",
+    "physx",
+    "vcrun2010",
+    "d3dx9_40",
+    "d3dx10_43",
+    "d3dx11_43",
+    "d3dx9_32",
+    "wsh57",
+    "vcrun2008",
+    "d3dx9_41",
+    "mfc42",
+    "vcrun2003",
+    "vcrun2005",
+    "vcrun2012",
+    "vcrun2013",
+    "vcrun2022",
+];
+
 /// The profile layer the launcher gives windowsarcadeloader: the runner,
-/// the launcher's own prefix, no ReShade or gamescope of its own (the
-/// launcher wraps the game).
+/// the launcher's own prefix with [`WAL_PREFIX_TRICKS`], no ReShade or
+/// gamescope of its own (the launcher wraps the game).
 pub fn wal_layer() -> String {
-    "# Written by the launcher before every start.\n\
-     runner: runner\nprefix: wine-prefix/nintendo\nreshade: false\n\
-     gamescope:\n  enabled: false\n"
-        .to_string()
+    format!(
+        "# Written by the launcher before every start.\n\
+         runner: runner\nprefix: wine-prefix/nintendo\nprefix_tricks: [{}]\nreshade: false\n\
+         gamescope:\n  enabled: false\n",
+        WAL_PREFIX_TRICKS.join(", ")
+    )
 }
 
 fn dolphin_plan(
@@ -451,7 +499,14 @@ pub fn plan(
                     layer.to_string_lossy().into_owned(),
                     "--input-pipe".into(),
                 ],
-                env: vec![],
+                // Linux: the game presents through gamescope's Xwayland, not
+                // gamescope's Vulkan layer: through the layer, gamescope 3.17
+                // (headless, NVIDIA) aborted on the game's first frame
+                // (docs/RUNTIME_NOTES.md)
+                env: match host {
+                    Host::Linux => vec![("ENABLE_GAMESCOPE_WSI".into(), "0".into())],
+                    Host::Windows => vec![],
+                },
                 cwd: root.clone(),
             };
             (cmd, Feed::Wal(StickLayout::NamcoEs3Kart))
@@ -687,12 +742,24 @@ mod tests {
         let p = linux(GameId::MarioKartDx, &s, false);
         assert_eq!(p.feed, Feed::Wal(StickLayout::NamcoEs3Kart));
         assert_eq!(p.game.program, PathBuf::from("/c/wal/arcade-launcher"));
+        assert!(
+            p.game
+                .env
+                .contains(&("ENABLE_GAMESCOPE_WSI".into(), "0".into()))
+        );
         assert!(p.game.args.contains(&"--input-pipe".to_string()));
         assert_eq!(
             file(&p, "mario-kart-arcade-gp-dx.windowsloader"),
             "MK_AGP3_FINAL.exe\n"
         );
-        assert!(file(&p, "layer-mkdx.yaml").contains("prefix: wine-prefix/nintendo"));
+        let layer = file(&p, "layer-mkdx.yaml");
+        assert!(layer.contains("prefix: wine-prefix/nintendo"));
+        assert!(layer.contains("prefix_tricks: [dmband, "));
+        assert!(
+            layer.contains("fakejapanese")
+                && !layer.contains("dmusic32")
+                && !layer.contains("gmdls")
+        );
         assert_eq!(arg_after(&p.gamescope, "-w").as_deref(), Some("2560"));
         let runners = PathBuf::from("/d/wal/wine-runners");
         assert!(

@@ -45,9 +45,18 @@ stick (or W/Q) up and down, presses both pedals, then Start.
 
 ## Mario Kart Arcade GP DX — windowsarcadeloader (2026-11-14)
 
+Components: windowsarcadeloader at the pinned commit with `patches/wal`,
+GE-Proton 11-12, winetricks 20260125.
+
 | Check | Seen |
 |---|---|
-| First start | the prefix is built, then winetricks downloads Microsoft's runtimes; `dmusic32` timed out downloading `directx_apr2006_redist.exe` from web.archive.org (the archive was unreachable that afternoon) and the start ended there |
+| First start with windowsarcadeloader's default prefix | stopped: winetricks `dmusic32` downloads `directx_apr2006_redist.exe` from web.archive.org, unreachable that day (Microsoft's own URL is gone, 404) |
+| Prefix with only the profile's `tricks` (vcrun2010, d3dx9_43, d3dx10_43) | the game starts, then reads a null pointer at `MK_AGP3_FINAL.exe+0x435e60` a second after its window opens (the stack holds the font name "ＭＳ ゴシック"); `fakejapanese` + `xact` alone did not change it |
+| Default prefix list without `dmusic32` and `gmdls` (the two archive.org verbs; `WAL_PREFIX_TRICKS`) | prefix built in about 3 minutes from cached and Microsoft/GitHub downloads; the game boots to its own boot check (power on, drive unit, JVS I/O connected) |
+| Headless gamescope with the game presenting through gamescope's Vulkan layer | gamescope aborts on the first frame (`vkImportSemaphoreFdKHR failed`, `vkAllocateMemory failed`, assertion in `acquire_pooled_texture`), three runs in a row; Dolphin in the same gamescope is fine |
+| `ENABLE_GAMESCOPE_WSI=0` (the launcher's environment for windowsarcadeloader on Linux) | no abort |
+| The game's own operator settings | boot stops on **E08-01 NAMCAM (CAMERA) ERROR** |
+| The dump's `FTestMode`/`GTestMode` settings seeded once onto the F:/G: drives (camera and IC card units off) | **race played**: free play, character select with the item button (pipe `b5`), item preview, "KartKing" unlocked profile from windowsarcadeloader's card server, lap 1/2 holding a Spiny Shell |
 
 ## Not checked yet
 

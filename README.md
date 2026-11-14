@@ -17,6 +17,8 @@ read, never changed: every game runs from a private folder.
 |---|---|
 | ![F-Zero AX Monster Ride, racing](docs/images/fzax-race.jpg) | ![Mario Kart Arcade GP 2, racing](docs/images/mkgp2-race.jpg) |
 | F-Zero AX Monster Ride, past the motion seat it can't find | Mario Kart Arcade GP 2, past the camera it can't find |
+| ![Mario Kart Arcade GP DX, racing](docs/images/mkdx-race.jpg) | |
+| Mario Kart Arcade GP DX through windowsarcadeloader | |
 
 ## What runs
 
@@ -24,7 +26,7 @@ read, never changed: every game runs from a private folder.
 |---|---|---|---|---|
 | F-Zero AX Monster Ride (Japan, SBHA6W) | Sega Triforce | Dolphin 2609b | **plays** | not yet run |
 | Mario Kart Arcade GP 2 (MK21 Ver. A) | Sega Triforce | Dolphin 2609b | **plays** | not yet run |
-| Mario Kart Arcade GP DX (1.18.16) | Namco ES3 | windowsarcadeloader (patched) | not yet run | not yet run |
+| Mario Kart Arcade GP DX (1.18.16) | Namco ES3 | windowsarcadeloader (patched) | **plays** | not yet run |
 
 "Plays" means a race was driven in the real game through the launcher,
 with its own input path; each run is recorded in
@@ -54,6 +56,11 @@ digest so you can report it.
   written into Dolphin's settings for that game only.
 - **Mario Kart GP 2 without its camera:** Dolphin's own "Skip Boot Check"
   code for that disc, turned on for it.
+- **Mario Kart DX without its camera:** the operator settings that come
+  with the dump (camera and card units off) are put on the game's F: and
+  G: drives at its first start; it stopped on E08-01 NAMCAM ERROR
+  otherwise. Its Wine prefix gets what windowsarcadeloader installs,
+  minus two DirectMusic pieces only web.archive.org still hosts.
 - **The handle's tilt:** the launcher carries it on the emulated stick
   (a pad's left stick, or W/Q on the keyboard).
 - **Full steering:** Dolphin's emulated stick normally stops at 79 % of its
@@ -148,13 +155,13 @@ Each run writes `runtimes/<game>/session.log`.
 
 ## Known limitations
 
-- Mario Kart DX's first start downloads Microsoft runtimes through
-  winetricks (some from web.archive.org); it needs the network once.
+- Mario Kart DX's first start installs Microsoft runtimes through
+  winetricks (a few minutes, from Microsoft and GitHub); it needs the
+  network once.
 - Mario Kart GP 2 looks for its three linked cabinets for about a minute
   at every boot.
 - Monster Ride asks for its adjustment at every boot so far.
-- Not checked yet: a real wheel, Windows, sound on speakers, Mario Kart DX
-  in a race.
+- Not checked yet: a real wheel, Windows, sound on speakers.
 
 ## For developers
 

@@ -13,7 +13,7 @@ Library: the owner's TeknoParrot folder (NFS).
 |---|---|---|---|---|
 | F-Zero AX Monster Ride (Japan, SBHA6W, 2004) | Sega Triforce | `F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso` (header id `SBHA6W`) | `280011bf67604a8041bfac3e54a142b56531fad67323bf4a52dc9547a4d33961` | 436 029 440 |
 | Mario Kart Arcade GP 2 (MK21 Ver. A, 2007-08-20) | Sega Triforce | `Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso` (header id `RELSAB`, "Sample Game Name") | `bf14a7c35efe1bda690adc5afdf30a6a0106cf89c4b61e8048f449f8c94ace01` | 536 870 912 |
-| Mario Kart Arcade GP DX (1.18.16, English mod 1.0) | Namco ES3A (Win32, D3D9) | `MK_AGP3_FINAL.exe` | `3c4862309b8a2943b46d9b917f1a28fb900691bbf6201280429e6817e861b785` | 7 432 704 |
+| Mario Kart Arcade GP DX (1.18.16, English mod 1.0) | Namco ES3A (Win32, DXVK) | `MK_AGP3_FINAL.exe` | `3c4862309b8a2943b46d9b917f1a28fb900691bbf6201280429e6817e861b785` | 7 432 704 |
 
 Dolphin gives the two discs the ids `GHAE6E` and `GNLJ82` (read from its
 `TimePlayed.ini` after a run). The library scan identifies a disc image by
@@ -43,6 +43,8 @@ SHA-256 under any `.iso`/`.gcm` name.
 | F-Zero AX Monster Ride | The CyCraft motion seat (on the cabinet's network; Dolphin only redirects `192.168.11.0/24` to localhost): the boot stays on "Searching cycraft" | Gecko code `0043137B 00000086` ("Bypass Cycraft") in the runtime's `GameSettings/GHAE6E.ini`, cheats on for this game | [Internet Archive, "F-ZERO AX Monster Ride (Decrypted/for Dolphin)"](https://archive.org/details/fzeroax_monster_ride); seen working, RUNTIME_NOTES |
 | F-Zero AX Monster Ride | First boot asks to move the handle left/right **and up/down**, both pedals, then Start | the launcher carries a pitch axis (a pad's left stick Y, keys W/Q) on the pad's stick Y | seen, RUNTIME_NOTES |
 | Mario Kart GP 2 | The camera (it photographs the player): CAMERA ERROR at the device check | Dolphin's own shipped Action Replay code "Skip Boot Check" for `GNLJ82`, enabled in `GameSettings/GNLJ82.ini` | Dolphin `Data/Sys/GameSettings/GNLJ82.ini`; seen working |
+| Mario Kart DX | The Namcam camera: E08-01 NAMCAM (CAMERA) ERROR with the game's own operator settings | the dump's `FTestMode`/`GTestMode` files (TeknoParrot's settings: camera and IC card units off) seeded once onto the F:/G: drives | seen working |
+| Mario Kart DX | windowsarcadeloader's shared prefix installs about forty winetricks verbs; `dmusic32` and `gmdls` download from web.archive.org only | the launcher's layer lists the same verbs without those two | seen |
 | Mario Kart GP 2 | Link check of three other cabinets (about a minute) | nothing yet: Dolphin's "Skip Link Check" code made no difference | seen |
 
 ## 5. Decisions

@@ -87,6 +87,10 @@ pub struct Game {
     /// Dolphin game settings for the cabinet hardware a PC lacks (see
     /// [`Patch`]); written into the runtime's Dolphin folder.
     pub patches: &'static [Patch],
+    /// Folders of the dump whose files seed a folder of the runtime the
+    /// first time (dump folder, runtime folder): settings a game keeps on
+    /// its own drives, which it then rewrites itself.
+    pub seeds: &'static [(&'static str, &'static str)],
 }
 
 /// A change Dolphin applies to the game's memory, for cabinet hardware
@@ -141,6 +145,7 @@ pub const GAMES: &[Game] = &[
         // "Searching cycraft". The community's "Bypass Cycraft" code
         // (Internet Archive, "F-ZERO AX Monster Ride (Decrypted/for Dolphin)").
         dolphin_id: "GHAE6E",
+        seeds: &[],
         patches: &[Patch::Gecko {
             name: "Bypass CyCraft (no motion seat)",
             lines: &["0043137B 00000086"],
@@ -165,6 +170,7 @@ pub const GAMES: &[Game] = &[
         // The cabinet's camera (it photographs the player for the card) is not
         // emulated: the boot's device check stops on CAMERA ERROR. Dolphin's
         // own "Skip Boot Check" code for this disc goes past that check.
+        seeds: &[],
         patches: &[Patch::ShippedActionReplay(
             "(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]",
         )],
@@ -189,6 +195,11 @@ pub const GAMES: &[Game] = &[
         support: Support::Unverified("not yet raced through the launcher"),
         dolphin_id: "",
         patches: &[],
+        // The dump's operator settings (TeknoParrot's, with the Namcam
+        // camera and the IC card units off) on the cabinet's F: and G:
+        // drives: with the game's own defaults it stops on E08-01 NAMCAM
+        // (CAMERA) ERROR, and windowsarcadeloader emulates no camera.
+        seeds: &[("FTestMode", "F/TestMode"), ("GTestMode", "G/TestMode")],
     },
 ];
 

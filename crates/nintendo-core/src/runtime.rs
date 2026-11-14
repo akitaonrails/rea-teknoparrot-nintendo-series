@@ -32,6 +32,12 @@ pub enum Op {
         from: PathBuf,
         to: PathBuf,
     },
+    /// The files of folder `from` copied into folder `to` while `to` holds
+    /// no file yet (the first start); never again after that.
+    Seed {
+        from: PathBuf,
+        to: PathBuf,
+    },
 }
 
 /// Top-level files of a Windows game below this size are copied, not
@@ -103,6 +109,12 @@ pub fn plan(game: &Game, src: &Path, items: &[Item], rt: &Path) -> Vec<Op> {
             continue;
         }
         let (from, to) = (src.join(&it.name), rt.join(&it.name));
+        if let Some((_, into)) = game.seeds.iter().find(|(dir, _)| *dir == it.name) {
+            ops.push(Op::Seed {
+                from: from.clone(),
+                to: rt.join(into),
+            });
+        }
         if copied(game.route, it) {
             ops.push(Op::CopyOnce { from, to });
         } else {
@@ -123,6 +135,7 @@ pub fn apply(ops: &[Op]) -> io::Result<()> {
         match op {
             Op::Dir(d) => fs::create_dir_all(d)?,
             Op::Link { target, at } => link(target, at)?,
+            Op::Seed { from, to } => seed(from, to)?,
             Op::CopyOnce { from, to } => match fs::symlink_metadata(to) {
                 Ok(m) if !m.file_type().is_symlink() => {}
                 found => {
@@ -132,6 +145,23 @@ pub fn apply(ops: &[Op]) -> io::Result<()> {
                     fs::copy(from, to)?;
                 }
             },
+        }
+    }
+    Ok(())
+}
+
+/// Copies the files of `from` into `to` unless `to` already has a file.
+fn seed(from: &Path, to: &Path) -> io::Result<()> {
+    let has_file = fs::read_dir(to)
+        .is_ok_and(|mut rd| rd.any(|e| e.is_ok_and(|e| e.file_type().is_ok_and(|t| t.is_file()))));
+    if has_file || !from.is_dir() {
+        return Ok(());
+    }
+    fs::create_dir_all(to)?;
+    for e in fs::read_dir(from)? {
+        let e = e?;
+        if e.file_type()?.is_file() {
+            fs::copy(e.path(), to.join(e.file_name()))?;
         }
     }
     Ok(())
@@ -303,6 +333,30 @@ mod tests {
         apply(&ops).unwrap();
         assert_eq!(fs::read(&log).unwrap(), b"the game's");
         assert_eq!(fs::read(src.join("error.log")).unwrap(), b"old");
+    }
+
+    #[test]
+    fn mario_kart_dx_gets_the_dumps_test_settings_once() {
+        let t = tempfile::tempdir().unwrap();
+        let (src, rt) = (t.path().join("dump"), t.path().join("rt"));
+        fs::create_dir_all(src.join("FTestMode")).unwrap();
+        fs::create_dir_all(src.join("GTestMode")).unwrap();
+        fs::write(src.join("FTestMode/testmode_1.bin"), b"camera off").unwrap();
+        fs::write(src.join("GTestMode/testmode_1.bin"), b"camera off").unwrap();
+        let ops = plan(game(GameId::MarioKartDx), &src, &list(&src).unwrap(), &rt);
+        apply(&ops).unwrap();
+        let f = rt.join("F/TestMode/testmode_1.bin");
+        assert_eq!(fs::read(&f).unwrap(), b"camera off");
+        assert!(rt.join("G/TestMode/testmode_1.bin").is_file());
+        // the game rewrites its settings: they are its own from then on
+        fs::remove_file(&f).unwrap();
+        fs::write(rt.join("F/TestMode/testmode_2.bin"), b"the player's").unwrap();
+        apply(&ops).unwrap();
+        assert!(!f.exists());
+        assert_eq!(
+            fs::read(src.join("FTestMode/testmode_1.bin")).unwrap(),
+            b"camera off"
+        );
     }
 
     #[test]
