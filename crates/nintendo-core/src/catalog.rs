@@ -114,7 +114,6 @@ impl Game {
     pub fn loader_path(&self) -> String {
         self.main_file.to_string()
     }
-
 }
 
 const fn sha(d: &'static str, label: &'static str) -> Edition {

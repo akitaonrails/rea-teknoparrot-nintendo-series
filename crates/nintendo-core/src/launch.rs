@@ -549,9 +549,10 @@ mod tests {
             p.game.program,
             PathBuf::from("/c/dolphin/dolphin-emu-nogui")
         );
+        // compared as paths: Windows joins with backslashes
         assert_eq!(
-            arg_after(&p.game.args, "-u"),
-            Some(user.to_string_lossy().into_owned())
+            arg_after(&p.game.args, "-u").map(PathBuf::from),
+            Some(user.clone())
         );
         assert_eq!(
             arg_after(&p.game.args, "-e").as_deref(),
