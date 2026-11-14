@@ -1,0 +1,130 @@
+# Builds the release packages for Linux and Windows from pinned sources
+# and pinned downloads (scripts/build-components.sh). A manual run uploads
+# them as workflow artifacts; pushing a tag vX.Y.Z (matching the workspace
+# version) also publishes a GitHub release with the packages and SHA256SUMS.
+#
+# Everything a game needs is in its package: Dolphin (built from its tag
+# for Linux, the project's own release for Windows), windowsarcadeloader
+# with its Wine (Linux) and the launcher's SDL. Never in a package: game
+# files.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  # Both packages from one build of windowsarcadeloader (its Linux and
+  # Windows launchers, the Windows payloads) and one of Dolphin for Linux,
+  # on Debian bookworm (glibc 2.36, GCC 12: Dolphin's minimum) so the Linux
+  # programs run on older distributions too. The Windows programs link
+  # with LLD (.cargo/config.toml).
+  packages:
+    runs-on: ubuntu-24.04
+    container: debian:bookworm
+    timeout-minutes: 240
+    steps:
+      - name: System packages
+        run: |
+          apt-get update
+          # SDL2 (the launcher); mingw (the payloads); mono (a payload's C# bridge, built by
+          # windowsarcadeloader's build.sh); cmake and SDL3's headers (its static build);
+          # ninja, evdev, bluez (Dolphin's Linux build); p7zip (Dolphin's Windows release)
+          apt-get install -y --no-install-recommends build-essential pkg-config cmake ninja-build git curl \
+            ca-certificates xz-utils zip unzip p7zip-full lld libsdl2-dev gcc-mingw-w64 mono-mcs mono-devel \
+            libevdev-dev libbluetooth-dev libsystemd-dev libxxf86vm-dev \
+            libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev \
+            libxtst-dev libxkbcommon-dev libdrm-dev libgbm-dev libgl-dev libegl-dev libgles-dev \
+            libdbus-1-dev libibus-1.0-dev libudev-dev libwayland-dev wayland-protocols libdecor-0-dev \
+            libasound2-dev libpulse-dev libpipewire-0.3-dev libjack-jackd2-dev libsndio-dev \
+            libusb-1.0-0-dev
+      - uses: actions/checkout@v5
+      - name: Rust
+        run: |
+          curl -fsSL https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain stable
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          "$HOME/.cargo/bin/rustup" target add i686-pc-windows-gnu x86_64-pc-windows-gnu
+      - name: Launcher
+        run: |
+          # libSDL2 ships in lib/ beside the program, found through its RUNPATH
+          RUSTFLAGS='-C link-arg=-Wl,-rpath,$ORIGIN/lib' cargo build --release --locked -p nintendo-launcher
+          mkdir -p dist/linux/lib
+          cp target/release/nintendo-launcher dist/linux/
+          cp -L "$(ldconfig -p | awk '$1 == "libSDL2-2.0.so.0" && /x86-64/ { print $NF; exit }')" dist/linux/lib/
+          cp /usr/share/doc/libsdl2-2.0-0/copyright dist/linux/SDL2-copyright.txt
+          readelf -d dist/linux/nintendo-launcher | grep -E "RUNPATH|NEEDED"
+      - name: Package
+        env:
+          # windowsarcadeloader's launcher with SDL3 inside it
+          LAUNCHER_FEATURES: sdl3/build-from-source-static
+        run: |
+          git config --global --add safe.directory '*'
+          scripts/package.sh linux
+      - name: Windows package
+        run: |
+          scripts/build-launcher.sh windows
+          scripts/package.sh windows
+      - name: Contents
+        run: |
+          cd dist/pkg
+          ls -l *.tar.gz *.zip
+          unzip -l NintendoArcadeLauncher-*-windows-x86_64.zip | grep -v -e "/systemprofiles/" -e "/payloads/"
+          tar -tzf NintendoArcadeLauncher-*-linux-x86_64.tar.gz | grep -v -e "/components/runner/" -e "/Sys/" | sort
+          tar -xzf NintendoArcadeLauncher-*-linux-x86_64.tar.gz
+          for f in */nintendo-launcher */components/wal/arcade-launcher */components/dolphin/dolphin-emu-nogui; do
+            echo "$f: $(objdump -T "$f" | grep -o 'GLIBC_[0-9.]*' | sort -uV | tail -1)"
+          done
+          # every library Dolphin asks for is the system's or in its lib/
+          LD_LIBRARY_PATH=$(echo */components/dolphin/lib) ldd */components/dolphin/dolphin-emu-nogui
+          ! LD_LIBRARY_PATH=$(echo */components/dolphin/lib) ldd */components/dolphin/dolphin-emu-nogui | grep "not found"
+          */components/dolphin/dolphin-emu-nogui --version
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: dist/pkg/NintendoArcadeLauncher-*-linux-x86_64.tar.gz
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: dist/pkg/NintendoArcadeLauncher-*-windows-x86_64.zip
+          if-no-files-found: error
+          compression-level: 0
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [packages]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Tag matches the workspace version
+        run: |
+          version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)
+          [ "v$version" = "$GITHUB_REF_NAME" ] || { echo "tag $GITHUB_REF_NAME != v$version"; exit 1; }
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: "{linux,windows}"
+          path: dist/pkg
+          merge-multiple: true
+      - name: Checksums
+        run: cd dist/pkg && sha256sum NintendoArcadeLauncher-* > SHA256SUMS && cat SHA256SUMS
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/pkg/NintendoArcadeLauncher-* dist/pkg/SHA256SUMS \
+            --repo "$GITHUB_REPOSITORY" --title "Nintendo arcade launcher ${GITHUB_REF_NAME#v}" \
+            --notes-file packaging/RELEASE_NOTES.md

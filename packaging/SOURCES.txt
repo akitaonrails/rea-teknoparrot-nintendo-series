@@ -1,0 +1,30 @@
+Where the source code of every program in this package comes from
+==================================================================
+
+The launcher (GPL-3.0-or-later)
+  https://github.com/akitaonrails/rea-teknoparrot-nintendo-series
+  (the source archive of each release is on its GitHub release page)
+
+Dolphin (GPL-2.0-or-later): components/dolphin (Linux), components/dolphin-win (Windows)
+  https://github.com/dolphin-emu/dolphin at tag 2609b
+  (commit 3a5b3743b18da3e8f04cbc44f20dc50fbd3a9ef3); Linux: built from it,
+  unmodified, with the libraries it links in components/dolphin/lib (their
+  sources: Dolphin's Externals/ at that commit, or Debian bookworm);
+  Windows: the project's release dolphin-2609b-x64.7z, unmodified.
+
+windowsarcadeloader (GPL-3.0-or-later): components/wal
+  https://github.com/aderumier/windowsarcadeloader at commit
+  4f42c6d86ddaaa9d2e4e8c21e0046bb3027b111d, with the launcher's patches/wal
+  applied (in the launcher's source: patches/wal/*.patch).
+
+GE-Proton (Wine and its components; LGPL-2.1 and others), Linux package only:
+components/runner
+  https://github.com/GloriousEggroll/proton-ge-custom/tree/GE-Proton11-12
+  (release GE-Proton11-12, unmodified)
+
+winetricks (LGPL-2.1), Linux package only: components/winetricks
+  https://github.com/Winetricks/winetricks/tree/20260125 (unmodified)
+
+SDL 2 (zlib)
+  https://github.com/libsdl-org/SDL (release 2.32.10 on Windows; Debian
+  bookworm's libsdl2 on Linux)

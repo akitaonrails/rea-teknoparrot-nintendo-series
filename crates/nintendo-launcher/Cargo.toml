@@ -1,0 +1,29 @@
+[package]
+name = "nintendo-launcher"
+description = "One launcher for F-Zero AX and the Mario Kart Arcade GP games"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "nintendo-launcher"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+eframe = { version = "0.37.0", default-features = false, features = ["glow", "default_fonts", "x11", "wayland"] }
+image = { version = "0.25", default-features = false, features = ["jpeg"] }
+rea-launcher.workspace = true
+rea-launcher-native.workspace = true
+nintendo-core = { path = "../nintendo-core" }
+signal-hook = "0.3"
+
+[target.'cfg(windows)'.dependencies]
+rea-launcher-win32 = { git = "https://github.com/akitaonrails/rea-launcher-sdk", tag = "v0.9.0" }
+windows-sys = { version = "0.61", features = ["Win32_Foundation", "Win32_Security", "Win32_System_JobObjects", "Win32_System_Threading"] }
+
+[dev-dependencies]
+rea-launcher-ui = { workspace = true, features = ["testing"] }
+tempfile = "3"
