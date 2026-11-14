@@ -559,11 +559,8 @@ mod tests {
             Some("/lib/x/game.iso")
         );
         assert_eq!(arg_after(&p.game.args, "-p").as_deref(), Some("x11"));
-        assert!(
-            p.game
-                .env
-                .contains(&("LD_LIBRARY_PATH".into(), "/c/dolphin/lib".into()))
-        );
+        let lib = comps().dolphin.join("lib").to_string_lossy().into_owned();
+        assert!(p.game.env.contains(&("LD_LIBRARY_PATH".into(), lib)));
         assert!(file(&p, "Config/Dolphin.ini").contains("SIDevice0 = 11"));
         assert!(file(&p, "Config/Dolphin.ini").contains("SerialPort1 = 6"));
         assert!(file(&p, "Config/Dolphin.ini").contains("UsePanicHandlers = False"));
