@@ -58,6 +58,16 @@ GE-Proton 11-12, winetricks 20260125.
 | The game's own operator settings | boot stops on **E08-01 NAMCAM (CAMERA) ERROR** |
 | The dump's `FTestMode`/`GTestMode` settings seeded once onto the F:/G: drives (camera and IC card units off) | **race played**: free play, character select with the item button (pipe `b5`), item preview, "KartKing" unlocked profile from windowsarcadeloader's card server, lap 1/2 holding a Spiny Shell |
 
+## The release package (2026-11-14)
+
+The Linux package from the Release workflow (run 43645268157, Debian
+bookworm, Dolphin built there) unpacked and run as is, with a fresh data
+folder: the package's own `nintendo-launcher`, `components/dolphin` and
+its `lib/` → F-Zero AX Monster Ride calibrated and **raced** (664 km/h).
+Its programs need glibc 2.35 at most; `ldd` finds every library Dolphin
+needs on the system or in `components/dolphin/lib` (libevdev, libbluetooth,
+libusb).
+
 ## Not checked yet
 
 - A real wheel, and the synthetic centring force on it (Triforce games).
