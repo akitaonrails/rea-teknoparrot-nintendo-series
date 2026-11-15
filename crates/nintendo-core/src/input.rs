@@ -11,8 +11,14 @@
 //! windowsarcadeloader's payloads read a virtual arcade stick per player
 //! (its `wal_protocol`): buttons as bits, six axes. Which bit is which
 //! cabinet button comes from the system profile's `controls` section
-//! (`systemprofiles/namcoes3/mario-kart-arcade-gp-dx.yaml` at the pinned
+//! (`systemprofiles/namcoes3/mario-kart-arcade-gp-dx.yaml`,
+//! `systemprofiles/seganu/luigis-mansion-arcade.yaml` at the pinned
 //! commit).
+//!
+//! Luigi's Mansion Arcade has vacuum guns instead of a wheel: the same
+//! controls drive it, the stick (or wheel) moving a crosshair ([`Aim`]),
+//! the gas pedal (or the item button) the trigger, the Mario button the
+//! gun's action button.
 
 use rea_launcher::wheel::{Action, Control, Controls as Read, PadInput, PadMap};
 
@@ -125,39 +131,81 @@ pub enum StickLayout {
     /// Namco ES3 Mario Kart DX: b1 Enter switch, b2 Mario button, b5 item,
     /// b7/b8 menu up/down.
     NamcoEs3Kart,
+    /// Sega Nu Luigi's Mansion Arcade: lx/ly the gun's aim on the screen,
+    /// b1 the trigger (vacuum), b2 the gun's action button.
+    SegaNuGun,
 }
 
 impl StickLayout {
     fn bit(self, b: Button) -> u32 {
-        match b {
-            Button::Enter => wal::B1,
-            Button::Special => wal::B2,
-            Button::Item => wal::B5,
-            Button::PaddleLeft => wal::B7,
-            Button::PaddleRight => wal::B8,
-            Button::Start => wal::START,
-            Button::Card => wal::CARD,
-            Button::Coin => wal::COIN,
-            Button::Test => wal::TEST,
-            Button::Service => wal::SERVICE,
+        match (self, b) {
+            (StickLayout::NamcoEs3Kart, Button::Enter) => wal::B1,
+            (StickLayout::NamcoEs3Kart, Button::Special) => wal::B2,
+            (StickLayout::NamcoEs3Kart, Button::Item) => wal::B5,
+            (StickLayout::NamcoEs3Kart, Button::PaddleLeft) => wal::B7,
+            (StickLayout::NamcoEs3Kart, Button::PaddleRight) => wal::B8,
+            (StickLayout::SegaNuGun, Button::Item) => wal::B1,
+            (StickLayout::SegaNuGun, Button::Special | Button::PaddleLeft) => wal::B2,
+            (StickLayout::SegaNuGun, Button::Enter | Button::PaddleRight) => 0,
+            (_, Button::Start) => wal::START,
+            (_, Button::Card) => wal::CARD,
+            (_, Button::Coin) => wal::COIN,
+            (_, Button::Test) => wal::TEST,
+            (_, Button::Service) => wal::SERVICE,
         }
     }
 
     /// Player 1's line for `arcade-launcher --input-pipe`
-    /// (`p1 <buttons hex> <lx> <ly> <rx> <ry> <accel> <brake>`).
-    pub fn pipe_line(self, r: &Read) -> String {
-        let buttons = Button::ALL
+    /// (`p1 <buttons hex> <lx> <ly> <rx> <ry> <accel> <brake>`). `aim` is
+    /// the gun's crosshair (gun games only).
+    pub fn pipe_line(self, r: &Read, aim: Aim) -> String {
+        let mut buttons = Button::ALL
             .iter()
             .filter(|b| r.buttons & b.bit() != 0)
             .fold(0u32, |acc, &b| acc | self.bit(b));
         let axis = |v: f32| (v.clamp(-1.0, 1.0) * 32767.0).round() as i32;
         let pedal = |v: f32| (v.clamp(0.0, 1.0) * 32767.0).round() as i32;
-        format!(
-            "p1 {buttons:x} {} 0 0 0 {} {}",
-            axis(r.steer),
-            pedal(r.accel),
-            pedal(r.brake)
-        )
+        match self {
+            StickLayout::NamcoEs3Kart => format!(
+                "p1 {buttons:x} {} 0 0 0 {} {}",
+                axis(r.steer),
+                pedal(r.accel),
+                pedal(r.brake)
+            ),
+            StickLayout::SegaNuGun => {
+                // the gas pedal (a pad's right trigger) pulls the trigger
+                if r.accel > 0.5 {
+                    buttons |= wal::B1;
+                }
+                format!("p1 {buttons:x} {} {} 0 0 0 0", axis(aim.x), axis(aim.y))
+            }
+        }
+    }
+
+    /// Whether the stick moves a crosshair rather than steering.
+    pub fn aims(self) -> bool {
+        self == StickLayout::SegaNuGun
+    }
+}
+
+/// A gun's crosshair on the screen, −1..1 from the top left corner, moved
+/// by a stick or wheel: a full deflection crosses the screen in
+/// [`Aim::CROSS_SECONDS`].
+#[derive(Debug, Clone, Copy, Default, PartialEq)]
+pub struct Aim {
+    pub x: f32,
+    pub y: f32,
+}
+
+impl Aim {
+    pub const CROSS_SECONDS: f32 = 1.25;
+
+    /// Moves by a stick's deflection (`dx`, `dy`, −1..1) held for `dt`
+    /// seconds, staying on the screen.
+    pub fn step(&mut self, dx: f32, dy: f32, dt: f32) {
+        let speed = 2.0 / Self::CROSS_SECONDS * dt;
+        self.x = (self.x + dx.clamp(-1.0, 1.0) * speed).clamp(-1.0, 1.0);
+        self.y = (self.y + dy.clamp(-1.0, 1.0) * speed).clamp(-1.0, 1.0);
     }
 }
 
@@ -258,6 +306,7 @@ mod tests {
         let mut seen = 0u32;
         for &b in Button::ALL {
             let bit = StickLayout::NamcoEs3Kart.bit(b);
+            assert_ne!(bit, 0, "{b:?}");
             assert_eq!(seen & bit, 0, "{b:?}");
             seen |= bit;
         }
@@ -270,7 +319,7 @@ mod tests {
             ..Read::default()
         };
         assert_eq!(
-            StickLayout::NamcoEs3Kart.pipe_line(&r),
+            StickLayout::NamcoEs3Kart.pipe_line(&r, Aim::default()),
             "p1 120 0 0 0 0 0 0"
         );
     }
@@ -313,7 +362,43 @@ mod tests {
             ..PadState::default()
         };
         let read = read_pad(&settings, &pad, None);
-        let line = StickLayout::NamcoEs3Kart.pipe_line(&read);
+        let line = StickLayout::NamcoEs3Kart.pipe_line(&read, Aim::default());
         assert_eq!(line, "p1 1000 -32767 0 0 0 32767 0");
+    }
+
+    #[test]
+    fn the_gun_layout_aims_and_the_gas_pedal_pulls_the_trigger() {
+        let r = Read {
+            steer: 1.0,
+            accel: 1.0,
+            buttons: Button::Special.bit() | Button::Start.bit(),
+            ..Read::default()
+        };
+        let aim = Aim { x: -1.0, y: 0.5 };
+        // b1 trigger, b2 action, start; no wheel or pedal axes
+        assert_eq!(
+            StickLayout::SegaNuGun.pipe_line(&r, aim),
+            "p1 1030 -32767 16384 0 0 0 0"
+        );
+        let released = Read {
+            accel: 0.2,
+            ..Read::default()
+        };
+        assert_eq!(
+            StickLayout::SegaNuGun.pipe_line(&released, Aim::default()),
+            "p1 0 0 0 0 0 0 0"
+        );
+    }
+
+    #[test]
+    fn a_held_stick_crosses_the_screen_and_stops_at_its_edge() {
+        let mut aim = Aim::default();
+        aim.step(1.0, -0.5, Aim::CROSS_SECONDS / 2.0);
+        assert!(
+            (aim.x - 1.0).abs() < 1e-5 && (aim.y + 0.5).abs() < 1e-5,
+            "{aim:?}"
+        );
+        aim.step(1.0, 0.0, 1.0);
+        assert_eq!(aim.x, 1.0);
     }
 }

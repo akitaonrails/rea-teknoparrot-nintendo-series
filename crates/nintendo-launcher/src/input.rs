@@ -12,7 +12,7 @@ use std::sync::{Arc, Mutex};
 use std::thread::JoinHandle;
 use std::time::{Duration, Instant};
 
-use nintendo_core::input::{Button, DolphinPad, StickLayout, default_pad_map};
+use nintendo_core::input::{Aim, Button, DolphinPad, StickLayout, default_pad_map};
 use nintendo_core::launch::DolphinWheel;
 use rea_launcher::ffb::{FfbOutput, FfbSettings, SyntheticFfb, Tuning};
 use rea_launcher::wheel::{
@@ -55,10 +55,11 @@ pub enum Wire {
 }
 
 impl Wire {
-    /// `pitch`: the handle up/down axis only Dolphin's pad carries.
-    pub fn line(self, r: &Read, pitch: f32) -> String {
+    /// `pitch`: the handle up/down axis only Dolphin's pad carries; `aim`:
+    /// a gun game's crosshair.
+    pub fn line(self, r: &Read, pitch: f32, aim: Aim) -> String {
         match self {
-            Wire::Wal(layout) => layout.pipe_line(r) + "\n",
+            Wire::Wal(layout) => layout.pipe_line(r, aim) + "\n",
             Wire::Dolphin => DolphinPad::pipe_lines(r, pitch),
         }
     }
@@ -156,6 +157,8 @@ struct Feed {
     sent: Instant,
     /// Dolphin's games: the synthetic force feedback (centring, damping).
     synthetic: Option<SyntheticFfb>,
+    /// A gun game's crosshair, moved by the stick (or wheel).
+    aim: Aim,
 }
 
 fn run(rx: Receiver<Command>, shared: Arc<Mutex<Snapshot>>) {
@@ -193,6 +196,7 @@ fn run(rx: Receiver<Command>, shared: Arc<Mutex<Snapshot>>) {
                         sent: Instant::now() - REFRESH,
                         synthetic: (wire == Wire::Dolphin)
                             .then(|| SyntheticFfb::new(Tuning::ARCADE)),
+                        aim: Aim::default(),
                     });
                 }
                 Ok(Command::Output(line)) => {
@@ -258,7 +262,10 @@ fn run(rx: Receiver<Command>, shared: Arc<Mutex<Snapshot>>) {
             })
         });
         if let Some(f) = feed.as_mut() {
-            let line = f.wire.line(&read, pitch);
+            if matches!(f.wire, Wire::Wal(l) if l.aims()) {
+                f.aim.step(read.steer, pitch, TICK.as_secs_f32());
+            }
+            let line = f.wire.line(&read, pitch, f.aim);
             if line != f.last || f.sent.elapsed() >= REFRESH {
                 if f.sink
                     .write_all(line.as_bytes())
@@ -311,7 +318,7 @@ fn idle_without_sdl(rx: Receiver<Command>) {
             Err(mpsc::RecvTimeoutError::Disconnected) => return,
         }
         if let Some((sink, wire)) = feed.as_mut() {
-            let line = wire.line(&Read::default(), 0.0);
+            let line = wire.line(&Read::default(), 0.0, Aim::default());
             if sink
                 .write_all(line.as_bytes())
                 .and_then(|_| sink.flush())

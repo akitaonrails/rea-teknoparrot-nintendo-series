@@ -14,6 +14,7 @@ Library: the owner's TeknoParrot folder (NFS).
 | F-Zero AX Monster Ride (Japan, SBHA6W, 2004) | Sega Triforce | `F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso` (header id `SBHA6W`) | `280011bf67604a8041bfac3e54a142b56531fad67323bf4a52dc9547a4d33961` | 436 029 440 |
 | Mario Kart Arcade GP 2 (MK21 Ver. A, 2007-08-20) | Sega Triforce | `Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso` (header id `RELSAB`, "Sample Game Name") | `bf14a7c35efe1bda690adc5afdf30a6a0106cf89c4b61e8048f449f8c94ace01` | 536 870 912 |
 | Mario Kart Arcade GP DX (1.18.16, English mod 1.0) | Namco ES3A (Win32, DXVK) | `MK_AGP3_FINAL.exe` | `3c4862309b8a2943b46d9b917f1a28fb900691bbf6201280429e6817e861b785` | 7 432 704 |
+| Luigi's Mansion Arcade (Capcom/Sega 2015, game id SDCF, Nu 1.1) | Sega Nu (Win x64, Direct3D 11) | `exe/x64/VACUUM.exe` (Capcom's protector) | `3dfef015e8657e21046af512561618609b0d230bfe8d5cbd2bf54c101c76e2db` | 3 436 544 |
 
 Dolphin gives the two discs the ids `GHAE6E` and `GNLJ82` (read from its
 `TimePlayed.ini` after a run). The library scan identifies a disc image by
@@ -32,7 +33,7 @@ SHA-256 under any `.iso`/`.gcm` name.
 | Project | Licence | Covers | Notes | Decision |
 |---|---|---|---|---|
 | [Dolphin](https://github.com/dolphin-emu/dolphin) (mainline) | GPL-2.0-or-later | both Triforce games; Triforce merged Feb 2026, in releases since 2603 ([blog](https://dolphin-emu.org/blog/2026/02/16/rise-of-the-triforce/)) | Per-game I/O (`HW/Triforce/FZeroAX.cpp`, `MarioKartGP.cpp`) on the emulated pad; `segaboot.gcm` only for the test menu; **no force feedback to the host**; no camera, no CyCraft seat; `dolphin-emu-nogui` boots Triforce; a `Pipe` input backend on Unix | **used**: 2609b, built from source for Linux, release build for Windows |
-| [windowsarcadeloader](https://github.com/aderumier/windowsarcadeloader) | GPL-3.0 | Mario Kart DX v1.10.22 and **v1.18.16** (`namcoes3` profile) | dongle skip, offline router, unlocked-profile card server, JVS steering/pedals, F:/G: drives, force feedback from the game's steering value; status "works (user: 100%)" | **used**, as in the Initial D launcher (same commit, `patches/wal` 0001 and 0002) |
+| [windowsarcadeloader](https://github.com/aderumier/windowsarcadeloader) | GPL-3.0 | Mario Kart DX v1.10.22 and **v1.18.16** (`namcoes3` profile); **Luigi's Mansion Arcade** (`seganu` profile: the protector unpacked, the vacuum guns' I/O board on COM1, free play; its notes: "user (2026-11-08): game is working perfect") | dongle skip, offline router, unlocked-profile card server, JVS steering/pedals, F:/G: drives, force feedback from the game's steering value; status "works (user: 100%)" | **used**, as in the Initial D launcher (same commit, `patches/wal` 0001 and 0002) |
 | [bananatools](https://gitea.tendokyu.moe/TeamTofuShop/bananatools) | public domain | MKDX hooks | windowsarcadeloader's reference | reference |
 | TeknoParrot | closed | all | parked under Wine in the sister projects | fallback only |
 
@@ -46,6 +47,8 @@ SHA-256 under any `.iso`/`.gcm` name.
 | Mario Kart DX | The Namcam camera: E08-01 NAMCAM (CAMERA) ERROR with the game's own operator settings | the dump's `FTestMode`/`GTestMode` files (TeknoParrot's settings: camera and IC card units off) seeded once onto the F:/G: drives | seen working |
 | Mario Kart DX | windowsarcadeloader's shared prefix installs about forty winetricks verbs; `dmusic32` and `gmdls` download from web.archive.org only | the launcher's layer lists the same verbs without those two | seen |
 | Mario Kart GP 2 | Link check of three other cabinets (about a minute) | nothing yet: Dolphin's "Skip Link Check" code made no difference | seen |
+| Luigi's Mansion | Two vacuum guns (an aim on the screen, a trigger, a button) | a pad's left stick moves a crosshair (`input::Aim`), RT/A the trigger, B the button; on Linux windowsarcadeloader's own mouse/lightgun reading aims over the pipe (`patches/wal/0003`: the aim that moved last) | seen (pad path; a mouse joined a test game by accident, RUNTIME_NOTES) |
+| Luigi's Mansion | windowsarcadeloader puts its payload and save folder next to `exe/x64/VACUUM.exe` | the runtime makes the folders on the way to the program real, their entries linked (`runtime::Op::Mirror`) | seen ("Read-only file system" before) |
 
 ## 5. Decisions
 

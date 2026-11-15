@@ -5,13 +5,15 @@ Dev-time asset authoring only (the outputs, assets/art/*.jpg, are committed;
 nothing in the build or the package runs this). Every scene is drawn here
 from shapes and a fixed seed: no photos, no game files, no official art, no
 logos, no characters and no item designs from any game. Three tracks seen
-from the driver's seat:
+from the driver's seat, and a haunted house:
 
 - fzax:  a floating neon track at night between towers, guide lights along
          both edges, a loop in the sky and the glow of racers ahead;
 - mkgp2: a sunny kart circuit with red and white kerbs, bunting, a
          grandstand and round hills;
-- mkdx:  a seaside circuit at sunset with palm trees and kerbs.
+- mkdx:  a seaside circuit at sunset with palm trees and kerbs;
+- luigi: an old mansion on a hill under a full moon, bare trees, wisps
+         of pale sheet-ghosts and a flashlight beam sweeping the lawn.
 
 usage: python3 -I scripts/art/scenes.py assets/art   (needs rsvg-convert, Pillow)
 """
@@ -53,6 +55,9 @@ SCENES = [
     # Mario Kart Arcade GP DX: sunset by the sea
     Scene('mkdx', 17, ('#2a1a5a', '#c4527a', '#ffb36a'), '#d9b36a', ('#4a4250', '#2a2430'),
           '#ffe2b0', '#ff7a3d', -0.45, 0.3, 'seaside'),
+    # Luigi's Mansion Arcade: a haunted house at night
+    Scene('luigi', 23, ('#05061a', '#1a1f4a', '#3a3f7a'), '#0f1a14', ('#2a2a30', '#1a1a20'),
+          '#dff6ff', '#7cff9a', 0.0, 0.0, 'mansion'),
 ]
 
 
@@ -358,14 +363,108 @@ def speed_streaks(r, s):
     return '\n'.join(out)
 
 
+def mansion(r, s):
+    """A moonlit mansion on a hill, bare trees, ghosts and a flashlight beam."""
+    out = []
+    # the moon and its halo
+    mx, my = 1960, 270
+    out.append(f'<circle cx="{mx}" cy="{my}" r="380" fill="{s.light}" opacity="0.18" filter="url(#blur50)"/>')
+    out.append(f'<circle cx="{mx}" cy="{my}" r="150" fill="#f4f1dc"/>')
+    for _ in range(9):
+        out.append(f'<circle cx="{mx + r.randint(-110, 110)}" cy="{my + r.randint(-110, 110)}" r="{r.randint(10, 34)}" '
+                   f'fill="#d8d4bc" opacity="0.6"/>')
+    for _ in range(220):
+        out.append(f'<circle cx="{r.randint(0, W)}" cy="{r.randint(10, HORIZON - 120)}" r="{r.uniform(0.7, 2.0):.1f}" '
+                   f'fill="#fff" opacity="{r.uniform(0.2, 0.8):.2f}"/>')
+    # clouds across the moon
+    for _ in range(7):
+        cx, cy = r.randint(0, W), r.randint(120, 520)
+        for k in range(5):
+            out.append(f'<ellipse cx="{cx + k * 80 - 160}" cy="{cy + r.randint(-14, 14)}" rx="{r.randint(90, 170)}" '
+                       f'ry="{r.randint(22, 40)}" fill="#2a2f5a" opacity="0.55"/>')
+    # the hill
+    hill = '#0a120e'
+    out.append(f'<path d="M-50,{H} L-50,{HORIZON + 40} Q{W * 0.25:.0f},{HORIZON - 160} {W * 0.5:.0f},{HORIZON - 170} '
+               f'Q{W * 0.78:.0f},{HORIZON - 160} {W + 50},{HORIZON + 60} L{W + 50},{H} Z" fill="{hill}"/>')
+    # the house: a main block, two wings, towers with pointed roofs
+    base = HORIZON - 150
+    body = '#141428'
+    roof = '#0b0b18'
+    cx = W // 2
+    blocks = [(cx - 300, 600, 300), (cx - 660, 360, 210), (cx + 300, 360, 210)]
+    for x, w, h in blocks:
+        out.append(f'<rect x="{x}" y="{base - h}" width="{w}" height="{h}" fill="{body}"/>')
+        out.append(poly([(x - 30, base - h), (x + w + 30, base - h), (x + w / 2, base - h - 0.45 * w)], roof))
+    for tx, tw, th in [(cx - 480, 110, 400), (cx + 380, 110, 430), (cx - 55, 110, 460)]:
+        out.append(f'<rect x="{tx}" y="{base - th}" width="{tw}" height="{th}" fill="{body}"/>')
+        out.append(poly([(tx - 24, base - th), (tx + tw + 24, base - th), (tx + tw / 2, base - th - 190)], roof))
+        out.append(f'<line x1="{tx + tw / 2}" y1="{base - th - 190}" x2="{tx + tw / 2}" y2="{base - th - 240}" '
+                   f'stroke="{roof}" stroke-width="6"/>')
+    # windows, a few lit, the rest dark; some with a green glow
+    for x, w, h in blocks:
+        for row in range(3):
+            for k in range(int(w // 90)):
+                wx, wy = x + 30 + k * 90, base - h + 50 + row * 120
+                if wy + 70 > base - 10:
+                    continue
+                lit = r.random()
+                col = '#ffcf6a' if lit < 0.25 else (s.accent if lit < 0.35 else '#070710')
+                out.append(f'<rect x="{wx}" y="{wy}" width="44" height="70" rx="20" fill="{col}"/>')
+                if lit < 0.35:
+                    out.append(f'<rect x="{wx - 20}" y="{wy - 20}" width="84" height="110" fill="{col}" opacity="0.25" filter="url(#blur18)"/>')
+    # the door and its steps
+    out.append(f'<path d="M{cx - 60},{base} L{cx - 60},{base - 150} Q{cx},{base - 210} {cx + 60},{base - 150} L{cx + 60},{base} Z" fill="#05050c"/>')
+    for k in range(4):
+        out.append(f'<rect x="{cx - 90 - k * 14}" y="{base + k * 12}" width="{180 + k * 28}" height="12" fill="#1a1a2a"/>')
+    # a path down the hill to the viewer
+    out.append(poly([(cx - 70, base + 48), (cx + 70, base + 48), (cx + 520, H), (cx - 520, H)], '#1a1c22'))
+    # bare trees on both sides
+    def branch(x, y, ang, ln, wd, depth):
+        if depth == 0 or ln < 8:
+            return
+        ex, ey = x + math.cos(ang) * ln, y + math.sin(ang) * ln
+        out.append(f'<line x1="{x:.0f}" y1="{y:.0f}" x2="{ex:.0f}" y2="{ey:.0f}" stroke="#05080a" stroke-width="{wd:.1f}" stroke-linecap="round"/>')
+        for d in (-0.45, 0.4):
+            branch(ex, ey, ang + d + r.uniform(-0.2, 0.2), ln * r.uniform(0.62, 0.78), wd * 0.66, depth - 1)
+    for x, y, ln in [(260, H - 40, 330), (520, HORIZON + 60, 220), (W - 300, H - 20, 360), (W - 620, HORIZON + 80, 200)]:
+        branch(x, y, -math.pi / 2 + r.uniform(-0.1, 0.1), ln, ln / 10, 8)
+    # bats
+    for _ in range(9):
+        bx, by, sz = r.randint(900, 2300), r.randint(150, 600), r.randint(10, 26)
+        out.append(f'<path d="M{bx - 2 * sz},{by} Q{bx - sz},{by - sz} {bx},{by} Q{bx + sz},{by - sz} {bx + 2 * sz},{by} '
+                   f'Q{bx + sz},{by - sz * 0.3} {bx},{by + sz * 0.4} Q{bx - sz},{by - sz * 0.3} {bx - 2 * sz},{by} Z" fill="#05050c"/>')
+    # the flashlight's beam sweeping the lawn from the bottom left
+    out.append(poly([(120, H + 20), (300, H + 20), (1500, HORIZON + 200), (1080, HORIZON + 120)], '#fff8d8',
+                    'opacity="0.16" filter="url(#blur18)"'))
+    out.append(f'<ellipse cx="1290" cy="{HORIZON + 170}" rx="260" ry="90" fill="#fff8d8" opacity="0.22" filter="url(#blur18)"/>')
+    # sheet ghosts: pale, wavy hems, empty eyes, half see-through
+    for gx, gy, sz in [(1290, HORIZON + 30, 120), (760, HORIZON - 380, 80), (1720, HORIZON - 260, 95)]:
+        hem = ' '.join(f'Q{gx + sz - (2 * k + 1) * sz / 5:.0f},{gy + sz * 1.25:.0f} {gx + sz - (2 * k + 2) * sz / 5:.0f},{gy + sz * (1.0 if k % 2 else 1.1):.0f}'
+                            for k in range(5))
+        d = f'M{gx - sz},{gy + sz} C{gx - sz},{gy - sz * 1.4} {gx + sz},{gy - sz * 1.4} {gx + sz},{gy + sz} {hem} Z'
+        out.append(f'<path d="{d}" fill="{s.accent}" opacity="0.25" filter="url(#blur18)"/>')
+        out.append(f'<path d="{d}" fill="#eafff4" opacity="0.72"/>')
+        for ex in (-0.32, 0.32):
+            out.append(f'<ellipse cx="{gx + ex * sz:.0f}" cy="{gy - sz * 0.15:.0f}" rx="{sz * 0.12:.0f}" ry="{sz * 0.2:.0f}" fill="#101828"/>')
+    # low mist over the lawn
+    for _ in range(14):
+        out.append(f'<ellipse cx="{r.randint(0, W)}" cy="{r.randint(HORIZON + 40, H - 80)}" rx="{r.randint(200, 480)}" '
+                   f'ry="{r.randint(30, 70)}" fill="#9fb4d8" opacity="0.08" filter="url(#blur18)"/>')
+    return '\n'.join(out)
+
+
 def svg(s):
     r = random.Random(s.seed)
-    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">', defs(s), sky(r, s)]
+    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">', defs(s)]
+    if s.kind == 'mansion':
+        parts += [f'<rect width="{W}" height="{H}" fill="url(#sky)"/>', mansion(r, s)]
+    else:
+        parts.append(sky(r, s))
     if s.kind == 'neon':
         parts += [towers(r, s), loop_in_the_sky(r, s), track(r, s), racers_ahead(r, s), speed_streaks(r, s)]
     elif s.kind == 'circuit':
         parts += [hills(r, s), grandstand(r, s), track(r, s), racers_ahead(r, s), bunting(r, s)]
-    else:
+    elif s.kind == 'seaside':
         parts += [sea(r, s), track(r, s), palms(r, s), racers_ahead(r, s)]
     parts.append(f'<rect width="{W}" height="{H}" fill="url(#vig)"/>')
     parts.append('</svg>')

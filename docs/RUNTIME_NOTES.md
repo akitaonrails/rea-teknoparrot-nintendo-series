@@ -58,6 +58,23 @@ GE-Proton 11-12, winetricks 20260125.
 | The game's own operator settings | boot stops on **E08-01 NAMCAM (CAMERA) ERROR** |
 | The dump's `FTestMode`/`GTestMode` settings seeded once onto the F:/G: drives (camera and IC card units off) | **race played**: free play, character select with the item button (pipe `b5`), item preview, "KartKing" unlocked profile from windowsarcadeloader's card server, lap 1/2 holding a Spiny Shell |
 
+## Luigi's Mansion Arcade — windowsarcadeloader (2026-11-15)
+
+Components: windowsarcadeloader at the pinned commit with `patches/wal`
+0001–0003 (`arcade-launcher` built locally), the same Wine prefix as Mario
+Kart DX.
+
+| Check | Seen |
+|---|---|
+| Runtime with `exe` linked to the dump | stopped: windowsarcadeloader creates its save folder next to the program (`exe/x64/sv`: "Read-only file system") |
+| The folders on the way to the program real, their entries linked | starts: payload connected, "Loading...", then the game's attract and FREE PLAY (about 90 s) |
+| windowsarcadeloader's input port 33700 | "Address already in use" twice while a sister launcher's game ran on the same machine; the launcher's own port (33790) since; Mario Kart DX's payload connects on it too |
+| A run with mice read (no `guns_enabled: false`) | a mouse at the desk (not the test's input) joined as **Player 2**, picked a stage and played: windowsarcadeloader's mouse reading reaches the game over the pipe (0003). Aim not checked on purpose. Headless runs read no mouse since |
+| The launcher's pipe only (script: start, the trigger through the menus, then the aim swept while the trigger is held) | **stage played**: "Player 1" joined, Normal Controls, the stage's intro, then Gloomy Manor's first room: the crosshair where the script put it (x 0.5, y −0.25 → about 1440, 405 of 1920×1080), a ghost vacuumed, score 18 |
+
+The live pad crosshair (a stick moving it, `input::Aim`) is covered by
+tests only; the script places it directly.
+
 ## The release package (2026-11-14)
 
 The Linux package from the Release workflow (run 43645268157, Debian
@@ -71,5 +88,7 @@ libusb).
 ## Not checked yet
 
 - A real wheel, and the synthetic centring force on it (Triforce games).
+- Luigi's Mansion with a real pad, a mouse on purpose, or a lightgun; its
+  second player.
 - Dolphin on Windows (Dolphin.exe, the XInput/SDL mapping).
 - Sound on speakers (only a null sink).

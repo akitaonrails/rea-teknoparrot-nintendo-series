@@ -1,8 +1,10 @@
 # rea-teknoparrot-nintendo-series — instructions for coding agents
 
 One launcher (a hub, like the Initial D and Wangan Midnight ones) for the
-Nintendo arcade racers the owner dumped: F-Zero AX Monster Ride and Mario
-Kart Arcade GP 2 (Sega Triforce), Mario Kart Arcade GP DX (Namco ES3).
+Nintendo arcade games the owner dumped: F-Zero AX Monster Ride and Mario
+Kart Arcade GP 2 (Sega Triforce), Mario Kart Arcade GP DX (Namco ES3),
+Luigi's Mansion Arcade (Sega Nu, a gun game; added 2026-11-15 on the
+owner's request).
 Built on `~/Projects/rea-launcher-sdk`; read its `docs/STANDARDS.md`
 (binding) and `docs/RESEARCH.md` here first. Sister projects:
 `rea-teknoparrot-initial-d-series` (this repository started from its
@@ -12,7 +14,9 @@ code), `rea-teknoparrot-wangan-series`.
 
 - **Runtime**: Dolphin (mainline, Triforce since 2603) for the Triforce
   games, driven through its pipe input on Linux; windowsarcadeloader under
-  Wine for Mario Kart DX, fed over `--input-pipe` (patches/wal). No
+  Wine for Mario Kart DX and Luigi's Mansion, fed over `--input-pipe`
+  (patches/wal; 0003 lets its own mouse/lightgun reading aim over the
+  pipe). No
   TeknoParrot.
 - **Packages carry everything**: Dolphin is built from its tag for Linux and
   taken from the project's release for Windows; GE-Proton, winetricks and

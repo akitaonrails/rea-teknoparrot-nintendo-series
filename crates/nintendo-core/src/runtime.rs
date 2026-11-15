@@ -38,6 +38,16 @@ pub enum Op {
         from: PathBuf,
         to: PathBuf,
     },
+    /// A real folder `to` holding a link to each entry of folder `from`,
+    /// except the folders on the way down `below`, mirrored the same way:
+    /// the folders on the way to a game's program, where windowsarcadeloader
+    /// puts its payloads and save folder (Luigi's Mansion Arcade runs
+    /// `exe/x64/VACUUM.exe`).
+    Mirror {
+        from: PathBuf,
+        to: PathBuf,
+        below: PathBuf,
+    },
 }
 
 /// Top-level files of a Windows game below this size are copied, not
@@ -109,6 +119,20 @@ pub fn plan(game: &Game, src: &Path, items: &[Item], rt: &Path) -> Vec<Op> {
             continue;
         }
         let (from, to) = (src.join(&it.name), rt.join(&it.name));
+        let program = Path::new(game.main_file);
+        if let Ok(below) = program
+            .parent()
+            .unwrap_or(Path::new(""))
+            .strip_prefix(&it.name)
+            && it.dir
+        {
+            ops.push(Op::Mirror {
+                from,
+                to,
+                below: below.to_path_buf(),
+            });
+            continue;
+        }
         if let Some((_, into)) = game.seeds.iter().find(|(dir, _)| *dir == it.name) {
             ops.push(Op::Seed {
                 from: from.clone(),
@@ -136,6 +160,7 @@ pub fn apply(ops: &[Op]) -> io::Result<()> {
             Op::Dir(d) => fs::create_dir_all(d)?,
             Op::Link { target, at } => link(target, at)?,
             Op::Seed { from, to } => seed(from, to)?,
+            Op::Mirror { from, to, below } => mirror(from, to, below)?,
             Op::CopyOnce { from, to } => match fs::symlink_metadata(to) {
                 Ok(m) if !m.file_type().is_symlink() => {}
                 found => {
@@ -145,6 +170,27 @@ pub fn apply(ops: &[Op]) -> io::Result<()> {
                     fs::copy(from, to)?;
                 }
             },
+        }
+    }
+    Ok(())
+}
+
+/// A real folder `to` with a link to each entry of `from`; the first
+/// folder of `below` is mirrored in turn. A link an older launcher left at
+/// `to` is replaced.
+fn mirror(from: &Path, to: &Path, below: &Path) -> io::Result<()> {
+    if fs::symlink_metadata(to).is_ok_and(|m| m.file_type().is_symlink()) {
+        remove_link(to)?;
+    }
+    fs::create_dir_all(to)?;
+    let mut parts = below.components();
+    let next = parts.next().map(|c| c.as_os_str().to_owned());
+    for e in fs::read_dir(from)? {
+        let name = e?.file_name();
+        if Some(&name) == next.as_ref() {
+            mirror(&from.join(&name), &to.join(&name), parts.as_path())?;
+        } else {
+            link(&from.join(&name), &to.join(&name))?;
         }
     }
     Ok(())
@@ -420,5 +466,36 @@ mod tests {
         fs::write(&src, b"v2, longer").unwrap();
         apply(std::slice::from_ref(&op)).unwrap();
         assert_eq!(fs::read(&at).unwrap(), b"v2, longer");
+    }
+
+    #[test]
+    #[cfg(unix)]
+    fn the_folders_on_the_way_to_the_program_are_real() {
+        let t = tempfile::tempdir().unwrap();
+        let (src, rt) = (t.path().join("dump"), t.path().join("rt"));
+        fs::create_dir_all(src.join("exe/x64")).unwrap();
+        fs::create_dir_all(src.join("DataGlobal")).unwrap();
+        fs::write(src.join("exe/x64/VACUUM.exe"), b"game").unwrap();
+        fs::write(src.join("exe/readme.txt"), b"r").unwrap();
+        // an older run linked the whole folder
+        fs::create_dir_all(&rt).unwrap();
+        std::os::unix::fs::symlink(src.join("exe"), rt.join("exe")).unwrap();
+        let ops = plan(game(GameId::LuigisMansion), &src, &list(&src).unwrap(), &rt);
+        apply(&ops).unwrap();
+        let is_link = |p: &str| {
+            fs::symlink_metadata(rt.join(p))
+                .unwrap()
+                .file_type()
+                .is_symlink()
+        };
+        assert!(!is_link("exe") && !is_link("exe/x64"));
+        assert!(
+            is_link("exe/x64/VACUUM.exe") && is_link("exe/readme.txt") && is_link("DataGlobal")
+        );
+        // the loader's save folder lands in the runtime, not in the dump
+        fs::create_dir_all(rt.join("exe/x64/sv")).unwrap();
+        assert!(!src.join("exe/x64/sv").exists());
+        apply(&ops).unwrap();
+        assert!(rt.join("exe/x64/sv").is_dir());
     }
 }

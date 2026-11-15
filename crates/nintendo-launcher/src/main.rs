@@ -31,7 +31,7 @@ nintendo-launcher — F-Zero AX and the Mario Kart Arcade GP games
   nintendo-launcher --library <folder>   add a folder with your games (repeatable)
   nintendo-launcher --segaboot <file>    the Triforce test-menu program (segaboot.gcm), optional
   nintendo-launcher --list               list the games found and their state
-  nintendo-launcher --play <game>        start a game (fzax, mkgp2, mkdx)
+  nintendo-launcher --play <game>        start a game (fzax, mkgp2, mkdx, luigi)
   nintendo-launcher --game <game> <options>   save options for a game without starting it
   Options (saved in that game's settings):
       --render <WxH|native>            the size the game draws at, e.g. 3840x2160

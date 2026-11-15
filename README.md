@@ -1,8 +1,8 @@
 # Nintendo Arcade Launcher
 
-One launcher for Nintendo's arcade racers: **F-Zero AX Monster Ride** and
-**Mario Kart Arcade GP 2** (Sega Triforce) and **Mario Kart Arcade GP DX**
-(Namco ES3), on Linux and Windows. Point it at the folder with your own
+One launcher for Nintendo's arcade games: **F-Zero AX Monster Ride** and
+**Mario Kart Arcade GP 2** (Sega Triforce), **Mario Kart Arcade GP DX**
+(Namco ES3) and **Luigi's Mansion Arcade** (Sega Nu), on Linux and Windows. Point it at the folder with your own
 game dumps and press **Play**: it finds each game, sets up the emulator or
 loader, and runs it full screen with your pad or wheel. Built on
 [rea-launcher-sdk](https://github.com/akitaonrails/rea-launcher-sdk), like
@@ -17,8 +17,8 @@ read, never changed: every game runs from a private folder.
 |---|---|
 | ![F-Zero AX Monster Ride, racing](docs/images/fzax-race.jpg) | ![Mario Kart Arcade GP 2, racing](docs/images/mkgp2-race.jpg) |
 | F-Zero AX Monster Ride, past the motion seat it can't find | Mario Kart Arcade GP 2, past the camera it can't find |
-| ![Mario Kart Arcade GP DX, racing](docs/images/mkdx-race.jpg) | |
-| Mario Kart Arcade GP DX through windowsarcadeloader | |
+| ![Mario Kart Arcade GP DX, racing](docs/images/mkdx-race.jpg) | ![Luigi's Mansion Arcade, playing](docs/images/luigi-play.jpg) |
+| Mario Kart Arcade GP DX through windowsarcadeloader | Luigi's Mansion Arcade, aimed from the launcher's pad input |
 
 ## What runs
 
@@ -27,9 +27,10 @@ read, never changed: every game runs from a private folder.
 | F-Zero AX Monster Ride (Japan, SBHA6W) | Sega Triforce | Dolphin 2609b | **plays** | not yet run |
 | Mario Kart Arcade GP 2 (MK21 Ver. A) | Sega Triforce | Dolphin 2609b | **plays** | not yet run |
 | Mario Kart Arcade GP DX (1.18.16) | Namco ES3 | windowsarcadeloader (patched) | **plays** | not yet run |
+| Luigi's Mansion Arcade (SDCF) | Sega Nu | windowsarcadeloader (patched) | **plays** | not yet run |
 
-"Plays" means a race was driven in the real game through the launcher,
-with its own input path; each run is recorded in
+"Plays" means a race was driven (or, for Luigi's Mansion, a stage played)
+in the real game through the launcher, with its own input path; each run is recorded in
 [docs/RUNTIME_NOTES.md](docs/RUNTIME_NOTES.md). Only the exact builds
 listed in the hub are started (each is identified by the SHA-256 of its
 disc image or program, under any file name); another build shows its
@@ -52,6 +53,9 @@ digest so you can report it.
 
 - **Open emulators and loaders only:** mainline Dolphin for the Triforce
   games, windowsarcadeloader (GPL) for Mario Kart DX. No TeknoParrot.
+- **Luigi's Mansion with a pad:** the left stick moves the crosshair, so
+  no lightgun is needed; on Linux a mouse or a lightgun aims as well
+  (windowsarcadeloader reads them, `patches/wal/0003`).
 - **Monster Ride without its seat:** the community's "Bypass Cycraft" code,
   written into Dolphin's settings for that game only.
 - **Mario Kart GP 2 without its camera:** Dolphin's own "Skip Boot Check"
@@ -71,7 +75,7 @@ digest so you can report it.
 
 ## What it adds
 
-- **One hub for the three games**, with an original illustration for each,
+- **One hub for the four games**, with an original illustration for each,
   driven by pad, keyboard or mouse.
 - **Wheel and pad support for every game.** Pads and wheels are read once
   with SDL: analog steering and pedals, a stick dead zone, wheels
@@ -94,8 +98,10 @@ Packages are on the [releases page](https://github.com/akitaonrails/rea-teknopar
 **Linux** (`NintendoArcadeLauncher-<version>-linux-x86_64.tar.gz`): unpack
 it anywhere and run `./nintendo-launcher`. It brings Dolphin,
 windowsarcadeloader and its Wine. You need gamescope, bubblewrap (`bwrap`),
-a Vulkan driver, 32-bit OpenGL and `cabextract` (winetricks installs Mario
-Kart DX's Microsoft runtimes with it, once).
+a Vulkan driver, 32-bit OpenGL and `cabextract` (winetricks installs the
+Windows games' Microsoft runtimes with it, once). A mouse or lightgun for
+Luigi's Mansion is read from `/dev/input`, which your user must be allowed
+to read (usually the `input` group); a pad works without it.
 
 **Windows** (`NintendoArcadeLauncher-<version>-windows-x86_64.zip`): unpack
 it anywhere and run `nintendo-launcher.exe`. It brings Dolphin and
@@ -121,6 +127,11 @@ game and press **Play**.
 | Start | Start |
 | Back | Coin |
 | Y | Card (Mario Kart DX) |
+
+Luigi's Mansion Arcade: the left stick moves the crosshair, RT or A
+vacuums (the trigger), B is the gun's button, Start joins. On Linux a
+mouse (left button: trigger and join) or a lightgun aims too; whichever
+moved last aims.
 
 Keyboard (Triforce games): arrows steer, Up/Down gas and brake, W/Q tilt
 the handle, Z item/boost, X Mario button/view, A/S paddles, Enter start,
@@ -155,9 +166,11 @@ Each run writes `runtimes/<game>/session.log`.
 
 ## Known limitations
 
-- Mario Kart DX's first start installs Microsoft runtimes through
-  winetricks (a few minutes, from Microsoft and GitHub); it needs the
-  network once.
+- The first start of Mario Kart DX or Luigi's Mansion installs Microsoft
+  runtimes through winetricks (a few minutes, from Microsoft and GitHub);
+  it needs the network once.
+- Luigi's Mansion on Windows aims with the pad only (windowsarcadeloader
+  reads mice and lightguns on Linux).
 - Mario Kart GP 2 looks for its three linked cabinets for about a minute
   at every boot.
 - Monster Ride asks for its adjustment at every boot so far.
@@ -188,7 +201,7 @@ GE-Proton, winetricks, SDL, teknogods. Details and licences:
 
 ## Legal
 
-GPL-3.0-or-later. F-Zero and Mario Kart are trademarks of Nintendo; this
-project is not affiliated with Nintendo, SEGA or Bandai Namco. The launcher
+GPL-3.0-or-later. F-Zero, Mario Kart and Luigi's Mansion are trademarks of Nintendo; this
+project is not affiliated with Nintendo, SEGA, Capcom or Bandai Namco. The launcher
 runs only builds you already have, and it never tells anyone where to get
 game files.

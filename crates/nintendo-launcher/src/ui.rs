@@ -1940,7 +1940,16 @@ impl App {
         wrapped(
             p,
             pos2(ix, y),
-            "A wheel steers with its wheel and pedals, and its paddles shift.",
+            if cfg!(windows) {
+                "A wheel steers with its wheel and pedals, and its paddles shift. Luigi's \
+                 Mansion Arcade: the left stick moves the crosshair, the right trigger or A \
+                 vacuums, B is the gun's button."
+            } else {
+                "A wheel steers with its wheel and pedals, and its paddles shift. Luigi's \
+                 Mansion Arcade: the left stick (or a mouse, or a lightgun) moves the \
+                 crosshair, the right trigger, A or the left mouse button vacuums, B is the \
+                 gun's button."
+            },
             theme::body(size::NOTE),
             MUTED,
             lay.width() - 40.0,
@@ -2730,18 +2739,18 @@ mod tests {
     }
 
     #[test]
-    fn the_hub_has_a_tile_for_each_of_the_three_games() {
+    fn the_hub_has_a_tile_for_each_of_the_four_games() {
         let t = tempfile::tempdir().unwrap();
         let h = hub(t.path());
-        assert_eq!(GAMES.len(), 3);
-        assert_eq!(h.get_all_by_role(Role::RadioButton).count(), 3);
+        assert_eq!(GAMES.len(), 4);
+        assert_eq!(h.get_all_by_role(Role::RadioButton).count(), 4);
         for g in GAMES {
             let node = h.get_by_role_and_label(Role::RadioButton, g.title);
             let about = testing::description(&node).unwrap();
             assert!(about.contains(&g.year.to_string()), "{about}");
             assert!(about.contains(g.board), "{about}");
         }
-        assert!(says(&h, "Your games · 0 of 3 found"));
+        assert!(says(&h, "Your games · 0 of 4 found"));
         assert!(testing::checked(&tile(&h, GAMES[0].slug)));
         assert!(!testing::checked(&tile(&h, GAMES[1].slug)));
     }
@@ -2769,7 +2778,7 @@ mod tests {
         assert!(says(&h, &format!("Folder: {}", dir.display())));
         let play = h.get_by_role_and_label(Role::Button, "Play");
         assert!(!testing::disabled(&play));
-        assert!(says(&h, "Your games · 1 of 3 found"));
+        assert!(says(&h, "Your games · 1 of 4 found"));
     }
 
     #[test]
@@ -3093,10 +3102,10 @@ mod tests {
         let t = tempfile::tempdir().unwrap();
         let mut h = hub(t.path());
         open_tab(&mut h, Tab::Settings);
-        assert!(says(&h, "0 of 3 games found."));
+        assert!(says(&h, "0 of 4 games found."));
         click_button(&mut h, "Rescan");
         wait(&mut h, "the rescan", |a| a.entries.is_some());
-        assert!(says(&h, "0 of 3 games found."));
+        assert!(says(&h, "0 of 4 games found."));
         let lib = t.path().join("games");
         assert!(says(&h, &lib.display().to_string()));
     }
@@ -3162,8 +3171,8 @@ mod tests {
         ));
         click_button(&mut h, "Done");
         assert_eq!(h.state().model.page, Page::Hub);
-        assert!(says(&h, "Your games · 0 of 3 found"));
-        assert_eq!(h.get_all_by_role(Role::RadioButton).count(), 3);
+        assert!(says(&h, "Your games · 0 of 4 found"));
+        assert_eq!(h.get_all_by_role(Role::RadioButton).count(), 4);
     }
 
     #[test]

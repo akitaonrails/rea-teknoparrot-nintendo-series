@@ -13,6 +13,7 @@ use std::time::{Duration, Instant};
 
 use anyhow::{Context, Result, bail};
 use nintendo_core::catalog::{Game, Host, Route, Support};
+use nintendo_core::input::Aim;
 use nintendo_core::launch::{self, DolphinWheel, Feed as Wiring, Places, Plan};
 use nintendo_core::library::Entry;
 use nintendo_core::runtime;
@@ -331,7 +332,12 @@ pub fn run(paths: &Paths, p: &Prepared, feed: Feed, stop: Arc<AtomicBool>) -> Re
         }
         if let Some((sink, wire, script)) = script_sink.as_mut() {
             let (read, pitch) = script.at(start.elapsed().as_secs_f64());
-            let line = wire.line(&read, pitch);
+            // a script places a gun game's crosshair: steer and pitch are its x and y
+            let aim = Aim {
+                x: read.steer,
+                y: pitch,
+            };
+            let line = wire.line(&read, pitch, aim);
             // resent now and then: Dolphin's pipe drops what came before it opened
             if line != last_line || last_sent.elapsed() > Duration::from_millis(200) {
                 let _ = sink.write_all(line.as_bytes()).and_then(|_| sink.flush());

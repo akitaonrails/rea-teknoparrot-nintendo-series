@@ -2,7 +2,8 @@ Nintendo Arcade Launcher
 ========================
 
 One launcher for F-Zero AX Monster Ride, Mario Kart Arcade GP 2 (Sega
-Triforce) and Mario Kart Arcade GP DX (Namco ES3). It contains no game
+Triforce), Mario Kart Arcade GP DX (Namco ES3) and Luigi's Mansion Arcade
+(Sega Nu). It contains no game
 files: you need your own dumps. Your game folders are only read, never
 changed.
 
@@ -20,9 +21,11 @@ What it needs on Linux
 ----------------------
 
 - gamescope and bubblewrap (bwrap): every game runs in them.
-- A Vulkan driver, 32-bit OpenGL, and cabextract (Mario Kart DX's Microsoft
-  runtimes are installed with winetricks the first time; that start needs
-  the network).
+- A Vulkan driver, 32-bit OpenGL, and cabextract (the Windows games'
+  Microsoft runtimes are installed with winetricks the first time; that
+  start needs the network).
+- For a mouse or lightgun in Luigi's Mansion: your user in the input
+  group (a pad works without it).
 - Dolphin, windowsarcadeloader and its Wine are in this package.
 
 What it needs on Windows
@@ -37,6 +40,9 @@ Controls
 Pad: left stick steers (up/down tilts F-Zero AX Monster Ride's handle),
 RT/LT gas and brake, A item/boost, B Mario button/view, LB/RB paddles, X
 Enter (Mario Kart DX), Start, Back coin, Y card. Wheels are recognised.
+Luigi's Mansion: left stick moves the crosshair, RT or A vacuums, B the
+gun's button, Start joins; on Linux a mouse (left button) or lightgun aims
+too.
 Keyboard (Triforce games): arrows, W/Q handle tilt, Z, X, A/S, Enter, 5
 coin, 9 test, 0 service.
 

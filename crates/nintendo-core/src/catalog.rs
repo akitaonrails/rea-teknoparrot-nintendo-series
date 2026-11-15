@@ -5,6 +5,7 @@
 //! listed here are launched; anything else is reported with its digest so
 //! the player can file it (STANDARDS: "Exact binary identity").
 
+use crate::input::StickLayout;
 use crate::settings::Size;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -12,6 +13,7 @@ pub enum GameId {
     FZeroAx,
     MarioKartGp2,
     MarioKartDx,
+    LuigisMansion,
 }
 
 /// How a game is run.
@@ -25,6 +27,8 @@ pub enum Route {
     Wal {
         system: &'static str,
         profile: &'static str,
+        /// What the profile's virtual stick buttons and axes are.
+        layout: StickLayout,
     },
 }
 
@@ -116,7 +120,12 @@ impl Game {
     /// The program for windowsarcadeloader's `.windowsloader` file, a
     /// Windows path relative to the runtime.
     pub fn loader_path(&self) -> String {
-        self.main_file.to_string()
+        self.main_file.replace('/', "\\")
+    }
+
+    /// A gun game: the stick moves a crosshair.
+    pub fn aims(&self) -> bool {
+        matches!(self.route, Route::Wal { layout, .. } if layout.aims())
     }
 }
 
@@ -185,6 +194,7 @@ pub const GAMES: &[Game] = &[
         route: Route::Wal {
             system: "namcoes3",
             profile: "mario-kart-arcade-gp-dx",
+            layout: StickLayout::NamcoEs3Kart,
         },
         main_file: "MK_AGP3_FINAL.exe",
         editions: &[sha(
@@ -200,6 +210,29 @@ pub const GAMES: &[Game] = &[
         // drives: with the game's own defaults it stops on E08-01 NAMCAM
         // (CAMERA) ERROR, and windowsarcadeloader emulates no camera.
         seeds: &[("FTestMode", "F/TestMode"), ("GTestMode", "G/TestMode")],
+    },
+    Game {
+        id: GameId::LuigisMansion,
+        slug: "luigi",
+        title: "Luigi's Mansion Arcade",
+        short: "LUIGI",
+        year: 2015,
+        board: "Sega Nu",
+        route: Route::Wal {
+            system: "seganu",
+            profile: "luigis-mansion-arcade",
+            layout: StickLayout::SegaNuGun,
+        },
+        main_file: "exe/x64/VACUUM.exe",
+        editions: &[sha(
+            "3dfef015e8657e21046af512561618609b0d230bfe8d5cbd2bf54c101c76e2db",
+            "SDCF (Nu 1.1)",
+        )],
+        native: Size::new(1920, 1080),
+        support: Support::Unverified("not yet played through the launcher"),
+        dolphin_id: "",
+        patches: &[],
+        seeds: &[],
     },
 ];
 
@@ -265,5 +298,10 @@ mod tests {
             }
         ));
         assert_eq!(game(GameId::MarioKartDx).loader_path(), "MK_AGP3_FINAL.exe");
+        assert_eq!(
+            game(GameId::LuigisMansion).loader_path(),
+            "exe\\x64\\VACUUM.exe"
+        );
+        assert!(game(GameId::LuigisMansion).aims() && !game(GameId::MarioKartDx).aims());
     }
 }

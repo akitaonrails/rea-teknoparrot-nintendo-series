@@ -1,0 +1,130 @@
+diff --git a/crates/launcher/src/input.rs b/crates/launcher/src/input.rs
+index 65fa0e5..043accd 100644
+--- a/crates/launcher/src/input.rs
++++ b/crates/launcher/src/input.rs
+@@ -264,6 +264,19 @@ impl<'a> Hub<'a> {
+         }
+     }
+ 
++    /// The lightguns' and mice's virtual sticks alone (`--input-pipe`: a frontend drives the
++    /// rest); `None` without one.
++    pub fn pointer_frame(&self) -> Option<InputFrame> {
++        let deadzone = self.config.input.deadzone;
++        let sticks: Vec<_> = self
++            .devices
++            .iter()
++            .filter(|(k, _)| matches!(k, DevKey::Pointer(_)))
++            .map(|(_, d)| (d.player, d.contribution(deadzone)))
++            .collect();
++        (!sticks.is_empty()).then(|| mapping::merge_sticks(sticks.into_iter(), deadzone, self.config.input.stick_as_dpad))
++    }
++
+     /// The virtual sticks. Keyboards' axes (sticks, pedals) move to a held key's full
+     /// deflection in `input.keyboard_ramp_ms` (0: at once), as an analog stick or pedal pushed
+     /// progressively.
+diff --git a/crates/launcher/src/main.rs b/crates/launcher/src/main.rs
+index 3e33dfb..3b6333e 100644
+--- a/crates/launcher/src/main.rs
++++ b/crates/launcher/src/main.rs
+@@ -768,13 +768,15 @@ fn run(profile: &Profile, opts: &RunOptions, script: Option<script::Script>) ->
+     let mut kill_asked: Option<Instant> = None;
+     let mut last_check = Instant::now();
+     let pipe = opts.input_pipe.then(pipe::Pipe::start);
++    let mut aiming = pipe::Aiming::default();
+     let status = loop {
+         hub.poll(Duration::from_millis(4));
+         if let Some(f) = &mut focus {
+             f.poll();
+         }
+         let mut frame = match &pipe {
+-            Some(p) => p.frame(),
++            // the lightguns and mice the launcher reads itself aim over the frontend's sticks
++            Some(p) => aiming.merge(p.frame(), hub.pointer_frame()),
+             None if opts.no_input => InputFrame::default(),
+             None => hub.frame(),
+         };
+diff --git a/crates/launcher/src/pipe.rs b/crates/launcher/src/pipe.rs
+index b522e5d..e3404cb 100644
+--- a/crates/launcher/src/pipe.rs
++++ b/crates/launcher/src/pipe.rs
+@@ -11,12 +11,16 @@
+ //! (pedals 0..=32767). The latest line of each player is its whole state. `quit` (or the end of
+ //! standard input) asks the launcher to stop the game. The game's outputs (force feedback,
+ //! lamps) are written to standard output as `out <player> <id> <value>` lines.
++//!
++//! In a gun game (`input.guns_enabled`) the lightguns and mice the launcher reads itself still
++//! aim and shoot ([`Aiming`]): a player's aim (`lx`/`ly`) is the one that moved last, the
++//! frontend's or the pointer's, and the pointer's buttons add to the frontend's.
+ 
+ use std::io::{BufRead, Write};
+ use std::sync::atomic::{AtomicBool, Ordering};
+ use std::sync::{Arc, Mutex};
+ 
+-use wal_protocol::{InputFrame, MAX_PLAYERS, Output, StickState};
++use wal_protocol::{Axis, InputFrame, MAX_PLAYERS, Output, StickState};
+ 
+ pub struct Pipe {
+     frame: Arc<Mutex<InputFrame>>,
+@@ -81,6 +85,39 @@ impl Pipe {
+     }
+ }
+ 
++/// Which aim each player follows: the frontend's sticks or a lightgun / mouse.
++#[derive(Default)]
++pub struct Aiming {
++    last_pipe: [[i16; 2]; MAX_PLAYERS],
++    last_pointer: [[i16; 2]; MAX_PLAYERS],
++    pointer: [bool; MAX_PLAYERS],
++}
++
++fn aim(s: &StickState) -> [i16; 2] {
++    [s.axes[Axis::LeftX as usize], s.axes[Axis::LeftY as usize]]
++}
++
++impl Aiming {
++    pub fn merge(&mut self, mut frame: InputFrame, pointers: Option<InputFrame>) -> InputFrame {
++        let Some(pointers) = pointers else { return frame };
++        for (p, (stick, from_pointer)) in frame.players.iter_mut().zip(&pointers.players).enumerate() {
++            let (a, b) = (aim(stick), aim(from_pointer));
++            if b != self.last_pointer[p] {
++                self.pointer[p] = true;
++            } else if a != self.last_pipe[p] {
++                self.pointer[p] = false;
++            }
++            (self.last_pipe[p], self.last_pointer[p]) = (a, b);
++            stick.buttons |= from_pointer.buttons;
++            if self.pointer[p] {
++                stick.axes[Axis::LeftX as usize] = b[0];
++                stick.axes[Axis::LeftY as usize] = b[1];
++            }
++        }
++        frame
++    }
++}
++
+ #[cfg(test)]
+ mod tests {
+     use super::*;
+@@ -96,4 +133,22 @@ mod tests {
+         assert!(parse("p1 zz 0 0 0 0 0 0").is_err());
+         assert!(parse("p1 0 0 0").is_err());
+     }
++
++    #[test]
++    fn the_aim_that_moved_last_wins_and_pointer_buttons_add() {
++        let state = |x: i16, buttons: u32| {
++            let mut f = InputFrame::default();
++            f.players[0].axes[Axis::LeftX as usize] = x;
++            f.players[0].buttons = buttons;
++            f
++        };
++        let mut a = Aiming::default();
++        // no pointer: the frontend's frame as it is
++        assert_eq!(a.merge(state(5, 1), None), state(5, 1));
++        // the mouse moves: its aim; its trigger adds to the frontend's buttons
++        assert_eq!(a.merge(state(5, 1), Some(state(-300, 2))), state(-300, 3));
++        assert_eq!(a.merge(state(5, 0), Some(state(-300, 0))), state(-300, 0));
++        // the frontend's stick moves: its aim again
++        assert_eq!(a.merge(state(9, 0), Some(state(-300, 0))), state(9, 0));
++    }
+ }
