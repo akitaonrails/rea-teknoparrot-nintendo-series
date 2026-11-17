@@ -1,32 +1,31 @@
-Window
-  Label value="Controls"
-  Label value="Turn the wheel or move the stick, press the pedals and buttons: the bars should follow."
-  Label value="Controllers can't be read: controllers unavailable: no SDL. Plug the controller in again, then restart the launcher."
-  Label value="Steer: Left stick"
-  Label value="Gas: RT"
-  Label value="Brake: LT"
-  Label value="Item / boost: A"
-  Label value="Mario button / view change: B"
-  Label value="Left paddle / menu up: LB"
-  Label value="Right paddle / menu down: RB"
-  Label value="Enter (Mario Kart DX): X"
-  Label value="Start: START"
-  Label value="Insert / remove card: Y"
-  Label value="Insert coin: BACK"
-  Meter "Steering" value="0%" number=0
-  Meter "Gas" value="0%" number=0
-  Meter "Brake" value="0%" number=0
-  Label value="Item / boost: released"
-  Label value="Mario button / view change: released"
-  Label value="Left paddle / menu up: released"
-  Label value="Right paddle / menu down: released"
-  Label value="Enter (Mario Kart DX): released"
-  Label value="Start: released"
-  Label value="Insert / remove card: released"
-  Label value="Insert coin: released"
-  Label value="Operator test menu: released"
-  Label value="Service: released"
-  Tab "Games" toggled=False @326,17 78x38
-  Tab "Controls" toggled=True @412,17 91x38
-  Tab "Settings" toggled=False @511,17 91x38
-  Label value="Controller: Controllers unavailable"
+Label = "Controls"
+Label = "Turn the wheel or move the stick, press the pedals and buttons: the bars should follow."
+Label = "Controllers can't be read: controllers unavailable: no SDL. Plug the controller in again, then restart the launcher."
+Label = "Steer: Left stick"
+Label = "Gas: RT"
+Label = "Brake: LT"
+Label = "Item / boost: A"
+Label = "Mario button / view change: B"
+Label = "Left paddle / menu up: LB"
+Label = "Right paddle / menu down: RB"
+Label = "Enter (Mario Kart DX): X"
+Label = "Start: START"
+Label = "Insert / remove card: Y"
+Label = "Insert coin: BACK"
+Meter "Steering" = "0%" #0
+Meter "Gas" = "0%" #0
+Meter "Brake" = "0%" #0
+Label = "Item / boost: released"
+Label = "Mario button / view change: released"
+Label = "Left paddle / menu up: released"
+Label = "Right paddle / menu down: released"
+Label = "Enter (Mario Kart DX): released"
+Label = "Start: released"
+Label = "Insert / remove card: released"
+Label = "Insert coin: released"
+Label = "Operator test menu: released"
+Label = "Service: released"
+Tab "Games" [off] @326,17 78x38
+Tab "Controls" [on] @412,17 91x38
+Tab "Settings" [off] @511,17 91x38
+Label = "Controller: Controllers unavailable"

@@ -14,9 +14,9 @@ path = "src/main.rs"
 [dependencies]
 anyhow = "1"
 eframe = { version = "0.37.0", default-features = false, features = ["glow", "default_fonts", "x11", "wayland"] }
-image = { version = "0.25", default-features = false, features = ["jpeg"] }
 rea-launcher.workspace = true
 rea-launcher-native.workspace = true
+rea-launcher-ui.workspace = true
 nintendo-core = { path = "../nintendo-core" }
 signal-hook = "0.3"
 

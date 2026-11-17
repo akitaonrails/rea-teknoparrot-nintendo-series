@@ -1,16 +1,15 @@
-Window
-  Label value="F-Zero AX Monster Ride"
-  Label value="Sega Triforce · 2004"
-  Label value="Not in your library"
-  Label value="Not found in your game folders. Add its folder in Settings, then choose Rescan."
-  Button "Play" about="Not found in your game folders." disabled @62,524 189x56
-  Button "Settings" @269,524 189x56
-  Label value="Your games · 0 of 4 found"
-  RadioButton "F-Zero AX Monster Ride" about="2004, Sega Triforce, Not in your library" toggled=True @62,609 231x130
-  RadioButton "Mario Kart Arcade GP 2" about="2007, Sega Triforce, Not in your library" toggled=False @304,609 231x130
-  RadioButton "Mario Kart Arcade GP DX" about="2013, Namco ES3, Not in your library" toggled=False @547,609 231x130
-  RadioButton "Luigi's Mansion Arcade" about="2015, Sega Nu, Not in your library" toggled=False @789,609 231x130
-  Tab "Games" toggled=True @362,19 86x42
-  Tab "Controls" toggled=False @457,19 101x42
-  Tab "Settings" toggled=False @568,19 101x42
-  Label value="Controller: No controller"
+Label = "F-Zero AX Monster Ride"
+Label = "Sega Triforce · 2004"
+Label = "Not in your library"
+Label = "Not found in your game folders. Add its folder in Settings, then choose Rescan."
+Button "Play" (Not found in your game folders.) [disabled] @62,524 189x56
+Button "Settings" @269,524 189x56
+Label = "Your games · 0 of 4 found"
+RadioButton "F-Zero AX Monster Ride" (2004, Sega Triforce, Not in your library) [on] @62,609 231x130
+RadioButton "Mario Kart Arcade GP 2" (2007, Sega Triforce, Not in your library) [off] @304,609 231x130
+RadioButton "Mario Kart Arcade GP DX" (2013, Namco ES3, Not in your library) [off] @547,609 231x130
+RadioButton "Luigi's Mansion Arcade" (2015, Sega Nu, Not in your library) [off] @789,609 231x130
+Tab "Games" [on] @362,19 86x42
+Tab "Controls" [off] @457,19 101x42
+Tab "Settings" [off] @568,19 101x42
+Label = "Controller: No controller"

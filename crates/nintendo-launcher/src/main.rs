@@ -21,8 +21,9 @@ use nintendo_core::settings::{self, Settings};
 use rea_launcher::catalog::{Host, Support};
 use rea_launcher::library::Found;
 
-use crate::paths::Paths;
+use crate::paths::{DIRS, FIELDS};
 use crate::session::{Display, Feed};
+use rea_launcher::hub::{HubConfig, HubPaths};
 
 const USAGE: &str = "\
 nintendo-launcher — F-Zero AX and the Mario Kart Arcade GP games
@@ -101,12 +102,12 @@ fn parse_args(mut it: impl Iterator<Item = String>) -> Result<Option<Args>, Stri
     Ok(Some(a))
 }
 
-fn load_settings(paths: &Paths, slug: &str) -> Settings {
+fn load_settings(paths: &HubPaths, slug: &str) -> Settings {
     settings::load(&paths.settings(slug)).unwrap_or_default().0
 }
 
 /// Apply `key = value` options to a game's settings file, keeping the rest.
-fn save_options(paths: &Paths, slug: &str, options: &[String]) -> std::io::Result<()> {
+fn save_options(paths: &HubPaths, slug: &str, options: &[String]) -> std::io::Result<()> {
     let file = paths.settings(slug);
     let (mut s, _) = settings::load(&file)?;
     let (given, _) = Settings::parse(&options.join("\n"));
@@ -136,8 +137,14 @@ fn main() -> ExitCode {
             return ExitCode::from(2);
         }
     };
-    let paths = Paths::discover();
-    let mut config = paths.config();
+    let paths = HubPaths::discover(&DIRS);
+    let mut config = match HubConfig::load(&paths.config_file(), &FIELDS) {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!("{}: {e}", paths.config_file().display());
+            return ExitCode::FAILURE;
+        }
+    };
     if !args.libraries.is_empty() || args.bios.is_some() {
         for dir in &args.libraries {
             if !dir.is_dir() {
@@ -151,9 +158,9 @@ fn main() -> ExitCode {
                 eprintln!("{} is not a file", b.display());
                 return ExitCode::from(2);
             }
-            config.segaboot = Some(std::path::absolute(b).unwrap_or(b.clone()));
+            config.paths[0] = Some(std::path::absolute(b).unwrap_or(b.clone()));
         }
-        if let Err(e) = paths.save_config(&config) {
+        if let Err(e) = config.save(&paths.config_file(), &FIELDS) {
             eprintln!("could not save the settings: {e}");
             return ExitCode::FAILURE;
         }
@@ -205,13 +212,13 @@ fn main() -> ExitCode {
         }
     }
     if let Some(slug) = &args.play {
-        return play(&paths, slug, &args);
+        return play(&paths, &config, slug, &args);
     }
     if args.libraries.is_empty() && args.bios.is_none() && args.game.is_none() {
         return match ui::run(paths) {
             Ok(()) => ExitCode::SUCCESS,
             Err(e) => {
-                eprintln!("{e:#}");
+                eprintln!("{e}");
                 ExitCode::FAILURE
             }
         };
@@ -219,12 +226,11 @@ fn main() -> ExitCode {
     ExitCode::SUCCESS
 }
 
-fn play(paths: &Paths, slug: &str, args: &Args) -> ExitCode {
+fn play(paths: &HubPaths, config: &HubConfig, slug: &str, args: &Args) -> ExitCode {
     let Some(game) = catalog::by_slug(slug) else {
         eprintln!("unknown game {slug}");
         return ExitCode::from(2);
     };
-    let config = paths.config();
     let found = catalog::library().scan(&config.libraries);
     let Some(entry) = found.by_game().get(&game.id).map(|e| (*e).clone()) else {
         eprintln!("{} is not in your library folders", game.title);
@@ -242,7 +248,15 @@ fn play(paths: &Paths, slug: &str, args: &Args) -> ExitCode {
         std::thread::sleep(Duration::from_millis(300));
         i.snapshot().wheel
     });
-    let prepared = match session::prepare(paths, game, &entry, &settings, display, wheel.as_ref()) {
+    let prepared = match session::prepare(
+        paths,
+        config,
+        game,
+        &entry,
+        &settings,
+        display,
+        wheel.as_ref(),
+    ) {
         Ok(p) => p,
         Err(e) => {
             eprintln!("{e:#}");
@@ -279,7 +293,7 @@ fn play(paths: &Paths, slug: &str, args: &Args) -> ExitCode {
     } else {
         Feed::None
     };
-    match session::run(paths, &prepared, feed, &stop) {
+    match session::run(&prepared, feed, &stop) {
         Ok(status) => {
             eprintln!(
                 "{} ended ({status}); log: {}",
@@ -318,9 +332,10 @@ mod tests {
     #[test]
     fn saving_options_keeps_the_players_lines() {
         let t = tempfile::tempdir().unwrap();
-        let p = Paths {
+        let p = HubPaths {
             data: t.path().into(),
             components: t.path().join("c"),
+            dev_assets: None,
         };
         std::fs::create_dir_all(t.path().join("settings")).unwrap();
         std::fs::write(p.settings("mkdx"), "# mine\nupscaler = nis\n").unwrap();

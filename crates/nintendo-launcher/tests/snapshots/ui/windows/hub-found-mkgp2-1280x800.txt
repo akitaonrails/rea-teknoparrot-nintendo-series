@@ -1,18 +1,17 @@
-Window
-  Label value="Mario Kart Arcade GP 2"
-  Label value="Sega Triforce · 2007 · MK21 Ver. A (2007-08-20)"
-  Label value="Starts, not verified"
-  Label value="not yet raced through the launcher"
-  Label value="Folder: /library\\mkgp2"
-  Label value="Test menu off: add segaboot.gcm in Settings to open it."
-  Button "Play" @62,549 189x56
-  Button "Settings" @269,549 189x56
-  Label value="Your games · 4 of 4 found"
-  RadioButton "F-Zero AX Monster Ride" about="2004, Sega Triforce, Starts, not verified" toggled=False @62,609 231x130
-  RadioButton "Mario Kart Arcade GP 2" about="2007, Sega Triforce, Starts, not verified" toggled=True @304,609 231x130
-  RadioButton "Mario Kart Arcade GP DX" about="2013, Namco ES3, Starts, not verified" toggled=False @547,609 231x130
-  RadioButton "Luigi's Mansion Arcade" about="2015, Sega Nu, Starts, not verified" toggled=False @789,609 231x130
-  Tab "Games" toggled=True @362,19 86x42
-  Tab "Controls" toggled=False @457,19 101x42
-  Tab "Settings" toggled=False @568,19 101x42
-  Label value="Controller: No controller"
+Label = "Mario Kart Arcade GP 2"
+Label = "Sega Triforce · 2007 · MK21 Ver. A (2007-08-20)"
+Label = "Starts, not verified"
+Label = "not yet raced through the launcher"
+Label = "Folder: \\library\\mkgp2"
+Label = "Test menu off: add segaboot.gcm in Settings to open it."
+Button "Play" @62,549 189x56
+Button "Settings" @269,549 189x56
+Label = "Your games · 4 of 4 found"
+RadioButton "F-Zero AX Monster Ride" (2004, Sega Triforce, Starts, not verified) [off] @62,609 231x130
+RadioButton "Mario Kart Arcade GP 2" (2007, Sega Triforce, Starts, not verified) [on] @304,609 231x130
+RadioButton "Mario Kart Arcade GP DX" (2013, Namco ES3, Starts, not verified) [off] @547,609 231x130
+RadioButton "Luigi's Mansion Arcade" (2015, Sega Nu, Starts, not verified) [off] @789,609 231x130
+Tab "Games" [on] @362,19 86x42
+Tab "Controls" [off] @457,19 101x42
+Tab "Settings" [off] @568,19 101x42
+Label = "Controller: No controller"

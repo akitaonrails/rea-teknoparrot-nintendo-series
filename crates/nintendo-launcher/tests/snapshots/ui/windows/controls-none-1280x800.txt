@@ -1,32 +1,31 @@
-Window
-  Label value="Controls"
-  Label value="Turn the wheel or move the stick, press the pedals and buttons: the bars should follow."
-  Label value="No controller found. Plug in a wheel or a pad; it shows up here."
-  Label value="Steer: Left stick"
-  Label value="Gas: RT"
-  Label value="Brake: LT"
-  Label value="Item / boost: A"
-  Label value="Mario button / view change: B"
-  Label value="Left paddle / menu up: LB"
-  Label value="Right paddle / menu down: RB"
-  Label value="Enter (Mario Kart DX): X"
-  Label value="Start: START"
-  Label value="Insert / remove card: Y"
-  Label value="Insert coin: BACK"
-  Meter "Steering" value="0%" number=0
-  Meter "Gas" value="0%" number=0
-  Meter "Brake" value="0%" number=0
-  Label value="Item / boost: released"
-  Label value="Mario button / view change: released"
-  Label value="Left paddle / menu up: released"
-  Label value="Right paddle / menu down: released"
-  Label value="Enter (Mario Kart DX): released"
-  Label value="Start: released"
-  Label value="Insert / remove card: released"
-  Label value="Insert coin: released"
-  Label value="Operator test menu: released"
-  Label value="Service: released"
-  Tab "Games" toggled=False @362,19 86x42
-  Tab "Controls" toggled=True @457,19 101x42
-  Tab "Settings" toggled=False @568,19 101x42
-  Label value="Controller: No controller"
+Label = "Controls"
+Label = "Turn the wheel or move the stick, press the pedals and buttons: the bars should follow."
+Label = "No controller found. Plug in a wheel or a pad; it shows up here."
+Label = "Steer: Left stick"
+Label = "Gas: RT"
+Label = "Brake: LT"
+Label = "Item / boost: A"
+Label = "Mario button / view change: B"
+Label = "Left paddle / menu up: LB"
+Label = "Right paddle / menu down: RB"
+Label = "Enter (Mario Kart DX): X"
+Label = "Start: START"
+Label = "Insert / remove card: Y"
+Label = "Insert coin: BACK"
+Meter "Steering" = "0%" #0
+Meter "Gas" = "0%" #0
+Meter "Brake" = "0%" #0
+Label = "Item / boost: released"
+Label = "Mario button / view change: released"
+Label = "Left paddle / menu up: released"
+Label = "Right paddle / menu down: released"
+Label = "Enter (Mario Kart DX): released"
+Label = "Start: released"
+Label = "Insert / remove card: released"
+Label = "Insert coin: released"
+Label = "Operator test menu: released"
+Label = "Service: released"
+Tab "Games" [off] @362,19 86x42
+Tab "Controls" [on] @457,19 101x42
+Tab "Settings" [off] @568,19 101x42
+Label = "Controller: No controller"

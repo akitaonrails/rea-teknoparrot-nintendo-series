@@ -1,34 +1,33 @@
-Window
-  Label value="Controls"
-  Label value="Turn the wheel or move the stick, press the pedals and buttons: the bars should follow."
-  Label value="Pad: Test Pad"
-  Label value="Wheel: Test Wheel (drives the car)"
-  Label value="Steer: Left stick"
-  Label value="Gas: RT"
-  Label value="Brake: LT"
-  Label value="Item / boost: A"
-  Label value="Mario button / view change: B"
-  Label value="Left paddle / menu up: LB"
-  Label value="Right paddle / menu down: RB"
-  Label value="Enter (Mario Kart DX): X"
-  Label value="Start: START"
-  Label value="Insert / remove card: Y"
-  Label value="Insert coin: BACK"
-  Meter "Steering" value="-50%" number=-50
-  Meter "Gas" value="25%" number=25
-  Meter "Brake" value="75%" number=75
-  Label value="Item / boost: released"
-  Label value="Mario button / view change: released"
-  Label value="Left paddle / menu up: released"
-  Label value="Right paddle / menu down: released"
-  Label value="Enter (Mario Kart DX): released"
-  Label value="Start: pressed"
-  Label value="Insert / remove card: released"
-  Label value="Insert coin: released"
-  Label value="Operator test menu: released"
-  Label value="Service: released"
-  Label value="A game is running: it reads these controls."
-  Tab "Games" toggled=False @326,17 78x38
-  Tab "Controls" toggled=True @412,17 91x38
-  Tab "Settings" toggled=False @511,17 91x38
-  Label value="Controller: Test Wheel"
+Label = "Controls"
+Label = "Turn the wheel or move the stick, press the pedals and buttons: the bars should follow."
+Label = "Pad: Test Pad"
+Label = "Wheel: Test Wheel (drives the car)"
+Label = "Steer: Left stick"
+Label = "Gas: RT"
+Label = "Brake: LT"
+Label = "Item / boost: A"
+Label = "Mario button / view change: B"
+Label = "Left paddle / menu up: LB"
+Label = "Right paddle / menu down: RB"
+Label = "Enter (Mario Kart DX): X"
+Label = "Start: START"
+Label = "Insert / remove card: Y"
+Label = "Insert coin: BACK"
+Meter "Steering" = "-50%" #-50
+Meter "Gas" = "25%" #25
+Meter "Brake" = "75%" #75
+Label = "Item / boost: released"
+Label = "Mario button / view change: released"
+Label = "Left paddle / menu up: released"
+Label = "Right paddle / menu down: released"
+Label = "Enter (Mario Kart DX): released"
+Label = "Start: pressed"
+Label = "Insert / remove card: released"
+Label = "Insert coin: released"
+Label = "Operator test menu: released"
+Label = "Service: released"
+Label = "A game is running: it reads these controls."
+Tab "Games" [off] @326,17 78x38
+Tab "Controls" [on] @412,17 91x38
+Tab "Settings" [off] @511,17 91x38
+Label = "Controller: Test Wheel"

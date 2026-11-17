@@ -1,17 +1,16 @@
-Window
-  Label value="Mario Kart Arcade GP DX"
-  Label value="Namco ES3 · 2013 · 1.18.16 (English mod 1.0)"
-  Label value="Not supported yet"
-  Label value="Not yet: it crashes."
-  Label value="Folder: /library\\mkdx"
-  Button "Play" about="Not yet: it crashes." disabled @62,524 189x56
-  Button "Settings" @269,524 189x56
-  Label value="Your games · 4 of 4 found"
-  RadioButton "F-Zero AX Monster Ride" about="2004, Sega Triforce, Starts, not verified" toggled=False @62,609 231x130
-  RadioButton "Mario Kart Arcade GP 2" about="2007, Sega Triforce, Starts, not verified" toggled=False @304,609 231x130
-  RadioButton "Mario Kart Arcade GP DX" about="2013, Namco ES3, Not supported yet" toggled=True @547,609 231x130
-  RadioButton "Luigi's Mansion Arcade" about="2015, Sega Nu, Starts, not verified" toggled=False @789,609 231x130
-  Tab "Games" toggled=True @362,19 86x42
-  Tab "Controls" toggled=False @457,19 101x42
-  Tab "Settings" toggled=False @568,19 101x42
-  Label value="Controller: No controller"
+Label = "Mario Kart Arcade GP DX"
+Label = "Namco ES3 · 2013 · 1.18.16 (English mod 1.0)"
+Label = "Not supported yet"
+Label = "Not yet: it crashes."
+Label = "Folder: \\library\\mkdx"
+Button "Play" (Not yet: it crashes.) [disabled] @62,524 189x56
+Button "Settings" @269,524 189x56
+Label = "Your games · 4 of 4 found"
+RadioButton "F-Zero AX Monster Ride" (2004, Sega Triforce, Starts, not verified) [off] @62,609 231x130
+RadioButton "Mario Kart Arcade GP 2" (2007, Sega Triforce, Starts, not verified) [off] @304,609 231x130
+RadioButton "Mario Kart Arcade GP DX" (2013, Namco ES3, Not supported yet) [on] @547,609 231x130
+RadioButton "Luigi's Mansion Arcade" (2015, Sega Nu, Starts, not verified) [off] @789,609 231x130
+Tab "Games" [on] @362,19 86x42
+Tab "Controls" [off] @457,19 101x42
+Tab "Settings" [off] @568,19 101x42
+Label = "Controller: No controller"

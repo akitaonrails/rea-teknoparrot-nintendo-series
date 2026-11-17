@@ -28,7 +28,8 @@ use rea_launcher_native::group::{Group, Tag};
 use rea_launcher_native::supervise::{self, Ended, Hold, Options, Outcome};
 
 use crate::input;
-use crate::paths::Paths;
+use crate::paths;
+use rea_launcher::hub::{HubConfig, HubPaths};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Display {
@@ -40,10 +41,12 @@ pub enum Display {
 pub struct Prepared {
     pub plan: Plan,
     pub runtime: PathBuf,
+    /// The library folders, bound read-only around the game (Linux).
+    pub libraries: Vec<PathBuf>,
 }
 
-fn check_components(game: &Game, p: &Paths) -> Result<()> {
-    let c = p.components();
+fn check_components(game: &Game, p: &HubPaths) -> Result<()> {
+    let c = paths::components(p);
     let windows = Host::current() == Host::Windows;
     let need: Vec<PathBuf> = match game.route {
         Route::Dolphin if windows => vec![c.dolphin_win.join("Dolphin.exe")],
@@ -114,7 +117,8 @@ fn make_fifo(_path: &std::path::Path) -> Result<()> {
 /// Build the runtime folder and write the game's files. `wheel` is the
 /// wheel the input thread sees (Dolphin on Windows maps it itself).
 pub fn prepare(
-    paths: &Paths,
+    paths: &HubPaths,
+    config: &HubConfig,
     game: &Game,
     entry: &Entry<Game>,
     settings: &Settings,
@@ -126,7 +130,6 @@ pub fn prepare(
     }
     check_components(game, paths)?;
     let rt = paths.runtime(game.slug);
-    let config = paths.config();
     let ops = runtime::plan(game, &entry.dir, &rt, &linkfarm::list)
         .with_context(|| format!("reading {}", entry.dir.display()))?;
     if rt.is_dir() {
@@ -138,15 +141,15 @@ pub fn prepare(
         .with_context(|| format!("building {}", rt.display()))?;
     let places = Places {
         runtime: rt.clone(),
-        wal_root: paths.wal_root(),
-        segaboot: config.segaboot.clone().filter(|s| s.is_file()),
+        wal_root: paths::wal_root(paths),
+        segaboot: config.paths[0].clone().filter(|s| s.is_file()),
         wal_port: wal::free_port_block(launch::WAL_PORT),
     };
     let plan = launch::plan(
         game,
         &entry.file,
         &places,
-        &paths.components(),
+        &paths::components(paths),
         settings,
         display == Display::Headless,
         Host::current(),
@@ -172,7 +175,11 @@ pub fn prepare(
     if let Wiring::DolphinPipe(pipe) = &plan.feed {
         make_fifo(pipe)?;
     }
-    Ok(Prepared { plan, runtime: rt })
+    Ok(Prepared {
+        plan,
+        runtime: rt,
+        libraries: config.libraries.clone(),
+    })
 }
 
 /// The command line: gamescope, then bubblewrap with every library folder
@@ -299,10 +306,10 @@ impl supervise::Watcher for Polite {
 /// thread), feeds it, and waits until it ends or `stop` is set; then
 /// nothing of it is left. A game that closed by itself within seconds
 /// didn't start: that is an error saying why.
-pub fn run(paths: &Paths, p: &Prepared, feed: Feed, stop: &AtomicBool) -> Result<ExitStatus> {
+pub fn run(p: &Prepared, feed: Feed, stop: &AtomicBool) -> Result<ExitStatus> {
     let log_path = p.runtime.join("session.log");
     let file = fs::File::create(&log_path)?;
-    let argv = session_argv(&p.plan, &paths.config().libraries);
+    let argv = session_argv(&p.plan, &p.libraries);
     let mut cmd = Command::new(&argv[0]);
     cmd.args(&argv[1..])
         .current_dir(&p.plan.game.cwd)
@@ -479,9 +486,10 @@ mod tests {
             fs::create_dir_all(root.join(c).parent().unwrap()).unwrap();
             fs::write(root.join(c), b"placeholder").unwrap();
         }
-        let paths = Paths {
+        let paths = HubPaths {
             data: root.join("data"),
             components: root.join("components"),
+            dev_assets: None,
         };
         let g = game(GameId::MarioKartDx);
         let dir = root.join("library/mkdx");
@@ -495,6 +503,7 @@ mod tests {
         };
         let p = prepare(
             &paths,
+            &HubConfig::new(&paths::FIELDS),
             g,
             &entry,
             &Settings::default(),
@@ -684,16 +693,13 @@ mod tests {
                 }
             }
             let data = root.join("data").join(g.slug);
-            let paths = Paths {
+            let paths = HubPaths {
                 data: data.clone(),
                 components: root.join("components"),
+                dev_assets: None,
             };
-            fs::create_dir_all(&data).unwrap();
-            fs::write(
-                paths.config_file(),
-                format!("segaboot = {}\n", root.join("segaboot.gcm").display()),
-            )
-            .unwrap();
+            let mut config = HubConfig::new(&paths::FIELDS);
+            config.paths[0] = Some(root.join("segaboot.gcm"));
             let entry = Entry {
                 dir: game_dir.clone(),
                 file: game_dir.join(g.main_file),
@@ -706,6 +712,7 @@ mod tests {
             tree(&game_dir, root, &mut before);
             prepare(
                 &paths,
+                &config,
                 g,
                 &entry,
                 &Settings::default(),
@@ -717,8 +724,7 @@ mod tests {
             tree(&game_dir, root, &mut after);
             assert_eq!(before, after, "{} touched its game folder", g.slug);
             out.push_str(&format!("== {}\n", g.slug));
-            // not launcher.cfg: the test wrote it, with the scratch path
-            for dir in [paths.runtime(g.slug), paths.wal_root()] {
+            for dir in [paths.runtime(g.slug), paths::wal_root(&paths)] {
                 if dir.exists() {
                     tree(&dir, root, &mut out);
                 }

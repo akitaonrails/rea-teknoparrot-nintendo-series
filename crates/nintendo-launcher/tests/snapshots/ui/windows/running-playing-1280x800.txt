@@ -1,19 +1,19 @@
-Window
-  Label value="F-Zero AX Monster Ride"
-  Label value="Sega Triforce · 2004"
-  Label value="Not in your library"
-  Label value="Not found in your game folders. Add its folder in Settings, then choose Rescan."
-  Button "Play" about="Not found in your game folders." disabled @62,524 189x56
-  Button "Settings" @269,524 189x56
-  Label value="Your games · 0 of 4 found"
-  RadioButton "F-Zero AX Monster Ride" about="2004, Sega Triforce, Not in your library" toggled=True @62,609 231x130
-  RadioButton "Mario Kart Arcade GP 2" about="2007, Sega Triforce, Not in your library" toggled=False @304,609 231x130
-  RadioButton "Mario Kart Arcade GP DX" about="2013, Namco ES3, Not in your library" toggled=False @547,609 231x130
-  RadioButton "Luigi's Mansion Arcade" about="2015, Sega Nu, Not in your library" toggled=False @789,609 231x130
-  Tab "Games" toggled=True @362,19 86x42
-  Tab "Controls" toggled=False @457,19 101x42
-  Tab "Settings" toggled=False @568,19 101x42
-  Label value="Controller: No controller"
-  Label value="Mario Kart Arcade GP DX is running"
-  Label value="Close the game window or press Stop to come back."
-  Button "Stop" @540,506 200x56
+Label = "Mario Kart Arcade GP DX"
+Label = "Namco ES3 · 2013 · 1.18.16 (English mod 1.0)"
+Label = "Starts, not verified"
+Label = "not yet raced through the launcher"
+Label = "Folder: \\library\\mkdx"
+Button "Play" [disabled] @62,524 189x56
+Button "Settings" @269,524 189x56
+Label = "Your games · 4 of 4 found"
+RadioButton "F-Zero AX Monster Ride" (2004, Sega Triforce, Starts, not verified) [off] @62,609 231x130
+RadioButton "Mario Kart Arcade GP 2" (2007, Sega Triforce, Starts, not verified) [off] @304,609 231x130
+RadioButton "Mario Kart Arcade GP DX" (2013, Namco ES3, Starts, not verified) [on] @547,609 231x130
+RadioButton "Luigi's Mansion Arcade" (2015, Sega Nu, Starts, not verified) [off] @789,609 231x130
+Tab "Games" [on] @362,19 86x42
+Tab "Controls" [off] @457,19 101x42
+Tab "Settings" [off] @568,19 101x42
+Label = "Controller: No controller"
+Label = "Mario Kart Arcade GP DX is running"
+Label = "Close the game window or press Stop to come back."
+Button "Stop" @540,506 200x56
