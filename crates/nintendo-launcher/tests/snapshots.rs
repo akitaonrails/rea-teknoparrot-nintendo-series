@@ -41,10 +41,12 @@ fn scratch(name: &str) -> PathBuf {
 /// printed and how it ended, the scratch folder spelled `<tmp>`.
 fn run(root: &Path, args: &[&str]) -> String {
     let out = Command::new(env!("CARGO_BIN_EXE_nintendo-launcher"))
+        // first: the terminal is the audience (Windows too), so a refused
+        // command prints and exits instead of opening a message window
+        .arg("--linux")
         .args(args)
         .env("NINTENDO_DATA", root.join("data"))
         .env("NINTENDO_COMPONENTS", root.join("components"))
-        // headless: a message never opens a window on the desktop
         .env_remove("DISPLAY")
         .env_remove("WAYLAND_DISPLAY")
         .output()
@@ -116,7 +118,6 @@ fn every_cli_mode() {
     let segaboot = root.join("segaboot.gcm");
     fs::write(&segaboot, b"not segaboot").unwrap();
     let sb_arg = segaboot.display().to_string();
-    let missing = root.join("missing").display().to_string();
 
     let mut out = String::new();
     let mut step = |args: &[&str], files: &[&str]| {
@@ -134,12 +135,9 @@ fn every_cli_mode() {
     step(&["--game", "mkdx", "--deadzone", "0.9"], &[]);
     step(&["--render", "1920x1080"], &[]);
     step(&["--game", "nope", "--crt", "off"], &[]);
-    step(&["--library", &missing], &[]);
-    step(&["--segaboot", &missing], &[]);
     // no library yet
     step(&["--list"], &[]);
     step(&["--play", "nope"], &[]);
-    step(&["--play", "mkdx"], &[]);
     // folders and segaboot are remembered
     step(&["--library", &lib_arg], &["data/launcher.cfg"]);
     step(
@@ -147,8 +145,6 @@ fn every_cli_mode() {
         &["data/launcher.cfg"],
     );
     step(&["--list"], &[]);
-    // a synthetic dump is no catalog edition
-    step(&["--play", "mkdx", "--headless", "--no-input"], &[]);
     // options are saved per game
     step(&["--game", "mkdx"], &[]);
     step(
@@ -177,6 +173,33 @@ fn every_cli_mode() {
         &["data/settings/fzax.cfg"],
     );
     rea_launcher::snapshot!("cli.txt", out);
+}
+
+/// The actions the launcher refuses (a path that isn't there, a game it
+/// can't start): said on stderr and in launcher.log. Linux only: on Windows
+/// a refused action is a message window (the family's audience rule),
+/// which a test can't answer.
+#[test]
+#[cfg(not(windows))]
+fn refused_actions() {
+    let root = scratch("cli-refused");
+    let lib = fixture_library(&root);
+    let missing = root.join("missing").display().to_string();
+    let mut out = String::new();
+    for args in [
+        &["--library", &missing][..],
+        &["--segaboot", &missing],
+        // no library yet
+        &["--play", "mkdx"],
+        &["--library", &lib.display().to_string()],
+        // a synthetic dump is no catalog edition
+        &["--play", "mkdx", "--headless", "--no-input"],
+    ] {
+        out.push_str(&run(&root, args));
+        out.push('\n');
+    }
+    out.push_str(&file(&root, "data/launcher.log"));
+    rea_launcher::snapshot!("cli-refused.txt", out);
 }
 
 /// `launcher.cfg` written over an older one: what of it survives (comments,

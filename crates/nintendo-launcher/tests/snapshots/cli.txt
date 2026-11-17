@@ -236,20 +236,6 @@ Test options for --play:
   nintendo-launcher --help                   this text
 
 
-$ nintendo-launcher --library <tmp>/missing
-exit Some(1)
---- stdout
---- stderr
-Nintendo Arcade Launcher: <tmp>/missing isn't a folder this computer can open. Check the path and try again.
-Report a problem: https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
-
-$ nintendo-launcher --segaboot <tmp>/missing
-exit Some(1)
---- stdout
---- stderr
-Nintendo Arcade Launcher: <tmp>/missing isn't a file this computer can open. Check the path and try again.
-Report a problem: https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
-
 $ nintendo-launcher --list
 exit Some(1)
 --- stdout
@@ -291,13 +277,6 @@ Test options for --play:
   nintendo-launcher --help                   this text
 
 
-$ nintendo-launcher --play mkdx
-exit Some(1)
---- stdout
---- stderr
-Nintendo Arcade Launcher: No game folder yet: run with --library <folder>.
-Report a problem: https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
-
 $ nintendo-launcher --library <tmp>/library
 exit Some(0)
 --- stdout
@@ -325,13 +304,6 @@ unknown exe/x64/VACUUM.exe (SHA-256 b1160382b95ca32961cd09d8d816f1299a6fb0174026
 unknown F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso (SHA-256 001b71dd1ef2033d9797c5ef695d12e113c9348bc8424080f47e3513d0d64f95): report it at https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
       <tmp>/library/triforce
 --- stderr
-
-$ nintendo-launcher --play mkdx --headless --no-input
-exit Some(1)
---- stdout
---- stderr
-Nintendo Arcade Launcher: Mario Kart Arcade GP DX is not in your game folders.
-Report a problem: https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
 
 $ nintendo-launcher --game mkdx
 exit Some(2)
