@@ -1,0 +1,32 @@
+Window
+  Label value="Controls"
+  Label value="Turn the wheel or move the stick, press the pedals and buttons: the bars should follow."
+  Label value="No controller found. Plug in a wheel or a pad; it shows up here."
+  Label value="Steer: Left stick"
+  Label value="Gas: RT"
+  Label value="Brake: LT"
+  Label value="Item / boost: A"
+  Label value="Mario button / view change: B"
+  Label value="Left paddle / menu up: LB"
+  Label value="Right paddle / menu down: RB"
+  Label value="Enter (Mario Kart DX): X"
+  Label value="Start: START"
+  Label value="Insert / remove card: Y"
+  Label value="Insert coin: BACK"
+  Meter "Steering" value="0%" number=0
+  Meter "Gas" value="0%" number=0
+  Meter "Brake" value="0%" number=0
+  Label value="Item / boost: released"
+  Label value="Mario button / view change: released"
+  Label value="Left paddle / menu up: released"
+  Label value="Right paddle / menu down: released"
+  Label value="Enter (Mario Kart DX): released"
+  Label value="Start: released"
+  Label value="Insert / remove card: released"
+  Label value="Insert coin: released"
+  Label value="Operator test menu: released"
+  Label value="Service: released"
+  Tab "Games" toggled=False @326,17 78x38
+  Tab "Controls" toggled=True @412,17 91x38
+  Tab "Settings" toggled=False @511,17 91x38
+  Label value="Controller: No controller"

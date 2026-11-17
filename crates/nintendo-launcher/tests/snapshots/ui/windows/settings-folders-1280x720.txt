@@ -1,0 +1,11 @@
+Window
+  Label value="Your game folders"
+  Label value="Type the path of a folder that holds your game folders (TeknoParrot layout) and add it. The launcher looks inside for each game and never changes what's there."
+  Label value="target/ui-snapshots\\settings-folders-1280x720\\games"
+  TextInput "Game folder" value="" @96,232 704x46
+  Button "Add folder" @816,230 180x50
+  Label value="Triforce test menu (segaboot.gcm), optional: F-Zero AX and Mario Kart GP 2 play without it"
+  TextInput "segaboot.gcm file" value="/bios/segaboot.gcm" @96,328 704x46
+  Button "Use file" @816,326 180x50
+  Label value="In use: /bios/segaboot.gcm"
+  Button "Done" @96,420 180x50

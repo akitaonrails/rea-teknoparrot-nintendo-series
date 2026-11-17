@@ -2615,6 +2615,10 @@ mod tests {
 
     /// A window over an app that has `libraries` saved, with no controllers.
     fn window(paths: &Paths, libraries: &[PathBuf]) -> Harness<'static, App> {
+        window_sized(paths, libraries, SCREEN)
+    }
+
+    fn window_sized(paths: &Paths, libraries: &[PathBuf], screen: Vec2) -> Harness<'static, App> {
         let mut config = Config::default();
         for l in libraries {
             config.add_library(l);
@@ -2624,7 +2628,7 @@ mod tests {
         }
         let fonts = paths.fonts();
         let mut h = Harness::builder()
-            .with_size(SCREEN)
+            .with_size(screen)
             .with_theme(egui::Theme::Dark)
             .with_context_setup(move |ctx| {
                 theme::install_fonts(ctx, &fonts);
@@ -3455,5 +3459,233 @@ mod tests {
         if let Some(home) = std::env::var_os("HOME") {
             assert_eq!(typed_path("~/x"), PathBuf::from(home).join("x"));
         }
+    }
+
+    // ------------------------------------------------------------ golden dumps
+
+    /// The window sizes every page is pinned at.
+    const SIZES: [Vec2; 2] = [vec2(1280.0, 720.0), vec2(1280.0, 800.0)];
+
+    /// The window as a screen reader reads it: one line per node (role,
+    /// label, value, description, state, rounded bounds), indented by depth.
+    /// Text rows (`TextRun`) are left out (their label holds them), and so
+    /// are nameless containers (their children are kept).
+    fn dump(h: &Harness<'_, App>) -> String {
+        let mut out = String::new();
+        dump_node(h.root().accesskit_node(), 0, &mut out);
+        out
+    }
+
+    fn dump_node(n: testing::kittest::AccessKitNode<'_>, depth: usize, out: &mut String) {
+        use std::fmt::Write as _;
+        let role = n.role();
+        let (label, value, about) = (n.label(), n.value(), n.description());
+        let nameless = label.is_none() && value.is_none() && about.is_none();
+        let shown = role != Role::TextRun
+            && !(nameless && matches!(role, Role::GenericContainer | Role::Unknown));
+        if shown {
+            let _ = write!(out, "{}{role:?}", "  ".repeat(depth));
+            for (key, text) in [("", label), ("value=", value), ("about=", about)] {
+                if let Some(t) = text {
+                    let _ = write!(out, " {key}{t:?}");
+                }
+            }
+            if n.is_disabled() {
+                out.push_str(" disabled");
+            }
+            if let Some(t) = n.toggled() {
+                let _ = write!(out, " toggled={t:?}");
+            }
+            if let Some(v) = n.numeric_value() {
+                let _ = write!(out, " number={v}");
+            }
+            if let Some(b) = n.bounding_box() {
+                let r = |x: f64| x.round() as i64;
+                let _ = write!(
+                    out,
+                    " @{},{} {}x{}",
+                    r(b.x0),
+                    r(b.y0),
+                    r(b.width()),
+                    r(b.height())
+                );
+            }
+            out.push('\n');
+        }
+        if role == Role::TextRun {
+            return;
+        }
+        for c in n.children() {
+            dump_node(c, depth + usize::from(shown), out);
+        }
+    }
+
+    /// Pins the window in a `state` at every size: `setup` brings it there
+    /// from a fresh window (over an empty library folder when `library`);
+    /// what it returns is kept until the window is pinned.
+    /// The data folder is relative (cargo runs tests in the crate's folder),
+    /// so paths the window shows are the same on every machine.
+    fn golden<T>(state: &str, library: bool, setup: impl Fn(&mut Harness<'static, App>) -> T) {
+        let host = if cfg!(windows) { "windows" } else { "linux" };
+        for size in SIZES {
+            let at = format!("{state}-{}x{}", size.x, size.y);
+            let dir = PathBuf::from("target/ui-snapshots").join(&at);
+            let _ = std::fs::remove_dir_all(&dir);
+            let lib = dir.join("games");
+            std::fs::create_dir_all(&lib).unwrap();
+            let libraries = if library { vec![lib] } else { vec![] };
+            let mut h = window_sized(&paths_in(&dir), &libraries, size);
+            if library {
+                wait(&mut h, "the scan", |a| a.entries.is_some());
+            }
+            let _keep = setup(&mut h);
+            h.run_steps(3);
+            rea_launcher::snapshot!(&format!("ui/{host}/{at}.txt"), dump(&h));
+        }
+    }
+
+    /// Every game found, at `/library/<slug>`.
+    fn all_found(h: &mut Harness<'_, App>) {
+        let entries = GAMES
+            .iter()
+            .map(|g| fake_entry(g.slug, &Path::new("/library").join(g.slug)))
+            .collect();
+        h.state_mut().entries = Some(entries);
+        h.run_steps(3);
+    }
+
+    #[test]
+    fn golden_first_run() {
+        golden("first-run", false, |_| {});
+        golden("first-run-empty-add", false, |h| {
+            click_button(h, "Add folder");
+            click_button(h, "Use file");
+        });
+    }
+
+    #[test]
+    fn golden_hub() {
+        golden("hub-none-found", true, |_| {});
+        for g in GAMES {
+            golden(&format!("hub-found-{}", g.slug), true, |h| {
+                all_found(h);
+                select(h, g.slug);
+            });
+        }
+        golden("hub-ready", true, |h| {
+            let g = shown_as(h, Support::Ready);
+            all_found(h);
+            select(h, g.slug);
+        });
+        golden("hub-blocked", true, |h| {
+            let g = shown_as(h, Support::Blocked("Not yet: it crashes."));
+            all_found(h);
+            select(h, g.slug);
+        });
+        golden("hub-not-found", true, |h| select(h, ready().slug));
+        golden("hub-triforce-with-segaboot", true, |h| {
+            h.state_mut().config.segaboot = Some("/bios/segaboot.gcm".into());
+            all_found(h);
+            select(h, triforce().slug);
+        });
+    }
+
+    #[test]
+    fn golden_settings() {
+        for g in GAMES {
+            golden(&format!("settings-{}", g.slug), true, |h| {
+                select(h, g.slug);
+                open_tab(h, Tab::Settings);
+            });
+        }
+        golden("settings-saved", true, |h| {
+            open_tab(h, Tab::Settings);
+            click_button(h, "Dead zone: next");
+        });
+        golden("settings-folders", true, |h| {
+            h.state_mut().config.segaboot = Some("/bios/segaboot.gcm".into());
+            open_tab(h, Tab::Settings);
+            click_button(h, "Folders and files");
+        });
+    }
+
+    #[test]
+    fn golden_controls() {
+        golden("controls-none", true, |h| open_tab(h, Tab::Controls));
+        golden("controls-error", true, |h| {
+            h.state_mut().snap.error = Some("controllers unavailable: no SDL".into());
+            open_tab(h, Tab::Controls);
+        });
+        golden("controls-wheel-and-pad", true, |h| {
+            let mut controls = rea_launcher::wheel::Controls {
+                steer: -0.5,
+                accel: 0.25,
+                brake: 0.75,
+                buttons: 0,
+            };
+            controls.press(Button::Start);
+            h.state_mut().snap = Snapshot {
+                devices: vec![
+                    DeviceInfo {
+                        name: "Test Pad".into(),
+                        kind: Kind::Pad,
+                        haptic: false,
+                    },
+                    DeviceInfo {
+                        name: "Test Wheel".into(),
+                        kind: Kind::Wheel,
+                        haptic: true,
+                    },
+                ],
+                driver: Some(1),
+                controls,
+                feeding: true,
+                error: None,
+                wheel: None,
+            };
+            open_tab(h, Tab::Controls);
+        });
+    }
+
+    /// A game run reported by a session that is never started; the
+    /// session's end of the channel is returned.
+    fn running(h: &mut Harness<'_, App>, reports: Vec<Progress>) -> mpsc::Sender<Progress> {
+        let (tx, rx) = mpsc::channel();
+        h.state_mut().running = Some(Running {
+            game: ready(),
+            playing: false,
+            progress: rx,
+            stop: Arc::new(AtomicBool::new(false)),
+        });
+        for r in reports {
+            tx.send(r).unwrap();
+        }
+        h.run_steps(3);
+        tx
+    }
+
+    #[test]
+    fn golden_running_and_messages() {
+        golden("running-getting-ready", true, |h| running(h, vec![]));
+        golden("running-playing", true, |h| {
+            running(h, vec![Progress::Playing])
+        });
+        golden("message-could-not-start", true, |h| {
+            running(
+                h,
+                vec![Progress::Ended(Err(
+                    "starting gamescope (is it installed?).".into(),
+                ))],
+            )
+        });
+        golden("message-stopped-with-error", true, |h| {
+            running(
+                h,
+                vec![
+                    Progress::Playing,
+                    Progress::Ended(Err("the game ended unexpectedly".into())),
+                ],
+            )
+        });
     }
 }

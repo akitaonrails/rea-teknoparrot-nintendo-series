@@ -1,0 +1,10 @@
+$ nintendo-launcher --library <tmp>/library
+exit Some(0)
+--- stdout
+--- stderr
+--- data/launcher.cfg
+# Written by the launcher.
+library = /old/games
+library = /old/games
+library = <tmp>/library
+segaboot = /bios/segaboot.gcm

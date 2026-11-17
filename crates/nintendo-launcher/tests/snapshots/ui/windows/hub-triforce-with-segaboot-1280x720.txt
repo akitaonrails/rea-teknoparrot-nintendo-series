@@ -1,0 +1,17 @@
+Window
+  Label value="F-Zero AX Monster Ride"
+  Label value="Sega Triforce · 2004 · Japan (SBHA6W)"
+  Label value="Starts, not verified"
+  Label value="not yet raced through the launcher"
+  Label value="Folder: /library\\fzax"
+  Button "Play" @56,472 170x50
+  Button "Settings" @242,472 170x50
+  Label value="Your games · 4 of 4 found"
+  RadioButton "F-Zero AX Monster Ride" about="2004, Sega Triforce, Starts, not verified" toggled=True @56,548 208x117
+  RadioButton "Mario Kart Arcade GP 2" about="2007, Sega Triforce, Starts, not verified" toggled=False @274,548 208x117
+  RadioButton "Mario Kart Arcade GP DX" about="2013, Namco ES3, Starts, not verified" toggled=False @492,548 208x117
+  RadioButton "Luigi's Mansion Arcade" about="2015, Sega Nu, Starts, not verified" toggled=False @710,548 208x117
+  Tab "Games" toggled=True @326,17 78x38
+  Tab "Controls" toggled=False @412,17 91x38
+  Tab "Settings" toggled=False @511,17 91x38
+  Label value="Controller: No controller"

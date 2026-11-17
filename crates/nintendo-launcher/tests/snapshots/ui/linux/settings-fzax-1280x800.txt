@@ -1,0 +1,29 @@
+Window
+  Label value="F-Zero AX Monster Ride settings"
+  Label value="Changes are saved as you make them and used the next time you press Play."
+  Button "Game render size" value="Native, 640 × 480" about="The size the game draws at. Bigger is sharper and needs a stronger GPU." @67,238 742x64
+  Button "Game render size: previous" @493,248 31x44
+  Button "Game render size: next" @767,248 31x44
+  Button "Output size" value="3840 × 2160 (4K)" about="The size of the picture on your screen. Pick your screen's size." @67,302 742x64
+  Button "Output size: previous" @493,312 31x44
+  Button "Output size: next" @767,312 31x44
+  Button "Upscaler" value="FSR 1 (sharp upscale)" about="How the game's picture is stretched to the output size." @67,367 742x64
+  Button "Upscaler: previous" @493,377 31x44
+  Button "Upscaler: next" @767,377 31x44
+  Button "Sharpness" value="5" about="How crisp the upscaler makes edges. 0 is the sharpest." @67,431 742x64
+  Button "Sharpness: previous" @493,441 31x44
+  Button "Sharpness: next" @767,441 31x44
+  Button "Fullscreen" value="On" about="Fill the whole screen, or play in a window." @67,496 742x64
+  Button "Fullscreen: previous" @493,506 31x44
+  Button "Fullscreen: next" @767,506 31x44
+  Button "Dead zone" value="5%" about="How far a controller stick moves before the car starts to steer." @67,560 742x64
+  Button "Dead zone: previous" @493,570 31x44
+  Button "Dead zone: next" @767,570 31x44
+  Label value="target/ui-snapshots/settings-fzax-1280x800/games"
+  Label value="0 of 4 games found."
+  Button "Rescan" @862,327 333x51
+  Button "Folders and files" @862,393 333x51
+  Tab "Games" toggled=False @362,19 86x42
+  Tab "Controls" toggled=False @457,19 101x42
+  Tab "Settings" toggled=True @568,19 101x42
+  Label value="Controller: No controller"

@@ -1,0 +1,58 @@
+== fzax
+data/fzax/runtimes/fzax/dolphin/
+data/fzax/runtimes/fzax/dolphin/Config/
+data/fzax/runtimes/fzax/dolphin/Config/Dolphin.ini (495 bytes)
+data/fzax/runtimes/fzax/dolphin/Config/GCPadNew.ini (1257 bytes)
+data/fzax/runtimes/fzax/dolphin/Config/GFX.ini (182 bytes)
+data/fzax/runtimes/fzax/dolphin/GameSettings/
+data/fzax/runtimes/fzax/dolphin/GameSettings/GHAE6E.ini (154 bytes)
+data/fzax/runtimes/fzax/dolphin/Pipes/
+data/fzax/runtimes/fzax/dolphin/Pipes/launcher (pipe)
+data/fzax/runtimes/fzax/dolphin/Triforce/
+data/fzax/runtimes/fzax/dolphin/Triforce/segaboot.gcm -> <tmp>/segaboot.gcm
+== mkgp2
+data/mkgp2/runtimes/mkgp2/dolphin/
+data/mkgp2/runtimes/mkgp2/dolphin/Config/
+data/mkgp2/runtimes/mkgp2/dolphin/Config/Dolphin.ini (495 bytes)
+data/mkgp2/runtimes/mkgp2/dolphin/Config/GCPadNew.ini (1257 bytes)
+data/mkgp2/runtimes/mkgp2/dolphin/Config/GFX.ini (182 bytes)
+data/mkgp2/runtimes/mkgp2/dolphin/GameSettings/
+data/mkgp2/runtimes/mkgp2/dolphin/GameSettings/GNLJ82.ini (122 bytes)
+data/mkgp2/runtimes/mkgp2/dolphin/Pipes/
+data/mkgp2/runtimes/mkgp2/dolphin/Pipes/launcher (pipe)
+data/mkgp2/runtimes/mkgp2/dolphin/Triforce/
+data/mkgp2/runtimes/mkgp2/dolphin/Triforce/segaboot.gcm -> <tmp>/segaboot.gcm
+== mkdx
+data/mkdx/runtimes/mkdx/F/
+data/mkdx/runtimes/mkdx/F/TestMode/
+data/mkdx/runtimes/mkdx/F/TestMode/settings.ini (4 bytes)
+data/mkdx/runtimes/mkdx/FTestMode -> <tmp>/library/mkdx/FTestMode
+data/mkdx/runtimes/mkdx/G/
+data/mkdx/runtimes/mkdx/G/TestMode/
+data/mkdx/runtimes/mkdx/G/TestMode/settings.ini (4 bytes)
+data/mkdx/runtimes/mkdx/GTestMode -> <tmp>/library/mkdx/GTestMode
+data/mkdx/runtimes/mkdx/MK_AGP3_FINAL.exe -> <tmp>/library/mkdx/MK_AGP3_FINAL.exe
+data/mkdx/runtimes/mkdx/data -> <tmp>/library/mkdx/data
+data/mkdx/runtimes/mkdx/mario-kart-arcade-gp-dx.windowsloader (18 bytes)
+data/mkdx/runtimes/mkdx/notes.txt (5 bytes)
+data/mkdx/wal/dist/
+data/mkdx/wal/dist/payloads -> <tmp>/components/wal/payloads
+data/mkdx/wal/layer-mkdx.yaml (564 bytes)
+data/mkdx/wal/systemprofiles -> <tmp>/components/wal/systemprofiles
+data/mkdx/wal/wine-runners/
+data/mkdx/wal/wine-runners/runner -> <tmp>/components/runner
+data/mkdx/wal/wine-runners/winetricks -> <tmp>/components/winetricks
+== luigi
+data/luigi/runtimes/luigi/data -> <tmp>/library/luigi/data
+data/luigi/runtimes/luigi/exe/
+data/luigi/runtimes/luigi/exe/x64/
+data/luigi/runtimes/luigi/exe/x64/VACUUM.exe -> <tmp>/library/luigi/exe/x64/VACUUM.exe
+data/luigi/runtimes/luigi/luigis-mansion-arcade.windowsloader (19 bytes)
+data/luigi/runtimes/luigi/notes.txt (5 bytes)
+data/luigi/wal/dist/
+data/luigi/wal/dist/payloads -> <tmp>/components/wal/payloads
+data/luigi/wal/layer-luigi.yaml (564 bytes)
+data/luigi/wal/systemprofiles -> <tmp>/components/wal/systemprofiles
+data/luigi/wal/wine-runners/
+data/luigi/wal/wine-runners/runner -> <tmp>/components/runner
+data/luigi/wal/wine-runners/winetricks -> <tmp>/components/winetricks

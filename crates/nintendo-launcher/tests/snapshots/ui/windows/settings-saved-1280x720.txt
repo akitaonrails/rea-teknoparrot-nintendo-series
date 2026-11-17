@@ -1,0 +1,18 @@
+Window
+  Label value="F-Zero AX Monster Ride settings"
+  Label value="Changes are saved as you make them and used the next time you press Play."
+  Button "Game render size" value="Native, 640 × 480" about="The size the game draws at. Bigger is sharper and needs a stronger GPU." @60,214 796x58
+  Button "Game render size: previous" @572,223 28x40
+  Button "Game render size: next" @818,223 28x40
+  Button "Dead zone" value="6%" about="How far a controller stick moves before the car starts to steer." @60,272 796x58
+  Button "Dead zone: previous" @572,281 28x40
+  Button "Dead zone: next" @818,281 28x40
+  Label value="target/ui-snapshots\\settings-saved-1280x720\\games"
+  Label value="0 of 4 games found."
+  Button "Rescan" @904,294 300x46
+  Button "Folders and files" @904,354 300x46
+  Label value="Saved. The game uses it the next time you press Play."
+  Tab "Games" toggled=False @326,17 78x38
+  Tab "Controls" toggled=False @412,17 91x38
+  Tab "Settings" toggled=True @511,17 91x38
+  Label value="Controller: No controller"

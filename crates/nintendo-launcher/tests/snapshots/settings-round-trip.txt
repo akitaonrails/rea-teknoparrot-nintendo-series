@@ -1,0 +1,37 @@
+--- read
+Settings {
+    render: None,
+    output: Size {
+        w: 2560,
+        h: 1440,
+    },
+    upscaler: Nis,
+    sharpness: 5,
+    crt: Off,
+    fullscreen: true,
+    deadzone: 0.125,
+}
+--- problems
+line 8: bad value for sharpness: 50
+line 9: bad value for fullscreen: maybe
+line 10: no '='
+line 15: no '='
+--- saved
+# my notes about Mario Kart
+upscaler = nis
+future_key = 7
+segaboot = /bios/segaboot.gcm
+library = /games
+# crt = lottes
+output = 2560x1440
+sharpness = 5
+fullscreen = true
+no equals sign
+render = native
+render = native
+deadzone = 0.12
+
+[section]
+crt = off
+--- read back the same: false
+--- problems: ["line 10: no '='", "line 15: no '='"]

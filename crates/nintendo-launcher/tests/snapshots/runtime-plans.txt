@@ -1,0 +1,34 @@
+== fzax
+dir /rt/game
+== mkgp2
+dir /rt/game
+== mkdx
+dir /rt/game
+link /rt/game/Data -> /lib/game/Data
+link /rt/game/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso -> /lib/game/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
+seed /lib/game/FTestMode -> /rt/game/F/TestMode
+link /rt/game/FTestMode -> /lib/game/FTestMode
+seed /lib/game/GTestMode -> /rt/game/G/TestMode
+link /rt/game/GTestMode -> /lib/game/GTestMode
+link /rt/game/MK_AGP3_FINAL.exe -> /lib/game/MK_AGP3_FINAL.exe
+link /rt/game/big.dat -> /lib/game/big.dat
+link /rt/game/exe -> /lib/game/exe
+link /rt/game/game.dll -> /lib/game/game.dll
+link /rt/game/game.manifest -> /lib/game/game.manifest
+copy once /lib/game/init.ps1 -> /rt/game/init.ps1
+copy once /lib/game/log.txt -> /rt/game/log.txt
+link /rt/game/settings.ini -> /lib/game/settings.ini
+== luigi
+dir /rt/game
+link /rt/game/Data -> /lib/game/Data
+link /rt/game/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso -> /lib/game/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
+link /rt/game/FTestMode -> /lib/game/FTestMode
+link /rt/game/GTestMode -> /lib/game/GTestMode
+link /rt/game/MK_AGP3_FINAL.exe -> /lib/game/MK_AGP3_FINAL.exe
+link /rt/game/big.dat -> /lib/game/big.dat
+mirror /lib/game/exe -> /rt/game/exe below x64
+link /rt/game/game.dll -> /lib/game/game.dll
+link /rt/game/game.manifest -> /lib/game/game.manifest
+copy once /lib/game/init.ps1 -> /rt/game/init.ps1
+copy once /lib/game/log.txt -> /rt/game/log.txt
+link /rt/game/settings.ini -> /lib/game/settings.ini

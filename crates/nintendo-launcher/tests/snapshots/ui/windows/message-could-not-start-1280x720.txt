@@ -1,0 +1,19 @@
+Window
+  Label value="F-Zero AX Monster Ride"
+  Label value="Sega Triforce · 2004"
+  Label value="Not in your library"
+  Label value="Not found in your game folders. Add its folder in Settings, then choose Rescan."
+  Button "Play" about="Not found in your game folders." disabled @56,472 170x50
+  Button "Settings" @242,472 170x50
+  Label value="Your games · 0 of 4 found"
+  RadioButton "F-Zero AX Monster Ride" about="2004, Sega Triforce, Not in your library" toggled=True @56,548 208x117
+  RadioButton "Mario Kart Arcade GP 2" about="2007, Sega Triforce, Not in your library" toggled=False @274,548 208x117
+  RadioButton "Mario Kart Arcade GP DX" about="2013, Namco ES3, Not in your library" toggled=False @492,548 208x117
+  RadioButton "Luigi's Mansion Arcade" about="2015, Sega Nu, Not in your library" toggled=False @710,548 208x117
+  Tab "Games" toggled=True @326,17 78x38
+  Tab "Controls" toggled=False @412,17 91x38
+  Tab "Settings" toggled=False @511,17 91x38
+  Label value="Controller: No controller"
+  Label value="Mario Kart Arcade GP DX couldn't start"
+  Label value="Starting gamescope (is it installed?).\n\nCheck that the game folder is complete, then try again. Details are in target/ui-snapshots\\message-could-not-start-1280x720\\data\\launcher.log."
+  Button "OK" @354,403 140x50

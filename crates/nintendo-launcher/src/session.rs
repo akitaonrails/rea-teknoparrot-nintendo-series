@@ -443,4 +443,155 @@ mod tests {
         assert!(fs::metadata(&pipe).unwrap().file_type().is_fifo());
         make_fifo(&pipe).unwrap();
     }
+
+    // ------------------------------------------------------------ golden snapshots
+
+    /// The whole Linux command line of every game, plain and with the CRT
+    /// effect, with and without bubblewrap (tests/snapshots/session/).
+    #[test]
+    fn golden_command_lines() {
+        let crt = Settings {
+            crt: nintendo_core::settings::Crt::Lottes,
+            ..Settings::default()
+        };
+        let libraries: Vec<PathBuf> = vec!["/lib".into(), "/tf games".into()];
+        let mut out = String::new();
+        for g in nintendo_core::catalog::GAMES {
+            let places = Places {
+                runtime: Path::new("/d/rt").join(g.slug),
+                wal_root: "/d/wal".into(),
+                segaboot: None,
+            };
+            let file = Path::new("/lib").join(g.slug).join(g.main_file);
+            for (look, s) in [("default", Settings::default()), ("crt", crt.clone())] {
+                for headless in [false, true] {
+                    let plan =
+                        launch::plan(g, &file, &places, &comps(), &s, headless, Host::Linux, None);
+                    for bwrap in [true, false] {
+                        out.push_str(&format!(
+                            "== {} {look}{}{}\n",
+                            g.slug,
+                            if headless { " headless" } else { "" },
+                            if bwrap { "" } else { " no-bwrap" }
+                        ));
+                        for a in command_line(&plan, &libraries, bwrap, "/home/p") {
+                            out.push_str(&format!("  {a}\n"));
+                        }
+                    }
+                }
+            }
+        }
+        rea_launcher::snapshot!("session/command-lines.txt", out);
+    }
+
+    /// One line per entry below `dir`, sorted: folders, files with their
+    /// size, links with their target, pipes; `root` spelled `<tmp>`.
+    fn tree(dir: &Path, root: &Path, out: &mut String) {
+        let mut names: Vec<_> = fs::read_dir(dir)
+            .unwrap()
+            .map(|e| e.unwrap().path())
+            .collect();
+        names.sort();
+        for path in names {
+            let rel = path.strip_prefix(root).unwrap().display().to_string();
+            let meta = fs::symlink_metadata(&path).unwrap();
+            let kind = meta.file_type();
+            if kind.is_symlink() {
+                let target = fs::read_link(&path).unwrap().display().to_string();
+                let target = target.replace(&root.display().to_string(), "<tmp>");
+                out.push_str(&format!("{rel} -> {target}\n"));
+            } else if kind.is_dir() {
+                out.push_str(&format!("{rel}/\n"));
+                tree(&path, root, out);
+            } else if std::os::unix::fs::FileTypeExt::is_fifo(&kind) {
+                out.push_str(&format!("{rel} (pipe)\n"));
+            } else {
+                out.push_str(&format!("{rel} ({} bytes)\n", meta.len()));
+            }
+        }
+    }
+
+    /// What `prepare` leaves in the runtime and windowsarcadeloader folders
+    /// for every game, over a synthetic game folder and placeholder
+    /// components; the game folder is left as it was.
+    #[test]
+    fn golden_prepared_data_folders() {
+        use nintendo_core::catalog::{GAMES, Route};
+        use nintendo_core::library::Found;
+        let t = tempfile::tempdir().unwrap();
+        let root = t.path();
+        let put = |rel: &str, bytes: &[u8]| {
+            let f = root.join(rel);
+            fs::create_dir_all(f.parent().unwrap()).unwrap();
+            fs::write(f, bytes).unwrap();
+        };
+        for c in [
+            "components/dolphin/dolphin-emu-nogui",
+            "components/dolphin/Sys/x",
+            "components/wal/arcade-launcher",
+            "components/wal/payloads/x",
+            "components/wal/systemprofiles/x",
+            "components/runner/bin/wine",
+        ] {
+            put(c, b"placeholder");
+        }
+        put("segaboot.gcm", b"not segaboot");
+        let mut out = String::new();
+        for g in GAMES {
+            let game_dir = root.join("library").join(g.slug);
+            put(
+                &format!("library/{}/{}", g.slug, g.main_file),
+                b"not the game",
+            );
+            if matches!(g.route, Route::Wal { .. }) {
+                put(&format!("library/{}/data/big.bin", g.slug), &[0; 16]);
+                put(&format!("library/{}/notes.txt", g.slug), b"notes");
+                put(&format!("library/{}/F/TestMode/op.ini", g.slug), b"stale");
+                for (from, _) in g.seeds {
+                    put(&format!("library/{}/{from}/settings.ini", g.slug), b"seed");
+                }
+            }
+            let data = root.join("data").join(g.slug);
+            let paths = Paths {
+                data: data.clone(),
+                components: root.join("components"),
+            };
+            fs::create_dir_all(&data).unwrap();
+            fs::write(
+                paths.config_file(),
+                format!("segaboot = {}\n", root.join("segaboot.gcm").display()),
+            )
+            .unwrap();
+            let entry = Entry {
+                dir: game_dir.clone(),
+                file: game_dir.join(g.main_file),
+                found: Found::Known {
+                    game: g,
+                    edition: &g.editions[0],
+                },
+            };
+            let mut before = String::new();
+            tree(&game_dir, root, &mut before);
+            prepare(
+                &paths,
+                g,
+                &entry,
+                &Settings::default(),
+                Display::Headless,
+                None,
+            )
+            .unwrap();
+            let mut after = String::new();
+            tree(&game_dir, root, &mut after);
+            assert_eq!(before, after, "{} touched its game folder", g.slug);
+            out.push_str(&format!("== {}\n", g.slug));
+            // not launcher.cfg: the test wrote it, with the scratch path
+            for dir in [paths.runtime(g.slug), paths.wal_root()] {
+                if dir.exists() {
+                    tree(&dir, root, &mut out);
+                }
+            }
+        }
+        rea_launcher::snapshot!("session/prepared.txt", out);
+    }
 }

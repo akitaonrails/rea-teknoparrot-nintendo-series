@@ -1,0 +1,23 @@
+nintendo-launcher — F-Zero AX and the Mario Kart Arcade GP games
+
+  nintendo-launcher                      open the window (games, settings, controls)
+  nintendo-launcher --library <folder>   add a folder with your games (repeatable)
+  nintendo-launcher --segaboot <file>    the Triforce test-menu program (segaboot.gcm), optional
+  nintendo-launcher --list               list the games found and their state
+  nintendo-launcher --play <game>        start a game (fzax, mkgp2, mkdx, luigi)
+  nintendo-launcher --game <game> <options>   save options for a game without starting it
+  Options (saved in that game's settings):
+      --render <WxH|native>            the size the game draws at, e.g. 3840x2160
+                                       (Triforce games: 480 lines times 1 to 8)
+      --output <WxH>                   the size gamescope shows on the screen
+      --upscaler <fsr|nis|linear|nearest>
+      --sharpness <0-20>               FSR/NIS sharpness, 0 is sharpest
+      --crt <off|lottes>               CRT scanlines and mask
+      --fullscreen <on|off>
+      --deadzone <0-0.3>               controller stick dead zone
+  Test options for --play:
+      --headless                       run in an invisible display
+      --no-input                       no controller input
+      --input-script <file>            timed inputs, see docs/RUNTIME_NOTES.md
+      --seconds <n>                    stop the game after n seconds
+  nintendo-launcher --help             this text

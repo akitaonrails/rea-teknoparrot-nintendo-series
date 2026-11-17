@@ -1,0 +1,7 @@
+render = native
+output = 3840x2160
+upscaler = fsr
+sharpness = 5
+crt = off
+fullscreen = true
+deadzone = 0.05
