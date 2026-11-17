@@ -178,6 +178,25 @@ fn a_game_that_cant_start_says_why_and_the_log_has_it() {
     assert!(log_of(t.path()).contains("needs launcher components that are missing"));
 }
 
+/// The pad moves through the hub: a press steps once, Y opens Settings.
+#[test]
+fn the_pad_moves_between_tiles_and_opens_settings() {
+    use rea_launcher::hub::Page;
+    use rea_launcher::pad;
+    let t = tempfile::tempdir().unwrap();
+    let mut h = hub(t.path());
+    let mut press = |h: &mut H, bits: u16| {
+        h.state_mut().backend_mut().snapshot.nav = bits;
+        h.run_steps(2);
+        h.state_mut().backend_mut().snapshot.nav = 0;
+        h.run_steps(2);
+    };
+    press(&mut h, pad::DPAD_RIGHT);
+    assert_eq!(h.state().model().selected, 1);
+    press(&mut h, pad::Y);
+    assert_eq!(h.state().model().page, Page::Settings);
+}
+
 // ------------------------------------------------------------ settings
 
 fn settings_text(t: &Path, slug: &str) -> String {

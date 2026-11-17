@@ -12,9 +12,10 @@ use nintendo_core::input::{Button, default_pad_map};
 use nintendo_core::settings::{self, Settings};
 use rea_launcher::catalog::{Host, Support};
 use rea_launcher::gamescope::{Size, Upscaler};
-use rea_launcher::hub::{self, HubConfig, HubPaths};
+use rea_launcher::hub::{self, HubConfig, HubPaths, Input};
 use rea_launcher::library::{Found as Known, HashCache, Scan};
 use rea_launcher::log::Log;
+use rea_launcher::pad::PadNav;
 use rea_launcher::wheel::{Action, Control};
 use rea_launcher_native::feeder::{InputService, Snapshot};
 use rea_launcher_ui::hub::{
@@ -106,6 +107,8 @@ pub struct Launcher {
     pub supports: Vec<Support>,
     /// What the Controls page shows when there is no input thread (tests).
     pub snapshot: Snapshot,
+    /// The pads' menu steps (one per press).
+    nav: PadNav,
     /// The next Play's session, made by the test.
     #[cfg(test)]
     pub next: Option<Session>,
@@ -123,6 +126,7 @@ impl Launcher {
                 .map(|g| g.support_on(Host::current()))
                 .collect(),
             snapshot: Snapshot::default(),
+            nav: PadNav::default(),
             #[cfg(test)]
             next: None,
         }
@@ -262,6 +266,11 @@ impl HubBackend for Launcher {
 
     fn controls(&self) -> ControlsView {
         controls_view(&self.snapshot())
+    }
+
+    fn pad(&mut self) -> Vec<Input> {
+        let bits = self.snapshot().nav;
+        Input::from_pad(&mut self.nav, bits)
     }
 }
 
