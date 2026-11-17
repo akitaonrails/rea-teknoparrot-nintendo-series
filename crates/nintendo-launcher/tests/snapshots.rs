@@ -16,10 +16,11 @@ use std::process::Command;
 
 use nintendo_core::catalog::{GAMES, Route};
 use nintendo_core::launch::{self, Components, DolphinWheel, Places};
-use nintendo_core::runtime::{self, Item};
+use nintendo_core::runtime;
 use nintendo_core::settings::Settings;
 use rea_launcher::catalog::Host;
 use rea_launcher::gamescope::{Crt, Size, Upscaler};
+use rea_launcher::linkfarm::{Item, Op};
 
 /// A path as the snapshot spells it on every system (Windows joins with `\`).
 fn p(path: &Path) -> String {
@@ -445,21 +446,26 @@ fn every_runtime_plan() {
         item("old.windowsloader", false, 10),
         item("settings.ini", false, 4 * 1024 * 1024),
     ];
+    // the folders a plan opens (Luigi's way to its program) hold these
+    let root = Path::new("/lib/game");
+    let ls = |dir: &Path| -> std::io::Result<Vec<Item>> {
+        Ok(match dir.file_name().and_then(|n| n.to_str()) {
+            _ if dir == root => items.clone(),
+            Some("exe") => vec![item("readme.txt", false, 100), item("x64", true, 0)],
+            _ => vec![item("VACUUM.exe", false, 30 << 20)],
+        })
+    };
     let mut out = String::new();
     for g in GAMES {
         let _ = writeln!(out, "== {}", g.slug);
-        let ops = runtime::plan(g, Path::new("/lib/game"), &items, Path::new("/rt/game"));
+        let ops = runtime::plan(g, root, Path::new("/rt/game"), &ls).unwrap();
         for op in ops {
             let line = match op {
-                runtime::Op::Dir(d) => format!("dir {}", p(&d)),
-                runtime::Op::Link { target, at } => format!("link {} -> {}", p(&at), p(&target)),
-                runtime::Op::CopyOnce { from, to } => {
-                    format!("copy once {} -> {}", p(&from), p(&to))
-                }
-                runtime::Op::Seed { from, to } => format!("seed {} -> {}", p(&from), p(&to)),
-                runtime::Op::Mirror { from, to, below } => {
-                    format!("mirror {} -> {} below {}", p(&from), p(&to), p(&below))
-                }
+                Op::Dir(d) => format!("dir {}", p(&d)),
+                Op::Link { target, at } => format!("link {} -> {}", p(&at), p(&target)),
+                Op::CopyOnce { from, to } => format!("copy once {} -> {}", p(&from), p(&to)),
+                Op::Seed { from, to } => format!("seed {} -> {}", p(&from), p(&to)),
+                other => format!("{other:?}"),
             };
             let _ = writeln!(out, "{line}");
         }

@@ -26,9 +26,12 @@ link /rt/game/FTestMode -> /lib/game/FTestMode
 link /rt/game/GTestMode -> /lib/game/GTestMode
 link /rt/game/MK_AGP3_FINAL.exe -> /lib/game/MK_AGP3_FINAL.exe
 link /rt/game/big.dat -> /lib/game/big.dat
-mirror /lib/game/exe -> /rt/game/exe below x64
 link /rt/game/game.dll -> /lib/game/game.dll
 link /rt/game/game.manifest -> /lib/game/game.manifest
 copy once /lib/game/init.ps1 -> /rt/game/init.ps1
 copy once /lib/game/log.txt -> /rt/game/log.txt
 link /rt/game/settings.ini -> /lib/game/settings.ini
+dir /rt/game/exe
+link /rt/game/exe/readme.txt -> /lib/game/exe/readme.txt
+dir /rt/game/exe/x64
+link /rt/game/exe/x64/VACUUM.exe -> /lib/game/exe/x64/VACUUM.exe
