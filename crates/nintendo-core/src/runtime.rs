@@ -11,10 +11,9 @@
 //! reads its disc image where it is: its runtime holds only Dolphin's
 //! user folder.
 
-use std::io;
 use std::path::Path;
 
-use rea_launcher::linkfarm::{self, Item, Op, Place, Policy};
+use rea_launcher::linkfarm::{self, Item, Place, Policy};
 
 use crate::catalog::{Game, Route};
 
@@ -71,26 +70,15 @@ impl Policy for Game {
     }
 }
 
-/// The runtime `rt` of `game` from its folder `src`, listed with `ls`
-/// ([`linkfarm::list`], or a fake in tests).
-pub fn plan(
-    game: &Game,
-    src: &Path,
-    rt: &Path,
-    ls: &dyn Fn(&Path) -> io::Result<Vec<Item>>,
-) -> io::Result<Vec<Op>> {
-    linkfarm::plan(src, rt, game, ls)
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::catalog::{GameId, game};
-    use rea_launcher::linkfarm::{Occupied, apply, list};
+    use rea_launcher::linkfarm::{Occupied, Op, apply, list};
     use std::fs;
 
     fn real(game_id: GameId, src: &Path, rt: &Path) -> Vec<Op> {
-        plan(game(game_id), src, rt, &list).unwrap()
+        linkfarm::plan(src, rt, game(game_id), &list).unwrap()
     }
 
     #[test]

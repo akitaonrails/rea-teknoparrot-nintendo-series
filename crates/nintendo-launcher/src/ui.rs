@@ -13,7 +13,7 @@ use nintendo_core::settings::{self, Settings};
 use rea_launcher::catalog::{Host, Support};
 use rea_launcher::gamescope::{Size, Upscaler};
 use rea_launcher::hub::{self, HubConfig, HubPaths, Input};
-use rea_launcher::library::{Found as Known, HashCache, Scan};
+use rea_launcher::library::{self, HashCache, Scan};
 use rea_launcher::log::Log;
 use rea_launcher::pad::PadNav;
 use rea_launcher::wheel::{Action, Control};
@@ -168,8 +168,8 @@ impl HubBackend for Launcher {
     fn found(library: &Scan<Game>, game: usize) -> Option<Found> {
         let entry = *library.by_game().get(&GAMES[game].id)?;
         let edition = match &entry.found {
-            Known::Known { edition, .. } => Some(edition.label.to_string()),
-            Known::Unknown { .. } => None,
+            library::Found::Known { edition, .. } => Some(edition.label.to_string()),
+            library::Found::Unknown { .. } => None,
         };
         Some(Found {
             dir: entry.dir.clone(),
@@ -179,11 +179,11 @@ impl HubBackend for Launcher {
 
     fn unknown(library: &Scan<Game>) -> Vec<String> {
         let unknown = library.entries.iter().filter_map(|e| match &e.found {
-            Known::Unknown { file, digest } => Some(format!(
+            library::Found::Unknown { file, digest } => Some(format!(
                 "unknown build {file} {digest} in {}",
                 hub::display_path(&e.dir)
             )),
-            Known::Known { .. } => None,
+            library::Found::Known { .. } => None,
         });
         let unread = library
             .problems

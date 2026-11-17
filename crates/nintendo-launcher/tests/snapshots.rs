@@ -16,11 +16,10 @@ use std::process::Command;
 
 use nintendo_core::catalog::{GAMES, Route};
 use nintendo_core::launch::{self, Components, DolphinWheel, Places};
-use nintendo_core::runtime;
 use nintendo_core::settings::Settings;
 use rea_launcher::catalog::Host;
 use rea_launcher::gamescope::{Crt, Size, Upscaler};
-use rea_launcher::linkfarm::{Item, Op};
+use rea_launcher::linkfarm::{self, Item, Op};
 use rea_launcher::wheel::PedalAxis;
 
 /// A path as the snapshot spells it on every system (Windows joins with `\`).
@@ -479,7 +478,7 @@ fn every_runtime_plan() {
     let mut out = String::new();
     for g in GAMES {
         let _ = writeln!(out, "== {}", g.slug);
-        let ops = runtime::plan(g, root, Path::new("/rt/game"), &ls).unwrap();
+        let ops = linkfarm::plan(root, Path::new("/rt/game"), g, &ls).unwrap();
         for op in ops {
             let line = match op {
                 Op::Dir(d) => format!("dir {}", p(&d)),

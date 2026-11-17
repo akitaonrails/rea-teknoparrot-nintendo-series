@@ -14,7 +14,6 @@ use std::time::Duration;
 use anyhow::{Context, Result, bail};
 use nintendo_core::catalog::{Game, Route};
 use nintendo_core::launch::{self, Feed as Wiring, Places, Plan};
-use nintendo_core::runtime;
 use nintendo_core::settings::Settings;
 use rea_launcher::catalog::{Host, Support};
 use rea_launcher::gamescope::CommandLine;
@@ -130,7 +129,7 @@ pub fn prepare(
     }
     check_components(game, paths)?;
     let rt = paths.runtime(game.slug);
-    let ops = runtime::plan(game, &entry.dir, &rt, &linkfarm::list)
+    let ops = linkfarm::plan(&entry.dir, &rt, game, &linkfarm::list)
         .with_context(|| format!("reading {}", entry.dir.display()))?;
     if rt.is_dir() {
         for d in linkfarm::dangling(&rt)? {

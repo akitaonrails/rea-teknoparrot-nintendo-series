@@ -185,7 +185,7 @@ fn the_pad_moves_between_tiles_and_opens_settings() {
     use rea_launcher::pad;
     let t = tempfile::tempdir().unwrap();
     let mut h = hub(t.path());
-    let mut press = |h: &mut H, bits: u16| {
+    let press = |h: &mut H, bits: u16| {
         h.state_mut().backend_mut().snapshot.nav = bits;
         h.run_steps(2);
         h.state_mut().backend_mut().snapshot.nav = 0;
