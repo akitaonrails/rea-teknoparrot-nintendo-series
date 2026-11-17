@@ -45,7 +45,7 @@ pub struct Prepared {
     pub libraries: Vec<PathBuf>,
 }
 
-fn check_components(game: &Game, p: &HubPaths) -> Result<()> {
+pub fn check_components(game: &Game, p: &HubPaths) -> Result<()> {
     let c = paths::components(p);
     let windows = Host::current() == Host::Windows;
     let need: Vec<PathBuf> = match game.route {

@@ -14,6 +14,7 @@ repository = "https://github.com/akitaonrails/rea-teknoparrot-nintendo-series"
 rea-launcher = { git = "https://github.com/akitaonrails/rea-launcher-sdk", tag = "v0.9.0", features = ["linkfarm"] }
 rea-launcher-native = { git = "https://github.com/akitaonrails/rea-launcher-sdk", tag = "v0.9.0", default-features = false, features = ["feeder"] }
 rea-launcher-ui = { git = "https://github.com/akitaonrails/rea-launcher-sdk", tag = "v0.9.0" }
+rea-launcher-win32 = { git = "https://github.com/akitaonrails/rea-launcher-sdk", tag = "v0.9.0" }
 
 [profile.release]
 opt-level = "s"

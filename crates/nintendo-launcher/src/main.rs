@@ -1,5 +1,8 @@
-//! nintendo-launcher: one launcher for the Nintendo arcade racers
-//! (F-Zero AX Monster Ride, Mario Kart Arcade GP 2 and GP DX).
+//! nintendo-launcher: one launcher for the Nintendo arcade games (F-Zero AX
+//! Monster Ride, Mario Kart Arcade GP 2 and GP DX, Luigi's Mansion Arcade).
+//! This file wires the command line (`rea_launcher::hub::cli`) to the
+//! window, the sessions and the messages; the decisions live in
+//! `nintendo-core`.
 
 // a GUI program on Windows: no console window on a double click; commands
 // reach the terminal that started them (console::attach_parent)
@@ -10,115 +13,63 @@ mod paths;
 mod session;
 mod ui;
 
-use std::path::PathBuf;
 use std::process::ExitCode;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
 
-use nintendo_core::catalog;
+use nintendo_core::catalog::{self, GAMES, Game, Route};
+use nintendo_core::input::Button;
 use nintendo_core::settings::{self, Settings};
 use rea_launcher::catalog::{Host, Support};
-use rea_launcher::library::Found;
+use rea_launcher::cfg::KeyStyle;
+use rea_launcher::hub::cli::{self, BAD_COMMAND_LINE, CliSpec, Invocation, Mode, OK, REFUSED};
+use rea_launcher::hub::{HubConfig, HubPaths, PathKind, display_path, typed_path};
+use rea_launcher::library::{Found, Scan};
+use rea_launcher::log::Log;
+use rea_launcher::wheel::Script;
+use rea_launcher_native::feeder;
+use rea_launcher_ui::report::{self, Link};
+use rea_launcher_win32::report::{Audience, Mode as Says, Run};
 
 use crate::paths::{DIRS, FIELDS};
 use crate::session::{Display, Feed};
-use rea_launcher::hub::{HubConfig, HubPaths};
 
-const USAGE: &str = "\
-nintendo-launcher — F-Zero AX and the Mario Kart Arcade GP games
+/// The single-instance lock's name.
+const INSTANCE: &str = "rea-nintendo-launcher";
+const ISSUES: &str =
+    "https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose";
 
-  nintendo-launcher                      open the window (games, settings, controls)
-  nintendo-launcher --library <folder>   add a folder with your games (repeatable)
-  nintendo-launcher --segaboot <file>    the Triforce test-menu program (segaboot.gcm), optional
-  nintendo-launcher --list               list the games found and their state
-  nintendo-launcher --play <game>        start a game (fzax, mkgp2, mkdx, luigi)
-  nintendo-launcher --game <game> <options>   save options for a game without starting it
-  Options (saved in that game's settings):
-      --render <WxH|native>            the size the game draws at, e.g. 3840x2160
-                                       (Triforce games: 480 lines times 1 to 8)
-      --output <WxH>                   the size gamescope shows on the screen
-      --upscaler <fsr|nis|linear|nearest>
-      --sharpness <0-20>               FSR/NIS sharpness, 0 is sharpest
-      --crt <off|lottes>               CRT scanlines and mask
-      --fullscreen <on|off>
-      --deadzone <0-0.3>               controller stick dead zone
-  Test options for --play:
-      --headless                       run in an invisible display
-      --no-input                       no controller input
-      --input-script <file>            timed inputs, see docs/RUNTIME_NOTES.md
-      --seconds <n>                    stop the game after n seconds
-  nintendo-launcher --help             this text
-";
-
-#[derive(Default)]
-struct Args {
-    libraries: Vec<PathBuf>,
-    bios: Option<PathBuf>,
-    list: bool,
-    play: Option<String>,
-    game: Option<String>,
-    headless: bool,
-    no_input: bool,
-    script: Option<PathBuf>,
-    seconds: Option<u64>,
-    options: Vec<String>,
-}
-
-fn parse_args(mut it: impl Iterator<Item = String>) -> Result<Option<Args>, String> {
-    let mut a = Args::default();
-    while let Some(x) = it.next() {
-        let mut value = |what: &str| it.next().ok_or(format!("{x} needs {what}"));
-        match x.as_str() {
-            "--help" | "-h" => return Ok(None),
-            "--library" => a.libraries.push(value("a folder")?.into()),
-            "--segaboot" => a.bios = Some(value("a file")?.into()),
-            "--list" => a.list = true,
-            "--play" => a.play = Some(value("a game")?),
-            "--game" => a.game = Some(value("a game")?),
-            "--headless" => a.headless = true,
-            "--no-input" => a.no_input = true,
-            "--input-script" => a.script = Some(value("a file")?.into()),
-            "--seconds" => {
-                a.seconds = Some(
-                    value("a number")?
-                        .parse()
-                        .map_err(|_| "--seconds needs a number")?,
-                )
-            }
-            "--render" | "--output" | "--upscaler" | "--sharpness" | "--crt" | "--fullscreen"
-            | "--deadzone" => {
-                let key = &x[2..];
-                let v = value("a value")?;
-                let line = format!("{key} = {v}");
-                if !Settings::parse(&line).1.is_empty() {
-                    return Err(format!("bad value for {x}: {v}"));
-                }
-                a.options.push(line);
-            }
-            other => return Err(format!("unknown option {other}")),
-        }
+/// The games' ids, as `--play` takes them.
+const SLUGS: [&str; GAMES.len()] = {
+    let mut v = [""; GAMES.len()];
+    let mut i = 0;
+    while i < v.len() {
+        v[i] = GAMES[i].slug;
+        i += 1;
     }
-    Ok(Some(a))
-}
+    v
+};
 
-fn load_settings(paths: &HubPaths, slug: &str) -> Settings {
-    settings::load(&paths.settings(slug)).unwrap_or_default().0
-}
+/// What the command line knows.
+const CLI: CliSpec = CliSpec {
+    program: "nintendo-launcher",
+    about: "F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mansion Arcade",
+    games: &SLUGS,
+    options: settings::OPTIONS,
+    style: KeyStyle::Underscore,
+    paths: &FIELDS,
+    offers: None,
+};
 
-/// Apply `key = value` options to a game's settings file, keeping the rest.
-fn save_options(paths: &HubPaths, slug: &str, options: &[String]) -> std::io::Result<()> {
-    let file = paths.settings(slug);
-    let (mut s, _) = settings::load(&file)?;
-    let (given, _) = Settings::parse(&options.join("\n"));
-    for line in options {
-        let key = line.split_once(" = ").map_or("", |(k, _)| k);
-        if let Some(v) = given.value(key) {
-            let spec = rea_launcher::cfg::spec::find(settings::OPTIONS, key).expect("checked");
-            let _ = s.apply(key, spec.parse(&v).expect("its own value"));
-        }
+/// The family's view of this run, for who sees its messages.
+fn run_of(inv: &Invocation) -> Run {
+    Run {
+        command: inv.is_command(),
+        no_window: inv.no_window(),
+        settings_only: false,
+        linux: inv.linux,
     }
-    settings::write(&file, &s)
 }
 
 fn main() -> ExitCode {
@@ -126,129 +77,225 @@ fn main() -> ExitCode {
     if std::env::args().len() > 1 {
         rea_launcher_win32::console::attach_parent();
     }
-    let args = match parse_args(std::env::args().skip(1)) {
-        Ok(Some(a)) => a,
-        Ok(None) => {
-            print!("{USAGE}");
-            return ExitCode::SUCCESS;
-        }
+    let inv = match cli::parse(&CLI, std::env::args().skip(1)) {
+        Ok(inv) => inv,
         Err(e) => {
-            eprintln!("{e}\n\n{USAGE}");
-            return ExitCode::from(2);
+            eprintln!("{e}\n\n{}", cli::usage(&CLI));
+            return ExitCode::from(BAD_COMMAND_LINE);
         }
     };
+    if inv.mode == Mode::Help {
+        print!("{}", cli::usage(&CLI));
+        return ExitCode::from(OK);
+    }
     let paths = HubPaths::discover(&DIRS);
-    let mut config = match HubConfig::load(&paths.config_file(), &FIELDS) {
-        Ok(c) => c,
-        Err(e) => {
-            eprintln!("{}: {e}", paths.config_file().display());
-            return ExitCode::FAILURE;
-        }
+    let log = Log::new(paths.log());
+    let says = match Audience::of(run_of(&inv), false).mode() {
+        Says::Command { interactive } => report::Mode::Command { interactive },
+        Says::Play { interactive } => report::Mode::Play { interactive },
     };
-    if !args.libraries.is_empty() || args.bios.is_some() {
-        for dir in &args.libraries {
-            if !dir.is_dir() {
-                eprintln!("{} is not a folder", dir.display());
-                return ExitCode::from(2);
-            }
-            config.add_library(&std::path::absolute(dir).unwrap_or(dir.clone()));
-        }
-        if let Some(b) = &args.bios {
-            if !b.is_file() {
-                eprintln!("{} is not a file", b.display());
-                return ExitCode::from(2);
-            }
-            config.paths[0] = Some(std::path::absolute(b).unwrap_or(b.clone()));
-        }
-        if let Err(e) = config.save(&paths.config_file(), &FIELDS) {
-            eprintln!("could not save the settings: {e}");
-            return ExitCode::FAILURE;
-        }
-    }
-    if args.list {
-        if config.libraries.is_empty() {
-            eprintln!("no library yet: run with --library <folder>");
-            return ExitCode::FAILURE;
-        }
-        let scan = catalog::library().scan(&config.libraries);
-        for p in &scan.problems {
-            eprintln!("couldn't read {p}");
-        }
-        for e in scan.entries {
-            match &e.found {
-                Found::Known { game, edition } => {
-                    let state = match game.support_on(Host::current()) {
-                        Support::Ready => "ready".to_string(),
-                        Support::Unverified(note) => format!("starts; {note}"),
-                        Support::Blocked(why) => format!("not yet: {why}"),
-                    };
-                    println!(
-                        "{:<5} {:<26} {:<28} {state}\n      {}",
-                        game.slug,
-                        game.title,
-                        edition.label,
-                        e.dir.display()
-                    );
-                }
-                Found::Unknown { file, digest } => {
-                    println!("unknown {file} {digest}\n      {}", e.dir.display())
-                }
-            }
-        }
-        return ExitCode::SUCCESS;
-    }
-    if !args.options.is_empty() {
-        let Some(slug) = args.play.as_ref().or(args.game.as_ref()) else {
-            eprintln!("options need --play <game> or --game <game>");
-            return ExitCode::from(2);
+    let fail = |text: &str| {
+        let link = Link {
+            label: "Report a problem",
+            url: ISSUES,
         };
-        if catalog::by_slug(slug).is_none() {
-            eprintln!("unknown game {slug}");
-            return ExitCode::from(2);
+        rea_launcher_ui::hub::fatal(&ui::THEME, &log, text, Some(link), says);
+    };
+    // --list only reads: it works while the window is open
+    let _instance = match (inv.mode != Mode::List).then(|| rea_launcher::instance::single(INSTANCE))
+    {
+        Some(Err(running)) if inv.is_action() => {
+            fail("The Nintendo Arcade Launcher is already open. Close it first, then try again.");
+            return ExitCode::from(running.exit_code() as u8);
         }
-        if let Err(e) = save_options(&paths, slug, &args.options) {
-            eprintln!("could not save the options: {e}");
-            return ExitCode::FAILURE;
+        Some(Err(_)) => {
+            eprintln!("The Nintendo Arcade Launcher is already open.");
+            return ExitCode::from(OK);
+        }
+        Some(Ok(guard)) => Some(guard),
+        None => None,
+    };
+    match run_mode(&paths, &inv) {
+        Ok(code) => ExitCode::from(code),
+        Err(e) => {
+            fail(&e);
+            ExitCode::from(REFUSED)
         }
     }
-    if let Some(slug) = &args.play {
-        return play(&paths, &config, slug, &args);
-    }
-    if args.libraries.is_empty() && args.bios.is_none() && args.game.is_none() {
-        return match ui::run(paths) {
-            Ok(()) => ExitCode::SUCCESS,
-            Err(e) => {
-                eprintln!("{e}");
-                ExitCode::FAILURE
-            }
-        };
-    }
-    ExitCode::SUCCESS
 }
 
-fn play(paths: &HubPaths, config: &HubConfig, slug: &str, args: &Args) -> ExitCode {
-    let Some(game) = catalog::by_slug(slug) else {
-        eprintln!("unknown game {slug}");
-        return ExitCode::from(2);
-    };
-    let found = catalog::library().scan(&config.libraries);
-    let Some(entry) = found.by_game().get(&game.id).map(|e| (*e).clone()) else {
-        eprintln!("{} is not in your library folders", game.title);
-        return ExitCode::FAILURE;
-    };
-    let settings = load_settings(paths, slug);
-    let display = if args.headless {
+fn run_mode(paths: &HubPaths, inv: &Invocation) -> Result<u8, String> {
+    let file = paths.config_file();
+    let mut config = HubConfig::load(&file, &FIELDS)
+        .map_err(|e| format!("Couldn't read {}: {e}", display_path(&file)))?;
+    if !inv.libraries.is_empty() || inv.paths.iter().any(Option::is_some) {
+        configure(paths, &mut config, inv)?;
+    }
+    match &inv.mode {
+        Mode::Window => ui::run(paths.clone()).map(|()| OK),
+        Mode::Help | Mode::Configure => Ok(OK),
+        Mode::List => list(&config),
+        Mode::Check(game) => check(paths, &config, game.as_deref()),
+        Mode::Set(slug) => set(paths, game_of(slug), inv).map(|()| OK),
+        Mode::Play(slug) => {
+            let game = game_of(slug);
+            set(paths, game, inv)?;
+            play(paths, &config, game, inv)
+        }
+    }
+}
+
+/// A game the parser checked.
+fn game_of(slug: &str) -> &'static Game {
+    catalog::by_slug(slug).expect("checked by the parser")
+}
+
+/// The library folders and paths of the command line saved in `launcher.cfg`.
+fn configure(paths: &HubPaths, config: &mut HubConfig, inv: &Invocation) -> Result<(), String> {
+    for dir in &inv.libraries {
+        config.add_library(&typed_path(&dir.to_string_lossy(), PathKind::Folder, "")?);
+    }
+    for (n, (given, field)) in inv.paths.iter().zip(&FIELDS).enumerate() {
+        if let Some(p) = given {
+            config.paths[n] = Some(typed_path(&p.to_string_lossy(), field.kind, field.empty)?);
+        }
+    }
+    config
+        .save(&paths.config_file(), &FIELDS)
+        .map_err(|e| format!("Could not save the settings: {e}"))
+}
+
+/// A game's settings; each line its file couldn't read is a warning.
+fn load_settings(paths: &HubPaths, game: &Game) -> Result<Settings, String> {
+    let file = paths.settings(game.slug);
+    let (s, problems) =
+        settings::load(&file).map_err(|e| format!("Couldn't read {}: {e}", display_path(&file)))?;
+    problems.iter().for_each(|p| warn(p));
+    Ok(s)
+}
+
+/// A warning of the command line, on stderr.
+fn warn(text: &str) {
+    eprintln!("warning: {text}");
+}
+
+/// The options of the command line saved into the game's settings.
+fn set(paths: &HubPaths, game: &Game, inv: &Invocation) -> Result<(), String> {
+    if inv.options.is_empty() {
+        return Ok(());
+    }
+    let mut s = load_settings(paths, game)?;
+    inv.apply_options(settings::OPTIONS, &[], |spec, v| {
+        let _ = s.apply(spec.key, v);
+    });
+    settings::write(&paths.settings(game.slug), &s)
+        .map_err(|e| format!("Could not save the options: {e}"))
+}
+
+fn state(game: &Game) -> String {
+    match game.support_on(Host::current()) {
+        Support::Ready => "ready".to_string(),
+        Support::Unverified(note) => format!("starts; {note}"),
+        Support::Blocked(why) => format!("not yet: {why}"),
+    }
+}
+
+/// The games in the library folders; what couldn't be read is a warning.
+fn scan(config: &HubConfig) -> Result<Scan<Game>, String> {
+    if config.libraries.is_empty() {
+        return Err("No game folder yet: run with --library <folder>.".into());
+    }
+    let scan = catalog::library().scan(&config.libraries);
+    for problem in &scan.problems {
+        warn(&format!("couldn't read {problem}"));
+    }
+    Ok(scan)
+}
+
+fn list(config: &HubConfig) -> Result<u8, String> {
+    for e in scan(config)?.entries {
+        let dir = display_path(&e.dir);
+        match &e.found {
+            Found::Known { game, edition } => println!(
+                "{:<5} {:<26} {:<28} {}\n      {dir}",
+                game.slug,
+                game.title,
+                edition.label,
+                state(game)
+            ),
+            Found::Unknown { file, digest } => {
+                println!("unknown {file} (SHA-256 {digest}): report it at {ISSUES}\n      {dir}")
+            }
+        }
+    }
+    Ok(OK)
+}
+
+/// Whether each game (or the one named) could start now: found in the
+/// library, a known edition, supported here, its components in place. The
+/// unknown builds reported are the named game's only.
+fn check(paths: &HubPaths, config: &HubConfig, only: Option<&str>) -> Result<u8, String> {
+    let found = scan(config)?;
+    let by_game = found.by_game();
+    let asked = |g: &Game| only.is_none_or(|s| s == g.slug);
+    let mut problems = 0;
+    for game in GAMES.iter().filter(|g| asked(g)) {
+        let verdict = match (by_game.get(&game.id), game.support_on(Host::current())) {
+            (None, _) => Err("not in your game folders".to_string()),
+            (Some(_), Support::Blocked(why)) => Err(format!("not yet: {why}")),
+            (Some(_), _) => session::check_components(game, paths)
+                .map(|()| state(game))
+                .map_err(|e| format!("{e:#}")),
+        };
+        match verdict {
+            Ok(s) => println!("{:<5} ok: {s}", game.slug),
+            Err(e) => {
+                problems += 1;
+                println!("{:<5} {e}", game.slug);
+            }
+        }
+    }
+    for e in &found.entries {
+        if let Found::Unknown { file, digest } = &e.found
+            && GAMES.iter().any(|g| asked(g) && g.main_file == file)
+        {
+            problems += 1;
+            println!(
+                "unknown {file} (SHA-256 {digest}) in {}: report it at {ISSUES}",
+                display_path(&e.dir)
+            );
+        }
+    }
+    Ok(if problems == 0 { OK } else { REFUSED })
+}
+
+/// Starts `game` without the window and waits until it ends (or a signal,
+/// or `--seconds`, stops it).
+fn play(
+    paths: &HubPaths,
+    config: &HubConfig,
+    game: &'static Game,
+    inv: &Invocation,
+) -> Result<u8, String> {
+    let found = scan(config)?;
+    let entry = found
+        .by_game()
+        .get(&game.id)
+        .map(|e| (*e).clone())
+        .ok_or_else(|| format!("{} is not in your game folders.", game.title))?;
+    let settings = load_settings(paths, game)?;
+    let display = if inv.test.headless {
         Display::Headless
     } else {
         Display::Screen
     };
-    let input = (!args.no_input && args.script.is_none()).then(input::service);
-    // the wheel, for Dolphin's own mapping on Windows: give SDL a moment to list it
-    let wheel = input.as_ref().and_then(|i| {
-        std::thread::sleep(Duration::from_millis(300));
-        i.snapshot().wheel
-    });
-    let prepared = match session::prepare(
+    // Dolphin on Windows reads the devices itself: a look at the wheel
+    // for its mapping, and no input thread
+    let reads_itself = game.route == Route::Dolphin && Host::current() == Host::Windows;
+    let feeds = !inv.test.no_input && inv.test.script.is_none() && !reads_itself;
+    let input = feeds.then(input::service);
+    let wheel = reads_itself.then(feeder::find_wheel).flatten();
+    let prepared = session::prepare(
         paths,
         config,
         game,
@@ -256,35 +303,22 @@ fn play(paths: &HubPaths, config: &HubConfig, slug: &str, args: &Args) -> ExitCo
         &settings,
         display,
         wheel.as_ref(),
-    ) {
-        Ok(p) => p,
-        Err(e) => {
-            eprintln!("{e:#}");
-            return ExitCode::FAILURE;
-        }
-    };
+    )
+    .map_err(|e| format!("{e:#}"))?;
     let stop = Arc::new(AtomicBool::new(false));
     for sig in [signal_hook::consts::SIGINT, signal_hook::consts::SIGTERM] {
         let _ = signal_hook::flag::register(sig, Arc::clone(&stop));
     }
-    if let Some(secs) = args.seconds {
+    if let Some(secs) = inv.test.seconds {
         let stop = Arc::clone(&stop);
         std::thread::spawn(move || {
             std::thread::sleep(Duration::from_secs(secs));
             stop.store(true, Ordering::SeqCst);
         });
     }
-    let feed = if let Some(f) = &args.script {
-        match std::fs::read_to_string(f)
-            .map_err(|e| e.to_string())
-            .and_then(|t| rea_launcher::wheel::Script::parse::<nintendo_core::input::Button>(&t))
-        {
-            Ok(s) => Feed::Script(s),
-            Err(e) => {
-                eprintln!("{}: {e}", f.display());
-                return ExitCode::from(2);
-            }
-        }
+    let feed = if let Some(f) = &inv.test.script {
+        let text = std::fs::read_to_string(f).map_err(|e| format!("{}: {e}", f.display()))?;
+        Feed::Script(Script::parse::<Button>(&text).map_err(|e| format!("{}: {e}", f.display()))?)
     } else if let Some(i) = &input {
         Feed::Devices {
             tx: i.sender(),
@@ -293,44 +327,56 @@ fn play(paths: &HubPaths, config: &HubConfig, slug: &str, args: &Args) -> ExitCo
     } else {
         Feed::None
     };
-    match session::run(&prepared, feed, &stop) {
-        Ok(status) => {
-            eprintln!(
-                "{} ended ({status}); log: {}",
-                game.title,
-                prepared.runtime.join("session.log").display()
-            );
-            ExitCode::SUCCESS
-        }
-        Err(e) => {
-            eprintln!("{e:#}");
-            ExitCode::FAILURE
-        }
-    }
+    let status = session::run(&prepared, feed, &stop).map_err(|e| format!("{e:#}"))?;
+    eprintln!(
+        "{} ended ({status}); log: {}",
+        game.title,
+        display_path(&prepared.runtime.join("session.log"))
+    );
+    Ok(OK)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    fn parse(v: &[&str]) -> Result<Option<Args>, String> {
-        parse_args(v.iter().map(|s| s.to_string()))
+    fn parse_v(v: &[&str]) -> Result<Invocation, String> {
+        cli::parse(&CLI, v.iter().map(|s| s.to_string()))
     }
 
     #[test]
     fn options_are_checked_before_they_are_saved() {
-        let a = parse(&["--game", "mkdx", "--render", "3840x2160", "--crt", "lottes"])
-            .unwrap()
-            .unwrap();
-        assert_eq!(a.options, ["render = 3840x2160", "crt = lottes"]);
-        assert!(parse(&["--game", "mkdx", "--crt", "rainbow"]).is_err());
-        assert!(parse(&["--render"]).is_err());
-        assert!(parse(&["--bogus"]).is_err());
-        assert!(parse(&["--help"]).unwrap().is_none());
+        let inv = parse_v(&["--set", "mkdx", "--render", "3840x2160", "--crt", "lottes"]).unwrap();
+        assert_eq!(
+            inv.options,
+            [
+                ("render", "3840x2160".to_string()),
+                ("crt", "lottes".into())
+            ]
+        );
+        for bad in [
+            &["--set", "mkdx", "--crt", "rainbow"][..],
+            &["--set", "mkdx", "--deadzone", "0.9"],
+            &["--render"],
+            &["--bogus"],
+        ] {
+            assert!(parse_v(bad).is_err(), "{bad:?}");
+        }
+        let e = parse_v(&["--set", "mkdx", "--deadzone", "0.9"]).unwrap_err();
+        assert!(e.starts_with("bad value for --deadzone: 0.9"), "{e}");
+        assert_eq!(parse_v(&["--help"]).unwrap().mode, Mode::Help);
+    }
+
+    /// `--game mkdx` with no options did nothing and said nothing.
+    #[test]
+    fn set_needs_options_and_game_is_its_old_name() {
+        assert!(parse_v(&["--game", "mkdx"]).is_err());
+        let inv = parse_v(&["--game", "mkdx", "--deadzone", "0.1"]).unwrap();
+        assert_eq!(inv.mode, Mode::Set("mkdx".into()));
     }
 
     #[test]
-    fn saving_options_keeps_the_players_lines() {
+    fn set_saves_the_flags_and_keeps_the_players_lines() {
         let t = tempfile::tempdir().unwrap();
         let p = HubPaths {
             data: t.path().into(),
@@ -339,7 +385,8 @@ mod tests {
         };
         std::fs::create_dir_all(t.path().join("settings")).unwrap();
         std::fs::write(p.settings("mkdx"), "# mine\nupscaler = nis\n").unwrap();
-        save_options(&p, "mkdx", &["render = 2560x1440".into()]).unwrap();
+        let inv = parse_v(&["--set", "mkdx", "--render", "2560x1440"]).unwrap();
+        set(&p, game_of("mkdx"), &inv).unwrap();
         let text = std::fs::read_to_string(p.settings("mkdx")).unwrap();
         assert!(text.starts_with("# mine\nupscaler = nis\n"), "{text}");
         assert!(text.contains("render = 2560x1440"));

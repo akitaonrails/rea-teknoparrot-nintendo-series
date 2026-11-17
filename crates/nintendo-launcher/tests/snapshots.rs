@@ -45,6 +45,9 @@ fn run(root: &Path, args: &[&str]) -> String {
         .args(args)
         .env("NINTENDO_DATA", root.join("data"))
         .env("NINTENDO_COMPONENTS", root.join("components"))
+        // headless: a message never opens a window on the desktop
+        .env_remove("DISPLAY")
+        .env_remove("WAYLAND_DISPLAY")
         .output()
         .expect("run the launcher");
     let text = format!(

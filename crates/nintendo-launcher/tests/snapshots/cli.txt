@@ -4,60 +4,66 @@ exit Some(2)
 --- stderr
 unknown option --bogus
 
-nintendo-launcher — F-Zero AX and the Mario Kart Arcade GP games
+nintendo-launcher — F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mansion Arcade
 
-  nintendo-launcher                      open the window (games, settings, controls)
-  nintendo-launcher --library <folder>   add a folder with your games (repeatable)
-  nintendo-launcher --segaboot <file>    the Triforce test-menu program (segaboot.gcm), optional
-  nintendo-launcher --list               list the games found and their state
-  nintendo-launcher --play <game>        start a game (fzax, mkgp2, mkdx, luigi)
-  nintendo-launcher --game <game> <options>   save options for a game without starting it
-  Options (saved in that game's settings):
-      --render <WxH|native>            the size the game draws at, e.g. 3840x2160
-                                       (Triforce games: 480 lines times 1 to 8)
-      --output <WxH>                   the size gamescope shows on the screen
-      --upscaler <fsr|nis|linear|nearest>
-      --sharpness <0-20>               FSR/NIS sharpness, 0 is sharpest
-      --crt <off|lottes>               CRT scanlines and mask
-      --fullscreen <on|off>
-      --deadzone <0-0.3>               controller stick dead zone
-  Test options for --play:
-      --headless                       run in an invisible display
-      --no-input                       no controller input
-      --input-script <file>            timed inputs, see docs/RUNTIME_NOTES.md
-      --seconds <n>                    stop the game after n seconds
-  nintendo-launcher --help             this text
+  nintendo-launcher                          open the window (games, settings, controls)
+  nintendo-launcher --library <folder>       add a folder with your games (repeatable)
+  nintendo-launcher --segaboot <file>        the Triforce test-menu program (segaboot.gcm), optional
+  nintendo-launcher --list                   list the games found and their state
+  nintendo-launcher --check [<game>]         check a game (or all) can start, without starting
+  nintendo-launcher --play <game> [options]  start a game (fzax, mkgp2, mkdx, luigi)
+  nintendo-launcher --set <game> <options>   save options for a game without starting it (also --game)
+
+Options (saved in that game's settings):
+  --render <WxH|native>              Game render size
+  --output <WxH>                     Output size (Linux helper)
+  --upscaler fsr|nis|linear|nearest  Upscaler (Linux helper)
+  --sharpness <0-20>                 Sharpness (Linux helper)
+  --crt off|lottes                   CRT look (Linux helper)
+  --fullscreen on|off                Fullscreen (Linux helper)
+  --deadzone <0.00-0.30>             Dead zone
+
+Test options for --play:
+  --headless               run in an invisible display
+  --no-input               no controller input
+  --input-script <file>    timed inputs
+  --seconds <n>            stop the game after n seconds
+
+  nintendo-launcher --help                   this text
 
 
 $ nintendo-launcher --render
 exit Some(2)
 --- stdout
 --- stderr
---render needs a value
+--render needs <WxH|native>
 
-nintendo-launcher — F-Zero AX and the Mario Kart Arcade GP games
+nintendo-launcher — F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mansion Arcade
 
-  nintendo-launcher                      open the window (games, settings, controls)
-  nintendo-launcher --library <folder>   add a folder with your games (repeatable)
-  nintendo-launcher --segaboot <file>    the Triforce test-menu program (segaboot.gcm), optional
-  nintendo-launcher --list               list the games found and their state
-  nintendo-launcher --play <game>        start a game (fzax, mkgp2, mkdx, luigi)
-  nintendo-launcher --game <game> <options>   save options for a game without starting it
-  Options (saved in that game's settings):
-      --render <WxH|native>            the size the game draws at, e.g. 3840x2160
-                                       (Triforce games: 480 lines times 1 to 8)
-      --output <WxH>                   the size gamescope shows on the screen
-      --upscaler <fsr|nis|linear|nearest>
-      --sharpness <0-20>               FSR/NIS sharpness, 0 is sharpest
-      --crt <off|lottes>               CRT scanlines and mask
-      --fullscreen <on|off>
-      --deadzone <0-0.3>               controller stick dead zone
-  Test options for --play:
-      --headless                       run in an invisible display
-      --no-input                       no controller input
-      --input-script <file>            timed inputs, see docs/RUNTIME_NOTES.md
-      --seconds <n>                    stop the game after n seconds
-  nintendo-launcher --help             this text
+  nintendo-launcher                          open the window (games, settings, controls)
+  nintendo-launcher --library <folder>       add a folder with your games (repeatable)
+  nintendo-launcher --segaboot <file>        the Triforce test-menu program (segaboot.gcm), optional
+  nintendo-launcher --list                   list the games found and their state
+  nintendo-launcher --check [<game>]         check a game (or all) can start, without starting
+  nintendo-launcher --play <game> [options]  start a game (fzax, mkgp2, mkdx, luigi)
+  nintendo-launcher --set <game> <options>   save options for a game without starting it (also --game)
+
+Options (saved in that game's settings):
+  --render <WxH|native>              Game render size
+  --output <WxH>                     Output size (Linux helper)
+  --upscaler fsr|nis|linear|nearest  Upscaler (Linux helper)
+  --sharpness <0-20>                 Sharpness (Linux helper)
+  --crt off|lottes                   CRT look (Linux helper)
+  --fullscreen on|off                Fullscreen (Linux helper)
+  --deadzone <0.00-0.30>             Dead zone
+
+Test options for --play:
+  --headless               run in an invisible display
+  --no-input               no controller input
+  --input-script <file>    timed inputs
+  --seconds <n>            stop the game after n seconds
+
+  nintendo-launcher --help                   this text
 
 
 $ nintendo-launcher --seconds soon
@@ -66,134 +72,231 @@ exit Some(2)
 --- stderr
 --seconds needs a number
 
-nintendo-launcher — F-Zero AX and the Mario Kart Arcade GP games
+nintendo-launcher — F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mansion Arcade
 
-  nintendo-launcher                      open the window (games, settings, controls)
-  nintendo-launcher --library <folder>   add a folder with your games (repeatable)
-  nintendo-launcher --segaboot <file>    the Triforce test-menu program (segaboot.gcm), optional
-  nintendo-launcher --list               list the games found and their state
-  nintendo-launcher --play <game>        start a game (fzax, mkgp2, mkdx, luigi)
-  nintendo-launcher --game <game> <options>   save options for a game without starting it
-  Options (saved in that game's settings):
-      --render <WxH|native>            the size the game draws at, e.g. 3840x2160
-                                       (Triforce games: 480 lines times 1 to 8)
-      --output <WxH>                   the size gamescope shows on the screen
-      --upscaler <fsr|nis|linear|nearest>
-      --sharpness <0-20>               FSR/NIS sharpness, 0 is sharpest
-      --crt <off|lottes>               CRT scanlines and mask
-      --fullscreen <on|off>
-      --deadzone <0-0.3>               controller stick dead zone
-  Test options for --play:
-      --headless                       run in an invisible display
-      --no-input                       no controller input
-      --input-script <file>            timed inputs, see docs/RUNTIME_NOTES.md
-      --seconds <n>                    stop the game after n seconds
-  nintendo-launcher --help             this text
+  nintendo-launcher                          open the window (games, settings, controls)
+  nintendo-launcher --library <folder>       add a folder with your games (repeatable)
+  nintendo-launcher --segaboot <file>        the Triforce test-menu program (segaboot.gcm), optional
+  nintendo-launcher --list                   list the games found and their state
+  nintendo-launcher --check [<game>]         check a game (or all) can start, without starting
+  nintendo-launcher --play <game> [options]  start a game (fzax, mkgp2, mkdx, luigi)
+  nintendo-launcher --set <game> <options>   save options for a game without starting it (also --game)
+
+Options (saved in that game's settings):
+  --render <WxH|native>              Game render size
+  --output <WxH>                     Output size (Linux helper)
+  --upscaler fsr|nis|linear|nearest  Upscaler (Linux helper)
+  --sharpness <0-20>                 Sharpness (Linux helper)
+  --crt off|lottes                   CRT look (Linux helper)
+  --fullscreen on|off                Fullscreen (Linux helper)
+  --deadzone <0.00-0.30>             Dead zone
+
+Test options for --play:
+  --headless               run in an invisible display
+  --no-input               no controller input
+  --input-script <file>    timed inputs
+  --seconds <n>            stop the game after n seconds
+
+  nintendo-launcher --help                   this text
 
 
 $ nintendo-launcher --game mkdx --crt rainbow
 exit Some(2)
 --- stdout
 --- stderr
-bad value for --crt: rainbow
+bad value for --crt: rainbow (it takes off or lottes)
 
-nintendo-launcher — F-Zero AX and the Mario Kart Arcade GP games
+nintendo-launcher — F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mansion Arcade
 
-  nintendo-launcher                      open the window (games, settings, controls)
-  nintendo-launcher --library <folder>   add a folder with your games (repeatable)
-  nintendo-launcher --segaboot <file>    the Triforce test-menu program (segaboot.gcm), optional
-  nintendo-launcher --list               list the games found and their state
-  nintendo-launcher --play <game>        start a game (fzax, mkgp2, mkdx, luigi)
-  nintendo-launcher --game <game> <options>   save options for a game without starting it
-  Options (saved in that game's settings):
-      --render <WxH|native>            the size the game draws at, e.g. 3840x2160
-                                       (Triforce games: 480 lines times 1 to 8)
-      --output <WxH>                   the size gamescope shows on the screen
-      --upscaler <fsr|nis|linear|nearest>
-      --sharpness <0-20>               FSR/NIS sharpness, 0 is sharpest
-      --crt <off|lottes>               CRT scanlines and mask
-      --fullscreen <on|off>
-      --deadzone <0-0.3>               controller stick dead zone
-  Test options for --play:
-      --headless                       run in an invisible display
-      --no-input                       no controller input
-      --input-script <file>            timed inputs, see docs/RUNTIME_NOTES.md
-      --seconds <n>                    stop the game after n seconds
-  nintendo-launcher --help             this text
+  nintendo-launcher                          open the window (games, settings, controls)
+  nintendo-launcher --library <folder>       add a folder with your games (repeatable)
+  nintendo-launcher --segaboot <file>        the Triforce test-menu program (segaboot.gcm), optional
+  nintendo-launcher --list                   list the games found and their state
+  nintendo-launcher --check [<game>]         check a game (or all) can start, without starting
+  nintendo-launcher --play <game> [options]  start a game (fzax, mkgp2, mkdx, luigi)
+  nintendo-launcher --set <game> <options>   save options for a game without starting it (also --game)
+
+Options (saved in that game's settings):
+  --render <WxH|native>              Game render size
+  --output <WxH>                     Output size (Linux helper)
+  --upscaler fsr|nis|linear|nearest  Upscaler (Linux helper)
+  --sharpness <0-20>                 Sharpness (Linux helper)
+  --crt off|lottes                   CRT look (Linux helper)
+  --fullscreen on|off                Fullscreen (Linux helper)
+  --deadzone <0.00-0.30>             Dead zone
+
+Test options for --play:
+  --headless               run in an invisible display
+  --no-input               no controller input
+  --input-script <file>    timed inputs
+  --seconds <n>            stop the game after n seconds
+
+  nintendo-launcher --help                   this text
 
 
 $ nintendo-launcher --game mkdx --deadzone 0.9
 exit Some(2)
 --- stdout
 --- stderr
-bad value for --deadzone: 0.9
+bad value for --deadzone: 0.9 (it takes 0.00 to 0.30)
 
-nintendo-launcher — F-Zero AX and the Mario Kart Arcade GP games
+nintendo-launcher — F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mansion Arcade
 
-  nintendo-launcher                      open the window (games, settings, controls)
-  nintendo-launcher --library <folder>   add a folder with your games (repeatable)
-  nintendo-launcher --segaboot <file>    the Triforce test-menu program (segaboot.gcm), optional
-  nintendo-launcher --list               list the games found and their state
-  nintendo-launcher --play <game>        start a game (fzax, mkgp2, mkdx, luigi)
-  nintendo-launcher --game <game> <options>   save options for a game without starting it
-  Options (saved in that game's settings):
-      --render <WxH|native>            the size the game draws at, e.g. 3840x2160
-                                       (Triforce games: 480 lines times 1 to 8)
-      --output <WxH>                   the size gamescope shows on the screen
-      --upscaler <fsr|nis|linear|nearest>
-      --sharpness <0-20>               FSR/NIS sharpness, 0 is sharpest
-      --crt <off|lottes>               CRT scanlines and mask
-      --fullscreen <on|off>
-      --deadzone <0-0.3>               controller stick dead zone
-  Test options for --play:
-      --headless                       run in an invisible display
-      --no-input                       no controller input
-      --input-script <file>            timed inputs, see docs/RUNTIME_NOTES.md
-      --seconds <n>                    stop the game after n seconds
-  nintendo-launcher --help             this text
+  nintendo-launcher                          open the window (games, settings, controls)
+  nintendo-launcher --library <folder>       add a folder with your games (repeatable)
+  nintendo-launcher --segaboot <file>        the Triforce test-menu program (segaboot.gcm), optional
+  nintendo-launcher --list                   list the games found and their state
+  nintendo-launcher --check [<game>]         check a game (or all) can start, without starting
+  nintendo-launcher --play <game> [options]  start a game (fzax, mkgp2, mkdx, luigi)
+  nintendo-launcher --set <game> <options>   save options for a game without starting it (also --game)
+
+Options (saved in that game's settings):
+  --render <WxH|native>              Game render size
+  --output <WxH>                     Output size (Linux helper)
+  --upscaler fsr|nis|linear|nearest  Upscaler (Linux helper)
+  --sharpness <0-20>                 Sharpness (Linux helper)
+  --crt off|lottes                   CRT look (Linux helper)
+  --fullscreen on|off                Fullscreen (Linux helper)
+  --deadzone <0.00-0.30>             Dead zone
+
+Test options for --play:
+  --headless               run in an invisible display
+  --no-input               no controller input
+  --input-script <file>    timed inputs
+  --seconds <n>            stop the game after n seconds
+
+  nintendo-launcher --help                   this text
 
 
 $ nintendo-launcher --render 1920x1080
 exit Some(2)
 --- stdout
 --- stderr
-options need --play <game> or --game <game>
+options need --play <game> or --set <game>
+
+nintendo-launcher — F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mansion Arcade
+
+  nintendo-launcher                          open the window (games, settings, controls)
+  nintendo-launcher --library <folder>       add a folder with your games (repeatable)
+  nintendo-launcher --segaboot <file>        the Triforce test-menu program (segaboot.gcm), optional
+  nintendo-launcher --list                   list the games found and their state
+  nintendo-launcher --check [<game>]         check a game (or all) can start, without starting
+  nintendo-launcher --play <game> [options]  start a game (fzax, mkgp2, mkdx, luigi)
+  nintendo-launcher --set <game> <options>   save options for a game without starting it (also --game)
+
+Options (saved in that game's settings):
+  --render <WxH|native>              Game render size
+  --output <WxH>                     Output size (Linux helper)
+  --upscaler fsr|nis|linear|nearest  Upscaler (Linux helper)
+  --sharpness <0-20>                 Sharpness (Linux helper)
+  --crt off|lottes                   CRT look (Linux helper)
+  --fullscreen on|off                Fullscreen (Linux helper)
+  --deadzone <0.00-0.30>             Dead zone
+
+Test options for --play:
+  --headless               run in an invisible display
+  --no-input               no controller input
+  --input-script <file>    timed inputs
+  --seconds <n>            stop the game after n seconds
+
+  nintendo-launcher --help                   this text
+
 
 $ nintendo-launcher --game nope --crt off
 exit Some(2)
 --- stdout
 --- stderr
-unknown game nope
+unknown game nope; the games are fzax, mkgp2, mkdx, luigi
+
+nintendo-launcher — F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mansion Arcade
+
+  nintendo-launcher                          open the window (games, settings, controls)
+  nintendo-launcher --library <folder>       add a folder with your games (repeatable)
+  nintendo-launcher --segaboot <file>        the Triforce test-menu program (segaboot.gcm), optional
+  nintendo-launcher --list                   list the games found and their state
+  nintendo-launcher --check [<game>]         check a game (or all) can start, without starting
+  nintendo-launcher --play <game> [options]  start a game (fzax, mkgp2, mkdx, luigi)
+  nintendo-launcher --set <game> <options>   save options for a game without starting it (also --game)
+
+Options (saved in that game's settings):
+  --render <WxH|native>              Game render size
+  --output <WxH>                     Output size (Linux helper)
+  --upscaler fsr|nis|linear|nearest  Upscaler (Linux helper)
+  --sharpness <0-20>                 Sharpness (Linux helper)
+  --crt off|lottes                   CRT look (Linux helper)
+  --fullscreen on|off                Fullscreen (Linux helper)
+  --deadzone <0.00-0.30>             Dead zone
+
+Test options for --play:
+  --headless               run in an invisible display
+  --no-input               no controller input
+  --input-script <file>    timed inputs
+  --seconds <n>            stop the game after n seconds
+
+  nintendo-launcher --help                   this text
+
 
 $ nintendo-launcher --library <tmp>/missing
-exit Some(2)
+exit Some(1)
 --- stdout
 --- stderr
-<tmp>/missing is not a folder
+Nintendo Arcade Launcher: <tmp>/missing isn't a folder this computer can open. Check the path and try again.
+Report a problem: https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
 
 $ nintendo-launcher --segaboot <tmp>/missing
-exit Some(2)
+exit Some(1)
 --- stdout
 --- stderr
-<tmp>/missing is not a file
+Nintendo Arcade Launcher: <tmp>/missing isn't a file this computer can open. Check the path and try again.
+Report a problem: https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
 
 $ nintendo-launcher --list
 exit Some(1)
 --- stdout
 --- stderr
-no library yet: run with --library <folder>
+Nintendo Arcade Launcher: No game folder yet: run with --library <folder>.
+Report a problem: https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
 
 $ nintendo-launcher --play nope
 exit Some(2)
 --- stdout
 --- stderr
-unknown game nope
+unknown game nope; the games are fzax, mkgp2, mkdx, luigi
+
+nintendo-launcher — F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mansion Arcade
+
+  nintendo-launcher                          open the window (games, settings, controls)
+  nintendo-launcher --library <folder>       add a folder with your games (repeatable)
+  nintendo-launcher --segaboot <file>        the Triforce test-menu program (segaboot.gcm), optional
+  nintendo-launcher --list                   list the games found and their state
+  nintendo-launcher --check [<game>]         check a game (or all) can start, without starting
+  nintendo-launcher --play <game> [options]  start a game (fzax, mkgp2, mkdx, luigi)
+  nintendo-launcher --set <game> <options>   save options for a game without starting it (also --game)
+
+Options (saved in that game's settings):
+  --render <WxH|native>              Game render size
+  --output <WxH>                     Output size (Linux helper)
+  --upscaler fsr|nis|linear|nearest  Upscaler (Linux helper)
+  --sharpness <0-20>                 Sharpness (Linux helper)
+  --crt off|lottes                   CRT look (Linux helper)
+  --fullscreen on|off                Fullscreen (Linux helper)
+  --deadzone <0.00-0.30>             Dead zone
+
+Test options for --play:
+  --headless               run in an invisible display
+  --no-input               no controller input
+  --input-script <file>    timed inputs
+  --seconds <n>            stop the game after n seconds
+
+  nintendo-launcher --help                   this text
+
 
 $ nintendo-launcher --play mkdx
 exit Some(1)
 --- stdout
 --- stderr
-Mario Kart Arcade GP DX is not in your library folders
+Nintendo Arcade Launcher: No game folder yet: run with --library <folder>.
+Report a problem: https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
 
 $ nintendo-launcher --library <tmp>/library
 exit Some(0)
@@ -215,11 +318,11 @@ segaboot = <tmp>/segaboot.gcm
 $ nintendo-launcher --list
 exit Some(0)
 --- stdout
-unknown MK_AGP3_FINAL.exe f5c02985f71416444a10e6b5abb2afbe10c09cbe95f13f37e79c0444145e3eb9
+unknown MK_AGP3_FINAL.exe (SHA-256 f5c02985f71416444a10e6b5abb2afbe10c09cbe95f13f37e79c0444145e3eb9): report it at https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
       <tmp>/library
-unknown exe/x64/VACUUM.exe b1160382b95ca32961cd09d8d816f1299a6fb01740264f760ef18624042089e4
+unknown exe/x64/VACUUM.exe (SHA-256 b1160382b95ca32961cd09d8d816f1299a6fb01740264f760ef18624042089e4): report it at https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
       <tmp>/library/luigi
-unknown F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso 001b71dd1ef2033d9797c5ef695d12e113c9348bc8424080f47e3513d0d64f95
+unknown F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso (SHA-256 001b71dd1ef2033d9797c5ef695d12e113c9348bc8424080f47e3513d0d64f95): report it at https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
       <tmp>/library/triforce
 --- stderr
 
@@ -227,12 +330,42 @@ $ nintendo-launcher --play mkdx --headless --no-input
 exit Some(1)
 --- stdout
 --- stderr
-Mario Kart Arcade GP DX is not in your library folders
+Nintendo Arcade Launcher: Mario Kart Arcade GP DX is not in your game folders.
+Report a problem: https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new/choose
 
 $ nintendo-launcher --game mkdx
-exit Some(0)
+exit Some(2)
 --- stdout
 --- stderr
+--set mkdx needs options to save, e.g. --set mkdx --render <value>
+
+nintendo-launcher — F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mansion Arcade
+
+  nintendo-launcher                          open the window (games, settings, controls)
+  nintendo-launcher --library <folder>       add a folder with your games (repeatable)
+  nintendo-launcher --segaboot <file>        the Triforce test-menu program (segaboot.gcm), optional
+  nintendo-launcher --list                   list the games found and their state
+  nintendo-launcher --check [<game>]         check a game (or all) can start, without starting
+  nintendo-launcher --play <game> [options]  start a game (fzax, mkgp2, mkdx, luigi)
+  nintendo-launcher --set <game> <options>   save options for a game without starting it (also --game)
+
+Options (saved in that game's settings):
+  --render <WxH|native>              Game render size
+  --output <WxH>                     Output size (Linux helper)
+  --upscaler fsr|nis|linear|nearest  Upscaler (Linux helper)
+  --sharpness <0-20>                 Sharpness (Linux helper)
+  --crt off|lottes                   CRT look (Linux helper)
+  --fullscreen on|off                Fullscreen (Linux helper)
+  --deadzone <0.00-0.30>             Dead zone
+
+Test options for --play:
+  --headless               run in an invisible display
+  --no-input               no controller input
+  --input-script <file>    timed inputs
+  --seconds <n>            stop the game after n seconds
+
+  nintendo-launcher --help                   this text
+
 
 $ nintendo-launcher --game mkdx --render 2720x1536 --output 2560x1440 --upscaler nis --sharpness 7 --crt lottes --fullscreen off --deadzone 0.1
 exit Some(0)
@@ -268,7 +401,7 @@ crt = lottes
 fullscreen = false
 
 # How far a controller stick moves before the car starts to steer.
-# Values: 0 to 0.3.
+# Values: 0.00 to 0.30.
 deadzone = 0.10
 
 $ nintendo-launcher --game fzax --render native
@@ -305,6 +438,6 @@ crt = off
 fullscreen = true
 
 # How far a controller stick moves before the car starts to steer.
-# Values: 0 to 0.3.
+# Values: 0.00 to 0.30.
 deadzone = 0.05
 

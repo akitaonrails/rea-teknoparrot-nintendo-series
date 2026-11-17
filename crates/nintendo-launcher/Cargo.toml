@@ -17,11 +17,9 @@ eframe = { version = "0.37.0", default-features = false, features = ["glow", "de
 rea-launcher.workspace = true
 rea-launcher-native.workspace = true
 rea-launcher-ui.workspace = true
+rea-launcher-win32.workspace = true
 nintendo-core = { path = "../nintendo-core" }
 signal-hook = "0.3"
-
-[target.'cfg(windows)'.dependencies]
-rea-launcher-win32 = { git = "https://github.com/akitaonrails/rea-launcher-sdk", tag = "v0.9.0" }
 
 [dev-dependencies]
 rea-launcher-ui = { workspace = true, features = ["testing"] }
