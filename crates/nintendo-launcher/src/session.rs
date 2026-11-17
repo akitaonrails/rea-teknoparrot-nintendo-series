@@ -3,28 +3,31 @@
 //! its input, wait, and leave nothing behind.
 
 use std::fs;
-use std::io::{BufRead, BufReader, Write};
+use std::io::Write;
 use std::path::PathBuf;
 use std::process::{Command, ExitStatus, Stdio};
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::AtomicBool;
 use std::sync::mpsc::Sender;
 use std::sync::{Arc, Mutex};
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 use anyhow::{Context, Result, bail};
 use nintendo_core::catalog::{Game, Route};
-use nintendo_core::input::Aim;
-use nintendo_core::launch::{self, DolphinWheel, Feed as Wiring, Places, Plan};
+use nintendo_core::launch::{self, Feed as Wiring, Places, Plan};
 use nintendo_core::runtime;
 use nintendo_core::settings::Settings;
 use rea_launcher::catalog::{Host, Support};
 use rea_launcher::gamescope::CommandLine;
 use rea_launcher::library::Entry;
 use rea_launcher::linkfarm::{self, Occupied, Op};
+use rea_launcher::session;
+use rea_launcher::wheel::Script;
+use rea_launcher_native::feeder::{self, Feeding, Scripted, Tuning, WheelInfo};
+use rea_launcher_native::group::{Group, Tag};
+use rea_launcher_native::supervise::{self, Ended, Hold, Options, Outcome};
 
-use crate::input::{self, Script, Wire};
+use crate::input;
 use crate::paths::Paths;
-use crate::proc;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Display {
@@ -36,20 +39,6 @@ pub enum Display {
 pub struct Prepared {
     pub plan: Plan,
     pub runtime: PathBuf,
-}
-
-/// What drives the game.
-#[derive(Clone)]
-pub enum Feed {
-    /// The input thread (pads and wheels through SDL).
-    Devices {
-        tx: Sender<input::Command>,
-        deadzone: f32,
-    },
-    /// A timed script (tests).
-    Script(Script),
-    /// Nothing.
-    None,
 }
 
 fn check_components(game: &Game, p: &Paths) -> Result<()> {
@@ -129,7 +118,7 @@ pub fn prepare(
     entry: &Entry<Game>,
     settings: &Settings,
     display: Display,
-    wheel: Option<&DolphinWheel>,
+    wheel: Option<&WheelInfo>,
 ) -> Result<Prepared> {
     if let Support::Blocked(why) = game.support_on(Host::current()) {
         bail!("{} can't start yet: {why}", game.title);
@@ -159,7 +148,7 @@ pub fn prepare(
         settings,
         display == Display::Headless,
         Host::current(),
-        wheel,
+        wheel.map(input::dolphin_wheel).as_ref(),
     );
     for (file, text) in &plan.files {
         if let Some(d) = file.parent() {
@@ -219,136 +208,145 @@ fn session_argv(plan: &Plan, libraries: &[PathBuf]) -> Vec<String> {
     command_line(plan, libraries, bwrap, &user_home)
 }
 
-/// Where a script's or the input thread's lines go, and in which form.
-fn sink_for(plan: &Plan, child: &mut std::process::Child) -> Option<(Box<dyn Write + Send>, Wire)> {
-    match &plan.feed {
-        Wiring::Wal(layout) => child
-            .stdin
-            .take()
-            .map(|s| (Box::new(s) as Box<dyn Write + Send>, Wire::Wal(*layout))),
-        #[cfg(unix)]
-        Wiring::DolphinPipe(pipe) => Some((
-            Box::new(input::FifoSink::new(pipe.clone())) as Box<dyn Write + Send>,
-            Wire::Dolphin,
-        )),
-        #[cfg(not(unix))]
-        Wiring::DolphinPipe(_) => None,
-        Wiring::None => None,
+/// What drives the game.
+pub enum Feed {
+    /// The input thread (pads and wheels through SDL).
+    Devices {
+        tx: Sender<feeder::Command>,
+        deadzone: f32,
+    },
+    /// A timed script (tests).
+    Script(Script),
+    /// Nothing: the game's input is held open until the stop.
+    None,
+}
+
+/// The environment variable every process of a session carries (Linux).
+const TAG: &str = "NINTENDO_SESSION";
+
+/// How long a stopping game gets to save and quit.
+const GRACE: Duration = Duration::from_secs(8);
+
+/// The feed of one run over the game's wiring.
+fn feed_for(feed: Feed, wiring: &Wiring) -> Box<dyn supervise::Feed> {
+    let scripted = matches!(feed, Feed::Script(_));
+    match (feed, input::wire(wiring, scripted)) {
+        (Feed::Devices { tx, deadzone }, Some(wire)) => {
+            let tuning = Tuning {
+                deadzone,
+                ..Tuning::default()
+            };
+            Box::new(Feeding::new(tx, wire, tuning))
+        }
+        (Feed::Script(script), Some(wire)) => Box::new(Scripted::new(wire, script)),
+        _ => Box::new(Hold::default()),
     }
 }
 
-/// Run the game until it exits or `stop` is set; then stop everything the
-/// session started. Returns the game's exit status.
-pub fn run(paths: &Paths, p: &Prepared, feed: Feed, stop: Arc<AtomicBool>) -> Result<ExitStatus> {
+/// The game's input when it isn't the loader's stdin: Dolphin's pipe.
+fn pipe_sink(wiring: &Wiring) -> Option<Box<dyn Write + Send>> {
+    match wiring {
+        #[cfg(unix)]
+        Wiring::DolphinPipe(pipe) => Some(Box::new(input::FifoSink::new(pipe.clone()))),
+        _ => None,
+    }
+}
+
+/// Dolphin on Linux is asked alone to stop (it saves, then quits, and
+/// gamescope with it): a stop to the whole group took gamescope's display
+/// away from it first. Elsewhere the session is asked as a whole
+/// (Windows: Dolphin's window gets WM_CLOSE).
+#[cfg(target_os = "linux")]
+struct Polite {
+    /// The program asked alone (`dolphin-emu-nogui`).
+    alone: Option<&'static str>,
+}
+
+#[cfg(target_os = "linux")]
+impl Polite {
+    fn pid(&self, group: &Group) -> Option<u32> {
+        let name = self.alone?;
+        group
+            .members()
+            .into_iter()
+            .find(|m| {
+                m.argv
+                    .first()
+                    .is_some_and(|a| std::path::Path::new(a).file_name() == Some(name.as_ref()))
+            })
+            .map(|m| m.pid)
+    }
+}
+
+#[cfg(target_os = "linux")]
+impl supervise::Watcher for Polite {
+    fn ask_to_stop(&mut self, group: &Group) {
+        match self.pid(group) {
+            Some(pid) if group.terminate_one(pid) => {}
+            _ => group.terminate(),
+        }
+    }
+
+    /// While the emulator asked alone still runs, it is saving.
+    fn saving(&mut self, group: &Group) -> bool {
+        self.alone.is_none() || self.pid(group).is_some()
+    }
+}
+
+/// Starts the game in its session (the window's or the command line's
+/// thread), feeds it, and waits until it ends or `stop` is set; then
+/// nothing of it is left. A game that closed by itself within seconds
+/// didn't start: that is an error saying why.
+pub fn run(paths: &Paths, p: &Prepared, feed: Feed, stop: &AtomicBool) -> Result<ExitStatus> {
     let log_path = p.runtime.join("session.log");
-    let log = Arc::new(Mutex::new(fs::File::create(&log_path)?));
+    let file = fs::File::create(&log_path)?;
     let argv = session_argv(&p.plan, &paths.config().libraries);
-    let tag = p.runtime.to_string_lossy().into_owned();
     let mut cmd = Command::new(&argv[0]);
     cmd.args(&argv[1..])
         .current_dir(&p.plan.game.cwd)
         .envs(p.plan.game.env.iter().map(|(k, v)| (k, v)))
         .stdout(Stdio::piped())
-        .stderr(Stdio::from(log.lock().unwrap().try_clone()?));
-    cmd.stdin(if matches!(p.plan.feed, Wiring::Wal(_)) {
-        Stdio::piped()
-    } else {
-        Stdio::null()
-    });
-    proc::configure(&mut cmd, &tag);
-    writeln!(log.lock().unwrap(), "# {}", argv.join(" "))?;
-    let mut child = cmd
-        .spawn()
-        .with_context(|| format!("starting {}", argv[0]))?;
-    let group = proc::Group::of(&child, &tag).context("grouping the game's processes")?;
-
-    // stdout: force feedback lines to the input thread, the rest to the log
-    let out_tx = match &feed {
-        Feed::Devices { tx, .. } => Some(tx.clone()),
-        _ => None,
-    };
-    if let Some(stdout) = child.stdout.take() {
-        let log = Arc::clone(&log);
-        std::thread::spawn(move || {
-            for line in BufReader::new(stdout).lines().map_while(Result::ok) {
-                if line.starts_with("out ") {
-                    if let Some(tx) = &out_tx {
-                        let _ = tx.send(input::Command::Output(line));
-                    }
-                } else {
-                    let _ = writeln!(log.lock().unwrap(), "{line}");
-                }
-            }
+        .stderr(Stdio::piped())
+        .stdin(if matches!(p.plan.feed, Wiring::Wal(_)) {
+            Stdio::piped()
+        } else {
+            Stdio::null()
         });
-    }
-    // windowsarcadeloader's input is closed to ask it to stop (it ends the
-    // game and gives back what it set up)
-    let detach = match &feed {
-        Feed::Devices { tx, .. } => Some(tx.clone()),
-        _ => None,
+    let log: supervise::Log = Arc::new(Mutex::new(file));
+    writeln!(log.lock().expect("the log"), "# {}", argv.join(" "))?;
+    let tag = Tag::new(TAG, p.runtime.to_string_lossy());
+    let group = Group::spawn(&mut cmd, &tag).with_context(|| format!("starting {}", argv[0]))?;
+    #[cfg(target_os = "linux")]
+    let mut watcher = Polite {
+        alone: matches!(p.plan.feed, Wiring::DolphinPipe(_)).then_some("dolphin-emu-nogui"),
     };
-    let mut script_sink = None;
-    if let Some((sink, wire)) = sink_for(&p.plan, &mut child) {
-        match feed {
-            Feed::Devices { tx, deadzone } => {
-                let _ = tx.send(input::Command::Attach {
-                    sink,
-                    wire,
-                    deadzone,
-                });
-            }
-            Feed::Script(script) => script_sink = Some((sink, wire, script)),
-            Feed::None => drop(sink),
-        }
-    }
-    let start = Instant::now();
-    let mut last_line = String::new();
-    let mut last_sent = Instant::now();
-    let status = loop {
-        if let Some(st) = child.try_wait()? {
-            break st;
-        }
-        if stop.load(Ordering::SeqCst) {
-            if let Some((mut sink, Wire::Wal(_), _)) = script_sink.take() {
-                let _ = writeln!(sink, "quit");
-            }
-            if let Some(tx) = &detach {
-                let _ = tx.send(input::Command::Detach);
-            }
-            group.terminate();
-            let deadline = Instant::now() + Duration::from_secs(8);
-            while Instant::now() < deadline && child.try_wait()?.is_none() {
-                std::thread::sleep(Duration::from_millis(100));
-            }
-            group.kill();
-            break child.wait()?;
-        }
-        if let Some((sink, wire, script)) = script_sink.as_mut() {
-            let (read, pitch) = script.at(start.elapsed().as_secs_f64());
-            // a script places a gun game's crosshair: steer and pitch are its x and y
-            let aim = Aim {
-                x: read.steer,
-                y: pitch,
-            };
-            let line = wire.line(&read, pitch, aim);
-            // resent now and then: Dolphin's pipe drops what came before it opened
-            if line != last_line || last_sent.elapsed() > Duration::from_millis(200) {
-                let _ = sink.write_all(line.as_bytes()).and_then(|_| sink.flush());
-                last_line = line;
-                last_sent = Instant::now();
-            }
-        }
-        std::thread::sleep(Duration::from_millis(10));
+    #[cfg(not(target_os = "linux"))]
+    let mut watcher = ();
+    let opts = Options {
+        stop,
+        log,
+        grace: GRACE,
+        sink: pipe_sink(&p.plan.feed),
     };
-    group.terminate();
-    std::thread::sleep(Duration::from_millis(500));
-    group.kill();
-    let left = group.leftovers();
-    writeln!(
-        log.lock().unwrap(),
-        "# exit: {status}; stopped {left} leftover process(es)"
+    let out = supervise::run(
+        group,
+        feed_for(feed, &p.plan.feed).as_mut(),
+        &mut watcher,
+        opts,
     )?;
-    Ok(status)
+    match early(&out, &fs::read_to_string(&log_path).unwrap_or_default()) {
+        Some(why) => bail!("{why}"),
+        None => Ok(out.status),
+    }
+}
+
+/// Why a run that ended by itself within seconds didn't start (Windows
+/// refusing a program, a missing runtime), from its session `log`.
+fn early(out: &Outcome, log: &str) -> Option<String> {
+    let itself = out.ended == Ended::Itself;
+    itself
+        .then(|| session::early_end(out.ran, &out.status.to_string(), log))
+        .flatten()
 }
 
 // the Linux command line (gamescope, bubblewrap)
@@ -357,6 +355,7 @@ mod tests {
     use super::*;
     use nintendo_core::catalog::{GameId, game};
     use nintendo_core::launch::Components;
+    use rea_launcher_native::supervise::Watcher;
     use std::path::Path;
 
     fn comps() -> Components {
@@ -423,6 +422,91 @@ mod tests {
             ),
             "{s}"
         );
+    }
+
+    /// `--no-input`: windowsarcadeloader quits when its input closes, so
+    /// a run without a feed keeps it open until the stop (it was dropped
+    /// at the start and the loader quit at once).
+    #[test]
+    fn without_input_the_loaders_input_stays_open_until_the_stop() {
+        let mut cmd = Command::new("cat");
+        cmd.stdin(Stdio::piped())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null());
+        let group = Group::spawn(&mut cmd, &Tag::new(TAG, "nintendo-test-hold")).unwrap();
+        let stop = AtomicBool::new(false);
+        let opts = Options {
+            stop: &stop,
+            log: Arc::new(Mutex::new(Vec::<u8>::new())),
+            grace: Duration::from_secs(2),
+            sink: None,
+        };
+        let wiring = Wiring::Wal(nintendo_core::input::StickLayout::NamcoEs3Kart);
+        let out = std::thread::scope(|s| {
+            s.spawn(|| {
+                std::thread::sleep(Duration::from_millis(400));
+                stop.store(true, std::sync::atomic::Ordering::SeqCst);
+            });
+            supervise::run(
+                group,
+                feed_for(Feed::None, &wiring).as_mut(),
+                &mut Polite { alone: None },
+                opts,
+            )
+            .unwrap()
+        });
+        assert_eq!(out.ended, Ended::Stopped, "{out:?}");
+        assert_eq!(out.leftovers, 0);
+    }
+
+    /// A game that closed by itself at once says why (it said nothing).
+    #[test]
+    fn a_game_that_ends_at_once_says_why() {
+        use std::os::unix::process::ExitStatusExt;
+        let out = |ended, secs| Outcome {
+            status: ExitStatus::from_raw(1 << 8),
+            ran: Duration::from_secs(secs),
+            ended,
+            leftovers: 0,
+        };
+        let log = "wine: starting\nerror: VACUUM.exe missing\n";
+        let why = early(&out(Ended::Itself, 2), log).unwrap();
+        assert!(why.contains("closed by itself 2 s after starting"), "{why}");
+        assert!(why.contains("VACUUM.exe missing"), "{why}");
+        assert_eq!(early(&out(Ended::Itself, 60), log), None);
+        assert_eq!(early(&out(Ended::Stopped, 2), log), None);
+    }
+
+    /// A stop asks Dolphin alone (it saves, then quits); the rest of the
+    /// session (gamescope) keeps running until Dolphin is gone.
+    #[test]
+    #[cfg(target_os = "linux")]
+    fn dolphin_is_asked_alone_to_stop() {
+        let t = tempfile::tempdir().unwrap();
+        let dolphin = t.path().join("dolphin-emu-nogui");
+        std::os::unix::fs::symlink("/bin/sleep", &dolphin).unwrap();
+        let mut cmd = Command::new("sh");
+        cmd.args(["-c", "\"$0\" 30; sleep 30"]).arg(&dolphin);
+        let mut group = Group::spawn(&mut cmd, &Tag::new(TAG, "nintendo-test-polite")).unwrap();
+        let mut polite = Polite {
+            alone: Some("dolphin-emu-nogui"),
+        };
+        let started = std::time::Instant::now();
+        while polite.pid(&group).is_none() && started.elapsed() < Duration::from_secs(5) {
+            std::thread::sleep(Duration::from_millis(20));
+        }
+        assert!(polite.saving(&group), "Dolphin runs");
+        polite.ask_to_stop(&group);
+        while polite.saving(&group) && started.elapsed() < Duration::from_secs(5) {
+            std::thread::sleep(Duration::from_millis(20));
+        }
+        assert!(!polite.saving(&group), "Dolphin stopped");
+        assert!(
+            group.exited().unwrap().is_none(),
+            "the leader was not asked"
+        );
+        group.kill();
+        group.finish().unwrap();
     }
 
     #[test]

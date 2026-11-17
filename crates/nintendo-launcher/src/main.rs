@@ -7,7 +7,6 @@
 
 mod input;
 mod paths;
-mod proc;
 mod session;
 mod ui;
 
@@ -237,7 +236,7 @@ fn play(paths: &Paths, slug: &str, args: &Args) -> ExitCode {
     } else {
         Display::Screen
     };
-    let input = (!args.no_input && args.script.is_none()).then(input::InputService::start);
+    let input = (!args.no_input && args.script.is_none()).then(input::service);
     // the wheel, for Dolphin's own mapping on Windows: give SDL a moment to list it
     let wheel = input.as_ref().and_then(|i| {
         std::thread::sleep(Duration::from_millis(300));
@@ -264,7 +263,7 @@ fn play(paths: &Paths, slug: &str, args: &Args) -> ExitCode {
     let feed = if let Some(f) = &args.script {
         match std::fs::read_to_string(f)
             .map_err(|e| e.to_string())
-            .and_then(|t| input::Script::parse(&t))
+            .and_then(|t| rea_launcher::wheel::Script::parse::<nintendo_core::input::Button>(&t))
         {
             Ok(s) => Feed::Script(s),
             Err(e) => {
@@ -280,7 +279,7 @@ fn play(paths: &Paths, slug: &str, args: &Args) -> ExitCode {
     } else {
         Feed::None
     };
-    match session::run(paths, &prepared, feed, stop) {
+    match session::run(paths, &prepared, feed, &stop) {
         Ok(status) => {
             eprintln!(
                 "{} ended ({status}); log: {}",

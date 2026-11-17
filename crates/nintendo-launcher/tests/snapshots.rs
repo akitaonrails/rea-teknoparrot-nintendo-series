@@ -21,6 +21,7 @@ use nintendo_core::settings::Settings;
 use rea_launcher::catalog::Host;
 use rea_launcher::gamescope::{Crt, Size, Upscaler};
 use rea_launcher::linkfarm::{Item, Op};
+use rea_launcher::wheel::PedalAxis;
 
 /// A path as the snapshot spells it on every system (Windows joins with `\`).
 fn p(path: &Path) -> String {
@@ -296,8 +297,16 @@ fn wheels() -> [(&'static str, Option<DolphinWheel>); 3] {
             Some(DolphinWheel {
                 name: "Test Wheel".into(),
                 steer_axis: 0,
-                gas: Some((1, 0, 32767)),
-                brake: Some((2, 0, -32768)),
+                gas: Some(PedalAxis {
+                    axis: 1,
+                    rest: 0,
+                    peak: 32767,
+                }),
+                brake: Some(PedalAxis {
+                    axis: 2,
+                    rest: 0,
+                    peak: -32768,
+                }),
             }),
         ),
         (
@@ -305,8 +314,16 @@ fn wheels() -> [(&'static str, Option<DolphinWheel>); 3] {
             Some(DolphinWheel {
                 name: "Other Wheel".into(),
                 steer_axis: 3,
-                gas: Some((4, 32767, -32768)),
-                brake: Some((5, -32768, 32767)),
+                gas: Some(PedalAxis {
+                    axis: 4,
+                    rest: 32767,
+                    peak: -32768,
+                }),
+                brake: Some(PedalAxis {
+                    axis: 5,
+                    rest: -32768,
+                    peak: 32767,
+                }),
             }),
         ),
     ]

@@ -20,6 +20,7 @@
 //! the gas pedal (or the item button) the trigger, the Mario button the
 //! gun's action button.
 
+use rea_launcher::wal::{self, Stick, button};
 use rea_launcher::wheel::{Action, Control, Controls as Read, PadInput, PadMap};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -111,20 +112,6 @@ pub fn default_pad_map() -> PadMap<Button> {
     ])
 }
 
-/// windowsarcadeloader's virtual stick bits (`wal_protocol::button`).
-pub mod wal {
-    pub const B1: u32 = 1 << 4;
-    pub const B2: u32 = 1 << 5;
-    pub const B5: u32 = 1 << 8;
-    pub const B7: u32 = 1 << 10;
-    pub const B8: u32 = 1 << 11;
-    pub const START: u32 = 1 << 12;
-    pub const COIN: u32 = 1 << 13;
-    pub const SERVICE: u32 = 1 << 14;
-    pub const TEST: u32 = 1 << 15;
-    pub const CARD: u32 = 1 << 16;
-}
-
 /// Which virtual stick buttons a system profile reads.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StickLayout {
@@ -139,19 +126,19 @@ pub enum StickLayout {
 impl StickLayout {
     fn bit(self, b: Button) -> u32 {
         match (self, b) {
-            (StickLayout::NamcoEs3Kart, Button::Enter) => wal::B1,
-            (StickLayout::NamcoEs3Kart, Button::Special) => wal::B2,
-            (StickLayout::NamcoEs3Kart, Button::Item) => wal::B5,
-            (StickLayout::NamcoEs3Kart, Button::PaddleLeft) => wal::B7,
-            (StickLayout::NamcoEs3Kart, Button::PaddleRight) => wal::B8,
-            (StickLayout::SegaNuGun, Button::Item) => wal::B1,
-            (StickLayout::SegaNuGun, Button::Special | Button::PaddleLeft) => wal::B2,
+            (StickLayout::NamcoEs3Kart, Button::Enter) => button::B1,
+            (StickLayout::NamcoEs3Kart, Button::Special) => button::B2,
+            (StickLayout::NamcoEs3Kart, Button::Item) => button::B5,
+            (StickLayout::NamcoEs3Kart, Button::PaddleLeft) => button::B7,
+            (StickLayout::NamcoEs3Kart, Button::PaddleRight) => button::B8,
+            (StickLayout::SegaNuGun, Button::Item) => button::B1,
+            (StickLayout::SegaNuGun, Button::Special | Button::PaddleLeft) => button::B2,
             (StickLayout::SegaNuGun, Button::Enter | Button::PaddleRight) => 0,
-            (_, Button::Start) => wal::START,
-            (_, Button::Card) => wal::CARD,
-            (_, Button::Coin) => wal::COIN,
-            (_, Button::Test) => wal::TEST,
-            (_, Button::Service) => wal::SERVICE,
+            (_, Button::Start) => button::START,
+            (_, Button::Card) => button::CARD,
+            (_, Button::Coin) => button::COIN,
+            (_, Button::Test) => button::TEST,
+            (_, Button::Service) => button::SERVICE,
         }
     }
 
@@ -159,27 +146,18 @@ impl StickLayout {
     /// (`p1 <buttons hex> <lx> <ly> <rx> <ry> <accel> <brake>`). `aim` is
     /// the gun's crosshair (gun games only).
     pub fn pipe_line(self, r: &Read, aim: Aim) -> String {
-        let mut buttons = Button::ALL
-            .iter()
-            .filter(|b| r.buttons & b.bit() != 0)
-            .fold(0u32, |acc, &b| acc | self.bit(b));
-        let axis = |v: f32| (v.clamp(-1.0, 1.0) * 32767.0).round() as i32;
-        let pedal = |v: f32| (v.clamp(0.0, 1.0) * 32767.0).round() as i32;
+        let buttons = wal::buttons(r.buttons, |b| self.bit(b));
         match self {
-            StickLayout::NamcoEs3Kart => format!(
-                "p1 {buttons:x} {} 0 0 0 {} {}",
-                axis(r.steer),
-                pedal(r.accel),
-                pedal(r.brake)
-            ),
-            StickLayout::SegaNuGun => {
+            StickLayout::NamcoEs3Kart => Stick::driving(buttons, r),
+            StickLayout::SegaNuGun => Stick {
                 // the gas pedal (a pad's right trigger) pulls the trigger
-                if r.accel > 0.5 {
-                    buttons |= wal::B1;
-                }
-                format!("p1 {buttons:x} {} {} 0 0 0 0", axis(aim.x), axis(aim.y))
-            }
+                buttons: buttons | if r.accel > 0.5 { button::B1 } else { 0 },
+                lx: aim.x,
+                ly: aim.y,
+                ..Stick::default()
+            },
         }
+        .line()
     }
 
     /// Whether the stick moves a crosshair rather than steering.

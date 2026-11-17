@@ -28,9 +28,9 @@ use rea_launcher::catalog::{Host, Support};
 use rea_launcher::library::{Found, HashCache, Scan};
 use rea_launcher::wheel::{Action, Control, Kind};
 
-use crate::input::{Command, InputService, Snapshot};
 use crate::paths::{Config, Paths};
 use crate::session::{self, Display, Feed};
+use rea_launcher_native::feeder::{Command, InputService, Snapshot};
 
 type Entry = rea_launcher::library::Entry<Game>;
 
@@ -58,7 +58,7 @@ pub fn run(paths: Paths) -> anyhow::Result<()> {
         Box::new(move |cc| {
             theme::install_fonts(&cc.egui_ctx, &paths.fonts());
             theme::install_style(&cc.egui_ctx);
-            Ok(Box::new(App::new(paths, Some(InputService::start()))))
+            Ok(Box::new(App::new(paths, Some(crate::input::service()))))
         }),
     )
     .map_err(|e| anyhow::anyhow!("the window could not open: {e}"))
@@ -472,7 +472,7 @@ impl App {
                     },
                     None => Feed::None,
                 };
-                let r = session::run(&paths, &prepared, feed, stop_for_session)
+                let r = session::run(&paths, &prepared, feed, &stop_for_session)
                     .map(|_| ())
                     .map_err(|e| format!("{e:#}"));
                 let _ = tx.send(Progress::Ended(r));
@@ -2609,7 +2609,7 @@ mod tests {
     use rea_launcher_ui::testing::{self, Harness, Queryable};
     use std::path::Path;
 
-    use crate::input::DeviceInfo;
+    use rea_launcher_native::feeder::DeviceInfo;
 
     const SCREEN: Vec2 = vec2(1280.0, 720.0);
 

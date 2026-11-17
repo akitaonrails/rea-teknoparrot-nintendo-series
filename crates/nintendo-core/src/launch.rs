@@ -21,6 +21,7 @@ use rea_launcher::catalog::Host;
 use crate::catalog::{Game, Patch, Route};
 use crate::input::{DolphinPad, StickLayout};
 use rea_launcher::gamescope::{self, Picture, Size};
+use rea_launcher::wheel::PedalAxis;
 
 use crate::settings::Settings;
 
@@ -104,9 +105,8 @@ pub struct Places {
 pub struct DolphinWheel {
     pub name: String,
     pub steer_axis: usize,
-    /// Axis, raw value at rest, raw value floored.
-    pub gas: Option<(usize, i16, i16)>,
-    pub brake: Option<(usize, i16, i16)>,
+    pub gas: Option<PedalAxis>,
+    pub brake: Option<PedalAxis>,
 }
 
 /// Dolphin's internal resolution (a multiple of the 640×480 picture) for a
@@ -247,7 +247,7 @@ pub fn gcpad_pipe_ini() -> String {
 
 /// A pedal as a 0..1 expression over Dolphin's half axes, whichever way the
 /// pedal travels.
-fn pedal_expr(dev: &str, (axis, rest, peak): (usize, i16, i16)) -> String {
+fn pedal_expr(dev: &str, PedalAxis { axis, rest, peak }: PedalAxis) -> String {
     let plus = format!("`{dev}:Axis {axis}+`");
     let minus = format!("`{dev}:Axis {axis}-`");
     if rest.unsigned_abs() < 8000 {
@@ -688,8 +688,16 @@ mod tests {
         let w = DolphinWheel {
             name: "Logitech G29".into(),
             steer_axis: 0,
-            gas: Some((2, 32767, -32768)),
-            brake: Some((3, 0, -32768)),
+            gas: Some(PedalAxis {
+                axis: 2,
+                rest: 32767,
+                peak: -32768,
+            }),
+            brake: Some(PedalAxis {
+                axis: 3,
+                rest: 0,
+                peak: -32768,
+            }),
         };
         let p = plan(
             game(GameId::FZeroAx),
