@@ -20,7 +20,7 @@ use rea_launcher::catalog::Host;
 
 use crate::catalog::{Game, Patch, Route};
 use crate::input::{DolphinPad, StickLayout};
-use rea_launcher::gamescope::{Crt, Size};
+use rea_launcher::gamescope::{self, Picture, Size};
 
 use crate::settings::Settings;
 
@@ -65,10 +65,6 @@ pub struct Plan {
 }
 
 type Files = Vec<(PathBuf, String)>;
-
-/// The CRT effect's file name, in the components' `shaders/` and in
-/// gamescope's effect folder.
-const CRT_EFFECT: &str = "crt-lottes.fx";
 
 /// The pipe's name in Dolphin's `Pipes/` folder; Dolphin calls the device
 /// `Pipe/0/<name>`.
@@ -130,36 +126,15 @@ pub fn game_size(game: &Game, s: &Settings) -> Size {
     }
 }
 
-fn gamescope_args(s: &Settings, size: Size, headless: bool) -> Vec<String> {
-    let mut a: Vec<String> = [
-        "-w",
-        &size.w.to_string(),
-        "-h",
-        &size.h.to_string(),
-        "-W",
-        &s.output.w.to_string(),
-        "-H",
-        &s.output.h.to_string(),
-        "-r",
-        "60",
-        "-F",
-        if headless { "linear" } else { s.upscaler.key() },
-    ]
-    .iter()
-    .map(|x| x.to_string())
-    .collect();
-    if !headless && matches!(s.upscaler.key(), "fsr" | "nis") {
-        a.extend(["--sharpness".into(), s.sharpness.to_string()]);
+fn picture(s: &Settings, game: Size) -> Picture {
+    Picture {
+        game,
+        output: s.output,
+        upscaler: s.upscaler,
+        sharpness: s.sharpness,
+        fullscreen: s.fullscreen,
+        crt: s.crt,
     }
-    if s.crt == Crt::Lottes {
-        a.extend(["--reshade-effect".into(), CRT_EFFECT.into()]);
-    }
-    if headless {
-        a.extend(["--backend".into(), "headless".into()]);
-    } else if s.fullscreen {
-        a.push("-f".into());
-    }
-    a
 }
 
 /// Dolphin's main settings: the Triforce baseboard on the first serial port
@@ -531,21 +506,17 @@ pub fn plan(
         }
     };
     // Windows: no gamescope (the games draw at their render size, full screen)
-    let gamescope_home =
-        (host == Host::Linux && s.crt == Crt::Lottes).then(|| rt.join("gamescope-home"));
-    if let Some(home) = &gamescope_home {
-        links.push((
-            home.join(".local/share/gamescope/reshade/Shaders")
-                .join(CRT_EFFECT),
-            c.shaders.join(CRT_EFFECT),
-        ));
+    let effect = s.crt.effect().filter(|_| host == Host::Linux);
+    let gamescope_home = effect.map(|_| gamescope::effect_home(rt));
+    if let (Some(home), Some(effect)) = (&gamescope_home, effect) {
+        links.push(gamescope::effect_link(home, &c.shaders, effect));
     }
     Plan {
         files,
         links,
         game: game_cmd,
         gamescope: match host {
-            Host::Linux => gamescope_args(s, size, headless),
+            Host::Linux => picture(s, size).args(headless),
             Host::Windows => Vec::new(),
         },
         gamescope_home,
@@ -558,6 +529,7 @@ pub fn plan(
 mod tests {
     use super::*;
     use crate::catalog::{GameId, game};
+    use rea_launcher::gamescope::Crt;
 
     fn comps() -> Components {
         Components {

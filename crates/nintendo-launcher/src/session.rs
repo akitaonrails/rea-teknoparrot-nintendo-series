@@ -18,6 +18,7 @@ use nintendo_core::launch::{self, DolphinWheel, Feed as Wiring, Places, Plan};
 use nintendo_core::runtime;
 use nintendo_core::settings::Settings;
 use rea_launcher::catalog::{Host, Support};
+use rea_launcher::gamescope::CommandLine;
 use rea_launcher::library::Entry;
 use rea_launcher::linkfarm::{self, Occupied, Op};
 
@@ -193,26 +194,16 @@ pub fn command_line(
     bwrap: bool,
     user_home: &str,
 ) -> Vec<String> {
-    let mut v = Vec::new();
-    if let Some(home) = &plan.gamescope_home {
-        v.extend(["env".into(), format!("HOME={}", home.display())]);
+    CommandLine {
+        gamescope: plan.gamescope.clone(),
+        homes: plan
+            .gamescope_home
+            .clone()
+            .map(|home| (home, user_home.to_string())),
+        read_only: bwrap.then(|| libraries.to_vec()),
+        cpus: None,
     }
-    v.push("gamescope".to_string());
-    v.extend(plan.gamescope.iter().cloned());
-    v.push("--".into());
-    if plan.gamescope_home.is_some() {
-        v.extend(["env".into(), format!("HOME={user_home}")]);
-    }
-    if bwrap {
-        v.extend(["bwrap", "--dev-bind", "/", "/"].map(String::from));
-        for l in libraries {
-            let l = l.to_string_lossy().into_owned();
-            v.extend(["--ro-bind".into(), l.clone(), l]);
-        }
-    }
-    v.push(plan.game.program.to_string_lossy().into_owned());
-    v.extend(plan.game.args.iter().cloned());
-    v
+    .argv(&plan.game.program, &plan.game.args)
 }
 
 /// The command the session starts: on Linux [`command_line`], on Windows
