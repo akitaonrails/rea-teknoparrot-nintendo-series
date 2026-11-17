@@ -14,10 +14,11 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-use nintendo_core::catalog::{GAMES, Host, Route};
+use nintendo_core::catalog::{GAMES, Route};
 use nintendo_core::launch::{self, Components, DolphinWheel, Places};
 use nintendo_core::runtime::{self, Item};
 use nintendo_core::settings::{Crt, Settings, Size, Upscaler};
+use rea_launcher::catalog::Host;
 
 /// A path as the snapshot spells it on every system (Windows joins with `\`).
 fn p(path: &Path) -> String {

@@ -8,7 +8,6 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
-sha2 = "0.10"
 rea-launcher.workspace = true
 
 [dev-dependencies]

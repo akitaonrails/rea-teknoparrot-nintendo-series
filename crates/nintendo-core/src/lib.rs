@@ -5,6 +5,5 @@
 pub mod catalog;
 pub mod input;
 pub mod launch;
-pub mod library;
 pub mod runtime;
 pub mod settings;

@@ -17,9 +17,10 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
 
-use nintendo_core::catalog::{self, Host, Support};
-use nintendo_core::library::{self, Found, HashCache};
+use nintendo_core::catalog;
 use nintendo_core::settings::Settings;
+use rea_launcher::catalog::{Host, Support};
+use rea_launcher::library::Found;
 
 use crate::paths::Paths;
 use crate::session::{Display, Feed};
@@ -162,7 +163,11 @@ fn main() -> ExitCode {
             eprintln!("no library yet: run with --library <folder>");
             return ExitCode::FAILURE;
         }
-        for e in library::scan(&config.libraries, &mut HashCache::default()) {
+        let scan = catalog::library().scan(&config.libraries);
+        for p in &scan.problems {
+            eprintln!("couldn't read {p}");
+        }
+        for e in scan.entries {
             match &e.found {
                 Found::Known { game, edition } => {
                     let state = match game.support_on(Host::current()) {
@@ -220,8 +225,8 @@ fn play(paths: &Paths, slug: &str, args: &Args) -> ExitCode {
         return ExitCode::from(2);
     };
     let config = paths.config();
-    let found = library::scan(&config.libraries, &mut HashCache::default());
-    let Some(entry) = library::by_game(&found).get(&game.id).map(|e| (*e).clone()) else {
+    let found = catalog::library().scan(&config.libraries);
+    let Some(entry) = found.by_game().get(&game.id).map(|e| (*e).clone()) else {
         eprintln!("{} is not in your library folders", game.title);
         return ExitCode::FAILURE;
     };

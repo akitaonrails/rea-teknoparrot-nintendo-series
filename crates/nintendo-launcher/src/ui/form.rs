@@ -5,8 +5,8 @@
 
 use std::path::Path;
 
-use nintendo_core::catalog::Host;
 use nintendo_core::settings::{Settings, Size, Upscaler};
+use rea_launcher::catalog::Host;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Row {

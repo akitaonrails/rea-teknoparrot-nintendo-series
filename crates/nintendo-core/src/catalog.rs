@@ -5,6 +5,11 @@
 //! listed here are launched; anything else is reported with its digest so
 //! the player can file it (STANDARDS: "Exact binary identity").
 
+use std::ops::RangeInclusive;
+
+use rea_launcher::catalog::{Edition, Host, Support, Title};
+use rea_launcher::library::{Extra, Library};
+
 use crate::input::StickLayout;
 use crate::settings::Size;
 
@@ -30,41 +35,6 @@ pub enum Route {
         /// What the profile's virtual stick buttons and axes are.
         layout: StickLayout,
     },
-}
-
-/// Whether the launcher can start a game today, and why not.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Support {
-    /// Verified in the real game (a race played), see docs/RUNTIME_NOTES.md.
-    Ready,
-    /// Starts, but no race was verified yet; the text says what is known.
-    Unverified(&'static str),
-    /// Known not to work yet; the text says why, for the player.
-    Blocked(&'static str),
-}
-
-/// The system the launcher runs on: what it can start depends on it.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Host {
-    Linux,
-    Windows,
-}
-
-impl Host {
-    pub const fn current() -> Host {
-        if cfg!(windows) {
-            Host::Windows
-        } else {
-            Host::Linux
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct Edition {
-    /// SHA-256 of the main file.
-    pub sha256: &'static str,
-    pub label: &'static str,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -129,8 +99,24 @@ impl Game {
     }
 }
 
+impl Title for Game {
+    type Id = GameId;
+
+    fn id(&self) -> GameId {
+        self.id
+    }
+
+    fn main_file(&self) -> &'static str {
+        self.main_file
+    }
+
+    fn editions(&self) -> &'static [Edition] {
+        self.editions
+    }
+}
+
 const fn sha(d: &'static str, label: &'static str) -> Edition {
-    Edition { sha256: d, label }
+    Edition::sha256(d, label)
 }
 
 pub const GAMES: &[Game] = &[
@@ -247,13 +233,18 @@ pub fn by_slug(slug: &str) -> Option<&'static Game> {
     GAMES.iter().find(|g| g.slug == slug)
 }
 
-/// The game and edition a digest belongs to.
-pub fn identify(digest: &str) -> Option<(&'static Game, &'static Edition)> {
-    GAMES.iter().find_map(|g| {
-        g.editions
-            .iter()
-            .find(|e| e.sha256.eq_ignore_ascii_case(digest))
-            .map(|e| (g, e))
+/// The sizes of the known Triforce disc images (F-Zero AX's 436 029 440
+/// bytes, Mario Kart GP 2's 536 870 912): an image under another name is
+/// hashed only at such a size, so a stray disc image of another system is
+/// never read whole.
+pub const DISC_SIZES: RangeInclusive<u64> = 436_029_440..=536_870_912;
+
+/// The scan of a player's library folders: each game by its main file,
+/// and a Triforce disc image renamed by the player by its digest.
+pub fn library() -> Library<Game> {
+    Library::new(GAMES).with_extra(Extra {
+        extensions: &[".iso", ".gcm"],
+        sizes: DISC_SIZES,
     })
 }
 
@@ -261,29 +252,73 @@ pub fn identify(digest: &str) -> Option<(&'static Game, &'static Edition)> {
 mod tests {
     use super::*;
     use std::collections::HashSet;
+    use std::fs;
+    use std::path::PathBuf;
+
+    use rea_launcher::catalog::{check_table, identify};
+    use rea_launcher::library::Found;
 
     #[test]
     fn ids_slugs_and_digests_are_unique_and_well_formed() {
-        let ids: HashSet<_> = GAMES.iter().map(|g| g.id).collect();
+        assert_eq!(check_table(GAMES), Ok(()));
         let slugs: HashSet<_> = GAMES.iter().map(|g| g.slug).collect();
-        assert_eq!(ids.len(), GAMES.len());
         assert_eq!(slugs.len(), GAMES.len());
-        let mut digests = HashSet::new();
-        for g in GAMES {
-            for e in g.editions {
-                assert_eq!(e.sha256.len(), 64, "{}", g.slug);
-                assert!(e.sha256.chars().all(|c| c.is_ascii_hexdigit()));
-                assert!(digests.insert(e.sha256), "duplicate digest");
-            }
-        }
     }
 
     #[test]
     fn identify_finds_the_right_game() {
-        let (g, _) =
-            identify("BF14A7C35EFE1BDA690ADC5AFDF30A6A0106CF89C4B61E8048F449F8C94ACE01").unwrap();
+        let (g, _) = identify(
+            GAMES,
+            "BF14A7C35EFE1BDA690ADC5AFDF30A6A0106CF89C4B61E8048F449F8C94ACE01",
+        )
+        .unwrap();
         assert_eq!(g.id, GameId::MarioKartGp2);
-        assert!(identify("00").is_none());
+        assert!(identify(GAMES, "00").is_none());
+    }
+
+    #[test]
+    fn an_unknown_build_is_reported_with_its_digest() {
+        let t = tempfile::tempdir().unwrap();
+        let g = t.path().join("Some Game [TP]");
+        fs::create_dir(&g).unwrap();
+        fs::write(g.join("MK_AGP3_FINAL.exe"), b"not the game").unwrap();
+        fs::create_dir(t.path().join("empty")).unwrap();
+        let scan = library().scan(&[t.path().to_path_buf()]);
+        assert_eq!(scan.entries.len(), 1);
+        assert!(
+            matches!(&scan.entries[0].found, Found::Unknown { file, .. } if file == "MK_AGP3_FINAL.exe")
+        );
+    }
+
+    /// A disc image under another name is read only at a known disc's
+    /// size: every .iso and .gcm of a library was hashed whole on each
+    /// start and `--list`. An unreadable stray image shows it: a read
+    /// would be reported as a problem.
+    #[test]
+    #[cfg(unix)]
+    fn a_stray_disc_image_is_not_read() {
+        use std::os::unix::fs::PermissionsExt;
+        let t = tempfile::tempdir().unwrap();
+        let stray = t.path().join("holiday.iso");
+        fs::write(&stray, b"junk").unwrap();
+        fs::set_permissions(&stray, fs::Permissions::from_mode(0o000)).unwrap();
+        let scan = library().scan(&[t.path().to_path_buf()]);
+        assert!(scan.entries.is_empty(), "{scan:?}");
+        assert!(scan.problems.is_empty(), "it was read: {scan:?}");
+        assert!(DISC_SIZES.contains(&436_029_440) && DISC_SIZES.contains(&536_870_912));
+    }
+
+    /// The owner's real library, when present
+    /// (`NINTENDO_LIBRARIES=dir1:dir2 cargo test -- --ignored`).
+    #[test]
+    #[ignore]
+    fn real_library_finds_every_game() {
+        let Ok(roots) = std::env::var("NINTENDO_LIBRARIES") else {
+            return;
+        };
+        let roots: Vec<PathBuf> = std::env::split_paths(&roots).collect();
+        let scan = library().scan(&roots);
+        assert_eq!(scan.by_game().len(), GAMES.len(), "{scan:#?}");
     }
 
     #[test]

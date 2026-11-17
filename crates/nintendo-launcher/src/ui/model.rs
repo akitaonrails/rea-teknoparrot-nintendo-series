@@ -3,7 +3,8 @@
 //! the setup page's fields. The window draws this and acts on the
 //! [`Effect`]s it returns.
 
-use nintendo_core::catalog::{Game, Support};
+use nintendo_core::catalog::Game;
+use rea_launcher::catalog::Support;
 
 use super::form::Row;
 
@@ -80,7 +81,7 @@ pub enum Item {
 }
 
 pub fn settings_items() -> Vec<Item> {
-    Row::shown(nintendo_core::catalog::Host::current())
+    Row::shown(rea_launcher::catalog::Host::current())
         .into_iter()
         .map(Item::Option)
         .chain([Item::Rescan, Item::ChangeFolder])

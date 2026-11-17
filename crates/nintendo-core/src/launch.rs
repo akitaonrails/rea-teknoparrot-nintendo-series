@@ -16,7 +16,9 @@
 
 use std::path::{Path, PathBuf};
 
-use crate::catalog::{Game, Host, Patch, Route};
+use rea_launcher::catalog::Host;
+
+use crate::catalog::{Game, Patch, Route};
 use crate::input::{DolphinPad, StickLayout};
 use crate::settings::{Crt, Settings, Size};
 

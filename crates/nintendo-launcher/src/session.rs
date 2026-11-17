@@ -12,12 +12,13 @@ use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
 use anyhow::{Context, Result, bail};
-use nintendo_core::catalog::{Game, Host, Route, Support};
+use nintendo_core::catalog::{Game, Route};
 use nintendo_core::input::Aim;
 use nintendo_core::launch::{self, DolphinWheel, Feed as Wiring, Places, Plan};
-use nintendo_core::library::Entry;
 use nintendo_core::runtime;
 use nintendo_core::settings::Settings;
+use rea_launcher::catalog::{Host, Support};
+use rea_launcher::library::Entry;
 
 use crate::input::{self, Script, Wire};
 use crate::paths::Paths;
@@ -123,7 +124,7 @@ fn make_fifo(_path: &std::path::Path) -> Result<()> {
 pub fn prepare(
     paths: &Paths,
     game: &Game,
-    entry: &Entry,
+    entry: &Entry<Game>,
     settings: &Settings,
     display: Display,
     wheel: Option<&DolphinWheel>,
@@ -517,7 +518,7 @@ mod tests {
     #[test]
     fn golden_prepared_data_folders() {
         use nintendo_core::catalog::{GAMES, Route};
-        use nintendo_core::library::Found;
+        use rea_launcher::library::Found;
         let t = tempfile::tempdir().unwrap();
         let root = t.path();
         let put = |rel: &str, bytes: &[u8]| {

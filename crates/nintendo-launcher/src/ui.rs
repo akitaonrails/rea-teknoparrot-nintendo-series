@@ -22,14 +22,17 @@ use eframe::egui::{
     self, Align2, Color32, CornerRadius, CursorIcon, FontId, Id, Mesh, Pos2, Rect, Sense, Shape,
     Stroke, StrokeKind, TextureHandle, Vec2, pos2, vec2,
 };
-use nintendo_core::catalog::{GAMES, Game, Host, Route, Support};
+use nintendo_core::catalog::{self, GAMES, Game, Route};
 use nintendo_core::input::{Button, default_pad_map};
-use nintendo_core::library::{self, Entry, Found, HashCache};
+use rea_launcher::catalog::{Host, Support};
+use rea_launcher::library::{Found, HashCache, Scan};
 use rea_launcher::wheel::{Action, Control, Kind};
 
 use crate::input::{Command, InputService, Snapshot};
 use crate::paths::{Config, Paths};
 use crate::session::{self, Display, Feed};
+
+type Entry = rea_launcher::library::Entry<Game>;
 
 use form::{Form, Row};
 use model::{Effect, Focus, Input, Item, Model, Page, Tab, TileState, World};
@@ -101,8 +104,9 @@ struct App {
     model: Model,
     /// The last scan; `None` while looking.
     entries: Option<Vec<Entry>>,
-    scan: Option<Receiver<(Vec<Entry>, HashCache)>>,
-    cache: Option<HashCache>,
+    scan: Option<Receiver<Scan<Game>>>,
+    /// The digests every scan shares (a rescan during a scan too).
+    cache: HashCache,
     form: Option<(usize, Form)>,
     /// The last save: text, and whether it worked.
     note: Note,
@@ -132,7 +136,7 @@ impl App {
             snap: Snapshot::default(),
             entries: None,
             scan: None,
-            cache: Some(HashCache::default()),
+            cache: HashCache::default(),
             form: None,
             note: None,
             heroes: vec![None; GAMES.len()],
@@ -160,13 +164,12 @@ impl App {
             return;
         }
         let roots = self.config.libraries.clone();
-        let mut cache = self.cache.take().unwrap_or_default();
+        let library = catalog::library().with_cache(self.cache.clone());
         let (tx, rx) = mpsc::channel();
         std::thread::Builder::new()
             .name("scan".into())
             .spawn(move || {
-                let found = library::scan(&roots, &mut cache);
-                let _ = tx.send((found, cache));
+                let _ = tx.send(library.scan(&roots));
             })
             .expect("spawn scan thread");
         self.entries = None;
@@ -176,7 +179,11 @@ impl App {
     fn poll_scan(&mut self) {
         let Some(rx) = &self.scan else { return };
         match rx.try_recv() {
-            Ok((found, cache)) => {
+            Ok(scan) => {
+                for p in &scan.problems {
+                    log_line(&self.paths, &format!("couldn't read {p}"));
+                }
+                let found = scan.entries;
                 for e in &found {
                     if let Found::Unknown { file, digest } = &e.found {
                         log_line(
@@ -186,7 +193,6 @@ impl App {
                     }
                 }
                 self.entries = Some(found);
-                self.cache = Some(cache);
                 self.scan = None;
             }
             Err(TryRecvError::Empty) => {}
