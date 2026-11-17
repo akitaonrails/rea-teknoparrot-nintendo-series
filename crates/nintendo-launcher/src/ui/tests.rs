@@ -208,38 +208,77 @@ fn settings_text(t: &Path, slug: &str) -> String {
 #[test]
 fn every_settings_row_reaches_its_key_in_the_file() {
     let t = tempfile::tempdir().unwrap();
+    // the defaults, written: no look decided on the first load
+    let file = paths_in(t.path()).settings("mkdx");
+    settings::write(&file, &Settings::default()).unwrap();
     let mut h = hub(t.path());
     select(&mut h, "mkdx");
     open_tab(&mut h, Tab::Settings);
     let steps: &[(&str, &str, &str)] = &[
+        ("Look", "next", "look = recommended"),
+        ("Look", "previous", "look = original"),
         ("Game render size", "next", "render = 1920x1080"),
         ("Dead zone", "next", "deadzone = 0.06"),
-        ("Output size", "previous", "output = 2560x1440"),
-        ("Upscaler", "next", "upscaler = nis"),
+        ("Output size", "next", "output = 2560x1440"),
+        ("Upscaler", "previous", "upscaler = nis"),
         ("Sharpness", "next", "sharpness = 6"),
         ("Fullscreen", "next", "fullscreen = false"),
     ];
     for (label, way, line) in steps {
-        if cfg!(windows) && !matches!(*label, "Game render size" | "Dead zone") {
+        if cfg!(windows) && !matches!(*label, "Look" | "Game render size" | "Dead zone") {
             // shown off, with the reason (it was hidden)
             let row = h.get_by_role_and_label(Role::Button, label);
             assert!(rea_launcher_ui::testing::disabled(&row), "{label}");
             let why = rea_launcher_ui::testing::description(&row).unwrap();
-            assert_eq!(why, WORDS.not_here, "{label}");
+            // sharpness: off for its own reason first (Original scales smoothly)
+            assert!(
+                why == WORDS.not_here || why == SHARPNESS_OFF,
+                "{label}: {why}"
+            );
             continue;
         }
         click_button(&mut h, &format!("{label}: {way}"));
         let text = settings_text(t.path(), "mkdx");
         assert!(text.contains(line), "{label}: {text}");
     }
-    let (read, problems) = settings::load(&paths_in(t.path()).settings("mkdx")).unwrap();
+    let (read, problems) = settings::read(&file).unwrap().unwrap();
     assert!(problems.is_empty(), "{problems:?}");
     assert_eq!(read.deadzone, 0.06);
+    assert_eq!(read.look, None, "a picture row changed by hand");
+    assert!(!settings_text(t.path(), "mkdx").contains("\nlook = "));
+}
+
+/// The first settings page of a game decides the look for the player's
+/// screen and saves it; a picture row changed by hand makes it Custom.
+#[test]
+fn the_look_row_sets_the_picture_and_a_hand_change_makes_it_custom() {
+    let mut f = Form::new(Settings::default(), Size::new(640, 480), Some((1280, 800)));
+    assert_eq!(f.value("look"), "Custom");
+    assert!(f.adjust("look", 1, true));
+    assert_eq!(
+        f.value("look"),
+        "Steam Deck",
+        "the look for this screen first"
+    );
+    assert_eq!(f.settings.output, Size::new(1280, 800));
+    assert!(f.adjust("look", 1, true), "Enter wraps around");
+    assert_eq!(f.value("look"), "Original");
+    assert_eq!(f.settings.render, None);
+    assert!(f.adjust("upscaler", 1, false));
+    assert_eq!(f.value("look"), "Custom");
+    assert!(f.adjust("deadzone", 1, false));
+    assert!(f.settings.look.is_none());
+    let t = tempfile::tempdir().unwrap();
+    let mut h = hub(t.path());
+    h.state_mut().set_screen(Some((1280, 800)));
+    select(&mut h, "fzax");
+    open_tab(&mut h, Tab::Settings);
+    assert!(settings_text(t.path(), "fzax").contains("\nlook = steam_deck\n"));
 }
 
 #[test]
 fn sharpness_is_off_without_fsr_or_nis() {
-    let mut f = Form::new(Settings::default(), Size::new(1360, 768));
+    let mut f = Form::new(Settings::default(), Size::new(1360, 768), None);
     assert!(f.disabled("sharpness").is_none());
     assert!(f.adjust("upscaler", 2, false));
     assert_eq!(f.value("upscaler"), "Smooth");
@@ -249,7 +288,7 @@ fn sharpness_is_off_without_fsr_or_nis() {
 
 #[test]
 fn render_and_output_step_through_their_sizes_and_keep_a_custom_one() {
-    let mut f = Form::new(Settings::default(), Size::new(1360, 768));
+    let mut f = Form::new(Settings::default(), Size::new(1360, 768), None);
     assert_eq!(f.value("render"), "Native, 1360 × 768");
     f.adjust("render", 9, false);
     assert_eq!(f.value("render"), "3840 × 2160 (4K)");

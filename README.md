@@ -93,9 +93,17 @@ game and press **Play**.
   **Play**. A game that can't start yet says why.
 - **Controls**: the wheels and pads the launcher sees, which one drives the
   car, the pad layout, and a live check of steering, pedals and buttons.
-- **Settings**: the selected game's picture options and the stick dead
-  zone, saved as you change them, plus your game folders and
+- **Settings**: the selected game's look and picture options and the
+  stick dead zone, saved as you change them, plus your game folders and
   `segaboot.gcm`.
+
+| Look | What it sets |
+|---|---|
+| **Original** | The game as shipped: the cabinet's own size, smooth scaling to your screen |
+| **Recommended** | The game drawn as large as your screen allows, FSR to fill it (chosen for you the first time) |
+| **Steam Deck** | Sized for the Deck's 1280×800 screen (chosen for you on a Deck) |
+
+Changing one of the picture rows by hand makes the look **Custom**.
 
 Everything works with a mouse, the keyboard or a pad: the d-pad or left
 stick moves, A chooses, B goes back, Start plays, Y opens Settings, the
@@ -139,6 +147,7 @@ them). Each is a line of `settings/<game>.cfg`.
 
 | Option | Values | What it changes |
 |---|---|---|
+| `--look` | `original`, `recommended`, `steam_deck` | Sets the picture options at once; other options given with it win |
 | `--render` | `native` or a size such as `2560x1440` | The size the game draws at (Triforce games: 480 lines times 1 to 8) |
 | `--output` | a size | Linux: the size of the picture on your screen |
 | `--upscaler` | `fsr`, `nis`, `linear`, `nearest` | Linux: how the picture is stretched |
@@ -149,6 +158,7 @@ them). Each is a line of `settings/<game>.cfg`.
 
 ```sh
 nintendo-launcher --play fzax
+nintendo-launcher --set mkgp2 --look steam_deck
 nintendo-launcher --set mkgp2 --render 2560x1440 --output 3840x2160 --upscaler fsr
 nintendo-launcher --list
 nintendo-launcher --check mkdx

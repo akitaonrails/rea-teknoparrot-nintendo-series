@@ -20,9 +20,10 @@ use std::time::Duration;
 
 use nintendo_core::catalog::{self, GAMES, Game, Route};
 use nintendo_core::input::Button;
-use nintendo_core::settings::{self, Settings};
+use nintendo_core::settings::{self, Look, Settings};
 use rea_launcher::catalog::{Host, Support};
 use rea_launcher::cfg::KeyStyle;
+use rea_launcher::cfg::Value;
 use rea_launcher::hub::cli::{self, BAD_COMMAND_LINE, CliSpec, Invocation, Mode, OK, REFUSED};
 use rea_launcher::hub::{HubConfig, HubPaths, PathKind, display_path, typed_path};
 use rea_launcher::library::{Found, Scan};
@@ -168,8 +169,8 @@ fn configure(paths: &HubPaths, config: &mut HubConfig, inv: &Invocation) -> Resu
 /// A game's settings; each line its file couldn't read is a warning.
 fn load_settings(paths: &HubPaths, game: &Game) -> Result<Settings, String> {
     let file = paths.settings(game.slug);
-    let (s, problems) =
-        settings::load(&file).map_err(|e| format!("Couldn't read {}: {e}", display_path(&file)))?;
+    let (s, problems) = settings::load(&file, game.native, None)
+        .map_err(|e| format!("Couldn't read {}: {e}", display_path(&file)))?;
     problems.iter().for_each(|p| warn(p));
     Ok(s)
 }
@@ -185,9 +186,27 @@ fn set(paths: &HubPaths, game: &Game, inv: &Invocation) -> Result<(), String> {
         return Ok(());
     }
     let mut s = load_settings(paths, game)?;
-    inv.apply_options(settings::OPTIONS, &[], |spec, v| {
-        let _ = s.apply(spec.key, v);
+    let before = s.clone();
+    // a look first, so the flags after it win
+    inv.apply_options(settings::OPTIONS, &["look"], |spec, v| match v {
+        Value::Choice(key) if spec.key == "look" => {
+            if let Some(look) = Look::from_key(key) {
+                look.apply(&mut s, game.native, None);
+            }
+        }
+        v => {
+            let _ = s.apply(spec.key, v);
+        }
     });
+    // a picture value changed without --look: the look is custom now
+    let looked = inv.options.iter().any(|(k, _)| *k == "look");
+    if !looked
+        && settings::PICTURE
+            .iter()
+            .any(|k| s.value(k) != before.value(k))
+    {
+        s.look = None;
+    }
     settings::write(&paths.settings(game.slug), &s)
         .map_err(|e| format!("Could not save the options: {e}"))
 }
@@ -373,6 +392,39 @@ mod tests {
         assert!(parse_v(&["--game", "mkdx"]).is_err());
         let inv = parse_v(&["--game", "mkdx", "--deadzone", "0.1"]).unwrap();
         assert_eq!(inv.mode, Mode::Set("mkdx".into()));
+    }
+
+    /// `--look` sets the look's values; a flag given with it wins, wherever
+    /// it stands.
+    #[test]
+    fn a_look_sets_its_values_and_the_other_flags_win() {
+        let t = tempfile::tempdir().unwrap();
+        let p = HubPaths {
+            data: t.path().into(),
+            components: t.path().join("c"),
+            dev_assets: None,
+        };
+        let inv = parse_v(&["--set", "mkdx", "--upscaler=nis", "--look", "steam_deck"]).unwrap();
+        set(&p, game_of("mkdx"), &inv).unwrap();
+        let (s, _) = settings::read(&p.settings("mkdx")).unwrap().unwrap();
+        assert_eq!(s.look, Some(Look::SteamDeck));
+        assert_eq!(s.output, rea_launcher::gamescope::Size::new(1280, 800));
+        assert_eq!(
+            s.upscaler,
+            rea_launcher::gamescope::Upscaler::Nis,
+            "the flag wins"
+        );
+        let inv = parse_v(&["--set", "fzax", "--look", "original"]).unwrap();
+        set(&p, game_of("fzax"), &inv).unwrap();
+        let (s, _) = settings::read(&p.settings("fzax")).unwrap().unwrap();
+        assert_eq!((s.look, s.render), (Some(Look::Original), None));
+        // a picture flag alone: the look is custom now
+        let inv = parse_v(&["--set", "fzax", "--upscaler", "nis"]).unwrap();
+        set(&p, game_of("fzax"), &inv).unwrap();
+        assert_eq!(
+            settings::read(&p.settings("fzax")).unwrap().unwrap().0.look,
+            None
+        );
     }
 
     #[test]

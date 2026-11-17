@@ -2,6 +2,11 @@
 # Every key is also a command-line flag with --set <game> or --play <game>:
 # render = 1920x1080 is --render 1920x1080.
 
+# Sets the picture options at once: the game as shipped, larger for your
+# screen, or for the Steam Deck. Options set after it win.
+# Values: original, recommended or steam_deck.
+#look =
+
 # The size the game draws at. Bigger is sharper and needs a stronger GPU.
 # Values: WIDTHxHEIGHT or native.
 render = native

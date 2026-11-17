@@ -287,6 +287,7 @@ fn looks() -> Vec<(&'static str, Settings)> {
         (
             "custom",
             Settings {
+                look: None,
                 render: Some(Size::new(1920, 1080)),
                 output: Size::new(2560, 1440),
                 upscaler: Upscaler::Nis,

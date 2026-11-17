@@ -9,13 +9,14 @@ nintendo-launcher — F-Zero AX, the Mario Kart Arcade GP games and Luigi's Mans
   nintendo-launcher --set <game> <options>   save options for a game without starting it (also --game)
 
 Options (saved in that game's settings):
-  --render <WxH|native>              Game render size
-  --output <WxH>                     Output size (Linux helper)
-  --upscaler fsr|nis|linear|nearest  Upscaler (Linux helper)
-  --sharpness <0-20>                 Sharpness (Linux helper)
-  --crt off|lottes                   CRT look (Linux helper)
-  --fullscreen on|off                Fullscreen (Linux helper)
-  --deadzone <0.00-0.30>             Dead zone
+  --look original|recommended|steam_deck  Look
+  --render <WxH|native>                   Game render size
+  --output <WxH>                          Output size (Linux helper)
+  --upscaler fsr|nis|linear|nearest       Upscaler (Linux helper)
+  --sharpness <0-20>                      Sharpness (Linux helper)
+  --crt off|lottes                        CRT look (Linux helper)
+  --fullscreen on|off                     Fullscreen (Linux helper)
+  --deadzone <0.00-0.30>                  Dead zone
 
 Test options for --play:
   --headless               run in an invisible display

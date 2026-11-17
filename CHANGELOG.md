@@ -6,6 +6,14 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
+### Added
+
+- Looks, as in the family's other launchers: **Original** (the game as
+  shipped), **Recommended** (as large as your screen allows, with FSR) and
+  **Steam Deck**, in the Settings page and as `--look`. The first time a
+  game's settings are read, the look for your screen is chosen and saved;
+  changing a picture option by hand makes the look Custom.
+
 ### Changed
 
 - Updated rea-launcher-sdk to v0.10.0: the window, the command line, the

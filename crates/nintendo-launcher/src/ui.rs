@@ -9,7 +9,7 @@ use std::path::{Path, PathBuf};
 use eframe::egui::Color32;
 use nintendo_core::catalog::{self, GAMES, Game, Route};
 use nintendo_core::input::{Button, default_pad_map};
-use nintendo_core::settings::{self, Settings};
+use nintendo_core::settings::{self, Look, Settings};
 use rea_launcher::catalog::{Host, Support};
 use rea_launcher::gamescope::{Size, Upscaler};
 use rea_launcher::hub::{self, HubConfig, HubPaths, Input};
@@ -192,9 +192,9 @@ impl HubBackend for Launcher {
         unknown.chain(unread).collect()
     }
 
-    fn form(&mut self, game: usize, _screen: Option<(u32, u32)>) -> Form {
-        let file = self.paths.settings(GAMES[game].slug);
-        let settings = match settings::load(&file) {
+    fn form(&mut self, game: usize, screen: Option<(u32, u32)>) -> Form {
+        let (file, native) = (self.paths.settings(GAMES[game].slug), GAMES[game].native);
+        let settings = match settings::load(&file, native, screen) {
             Ok((s, problems)) => {
                 for p in problems {
                     self.log.line(&format!("{}: {p}", hub::display_path(&file)));
@@ -207,7 +207,7 @@ impl HubBackend for Launcher {
                 Settings::default()
             }
         };
-        Form::new(settings, GAMES[game].native)
+        Form::new(settings, native, screen)
     }
 
     fn session(
@@ -215,7 +215,7 @@ impl HubBackend for Launcher {
         game: usize,
         library: &Scan<Game>,
         config: &HubConfig,
-        _screen: Option<(u32, u32)>,
+        screen: Option<(u32, u32)>,
     ) -> Result<Session, String> {
         #[cfg(test)]
         if let Some(s) = self.next.take() {
@@ -228,7 +228,7 @@ impl HubBackend for Launcher {
             .ok_or_else(|| format!("{} is not in your library folders", g.title))?)
         .clone();
         let file = self.paths.settings(g.slug);
-        let (settings, problems) = settings::load(&file)
+        let (settings, problems) = settings::load(&file, g.native, screen)
             .map_err(|e| format!("{} can't be read: {e}", hub::display_path(&file)))?;
         for p in problems {
             self.log.line(&format!("{}: {p}", hub::display_path(&file)));
@@ -378,13 +378,19 @@ fn render_choices(current: Option<Size>) -> Vec<Option<Size>> {
 #[derive(Debug, Clone, PartialEq)]
 pub struct Form {
     pub settings: Settings,
-    /// The cabinet's own screen size, for "native".
+    /// The cabinet's own screen size, for "native" and the looks.
     native: Size,
+    /// The player's screen, for the looks.
+    screen: Option<(u32, u32)>,
 }
 
 impl Form {
-    pub fn new(settings: Settings, native: Size) -> Form {
-        Form { settings, native }
+    pub fn new(settings: Settings, native: Size, screen: Option<(u32, u32)>) -> Form {
+        Form {
+            settings,
+            native,
+            screen,
+        }
     }
 }
 
@@ -392,6 +398,7 @@ impl HubForm for Form {
     fn value(&self, key: &str) -> String {
         let s = &self.settings;
         match key {
+            "look" => s.look.map_or("Custom".into(), |l| l.label().to_string()),
             "render" => match s.render {
                 None => format!("Native, {}", hub::size_name(self.native)),
                 Some(z) => hub::size_name(z),
@@ -416,6 +423,12 @@ impl HubForm for Form {
         let before = self.settings.clone();
         let s = &mut self.settings;
         match key {
+            // from Custom, the look for this screen first
+            "look" => match s.look {
+                Some(cur) => hub::pick(&Look::ALL, cur, d, wrap),
+                None => Look::recommended(self.screen),
+            }
+            .apply(s, self.native, self.screen),
             "render" => s.render = hub::pick(&render_choices(s.render), s.render, d, wrap),
             "output" => s.output = hub::pick(&output_choices(s.output), s.output, d, wrap),
             "upscaler" => s.upscaler = hub::pick(&Upscaler::ALL, s.upscaler, d, wrap),
@@ -426,6 +439,9 @@ impl HubForm for Form {
                 s.deadzone = pct.clamp(0, 30) as f32 / 100.0;
             }
             _ => {}
+        }
+        if settings::PICTURE.contains(&key) && self.settings != before {
+            self.settings.look = None;
         }
         self.settings != before
     }

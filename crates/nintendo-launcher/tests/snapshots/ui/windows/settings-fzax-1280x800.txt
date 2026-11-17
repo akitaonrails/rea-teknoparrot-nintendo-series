@@ -1,20 +1,23 @@
 Label = "F-Zero AX Monster Ride settings"
 Label = "Changes are saved as you make them and used the next time you press Play."
-Button "Game render size" = "Native, 640 × 480" (The size the game draws at. Bigger is sharper and needs a stronger GPU.) @67,238 742x64
-Button "Game render size: previous" @493,248 31x44
-Button "Game render size: next" @767,248 31x44
-Button "Output size" = "3840 × 2160 (4K)" (On Windows the game sets its own screen mode; this option is for gamescope on Linux.) [disabled] @67,302 742x64
-Button "Upscaler" = "FSR 1 (sharp upscale)" (On Windows the game sets its own screen mode; this option is for gamescope on Linux.) [disabled] @67,367 742x64
-Button "Sharpness" = "5" (On Windows the game sets its own screen mode; this option is for gamescope on Linux.) [disabled] @67,431 742x64
-Button "Fullscreen" = "On" (On Windows the game sets its own screen mode; this option is for gamescope on Linux.) [disabled] @67,496 742x64
-Button "Dead zone" = "5%" (How far a controller stick moves before the car starts to steer.) @67,560 742x64
-Button "Dead zone: previous" @493,570 31x44
-Button "Dead zone: next" @767,570 31x44
+Button "Look" = "Recommended" (Sets the picture options at once: the game as shipped, larger for your screen, or for the Steam Deck. Options set after it win.) @67,238 742x64
+Button "Look: previous" @493,248 31x44
+Button "Look: next" @767,248 31x44
+Button "Game render size" = "1440 × 1080" (The size the game draws at. Bigger is sharper and needs a stronger GPU.) @67,302 742x64
+Button "Game render size: previous" @493,312 31x44
+Button "Game render size: next" @767,312 31x44
+Button "Output size" = "1920 × 1080 (1080p)" (On Windows the game sets its own screen mode; this option is for gamescope on Linux.) [disabled] @67,367 742x64
+Button "Upscaler" = "FSR 1 (sharp upscale)" (On Windows the game sets its own screen mode; this option is for gamescope on Linux.) [disabled] @67,431 742x64
+Button "Sharpness" = "5" (On Windows the game sets its own screen mode; this option is for gamescope on Linux.) [disabled] @67,496 742x64
+Button "Fullscreen" = "On" (On Windows the game sets its own screen mode; this option is for gamescope on Linux.) [disabled] @67,560 742x64
+Button "Dead zone" = "5%" (How far a controller stick moves before the car starts to steer.) @67,624 742x64
+Button "Dead zone: previous" @493,634 31x44
+Button "Dead zone: next" @767,634 31x44
 Label = "<tmp>\\games"
 Label = "0 of 4 games found."
 Button "Rescan" @862,327 333x51
 Button "Folders and files" @862,393 333x51
-Label = "The size the game draws at. Bigger is sharper and needs a stronger GPU."
+Label = "Sets the picture options at once: the game as shipped, larger for your screen, or for the Steam Deck. Options set after it win."
 Tab "Games" [off] @362,19 86x42
 Tab "Controls" [off] @457,19 101x42
 Tab "Settings" [on] @568,19 101x42

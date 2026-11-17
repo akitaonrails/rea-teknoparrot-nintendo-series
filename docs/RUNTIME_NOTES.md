@@ -104,6 +104,14 @@ windowsarcadeloader, the launcher's Wine server).
 | Mario Kart DX, the input script, SIGTERM to the launcher at 150 s (quit from a terminal) | coins, Start, character and cup chosen through the launcher's pipe: "Select Round", Toad Cup; the launcher stopped the session on the signal, `stopped 0 leftover`; nothing left |
 | Mario Kart DX, `--no-input`, the launcher killed at 100 s | the game kept running with no input (the loader's input is held open; it quit at once before), "Press item button" at 90 s; after the kill no windowsarcadeloader, Wine server or gamescope was left |
 
+Looks (2026-11-17): `--set fzax --look steam_deck`, then `--play fzax
+--headless`: gamescope `-w 1280 -h 960 -W 1280 -H 800 -F linear`, Dolphin
+`InternalResolution = 2`; `--look original`: `-w 640 -h 480 -W 1920 -H
+1080 -F linear`, `InternalResolution = 1`. Both runs were stopped at 25 s,
+while Dolphin was still booting: it didn't answer the stop within the 8 s
+grace and was ended, nothing left behind (stopped at 120 s, in a race, it
+saves and quits by itself).
+
 Not run headless: closing the hub window itself (it needs a display);
 the window's close-stops-the-game path is covered by the SDK's window
 tests, and the quit from the game's own menu doesn't exist on these
