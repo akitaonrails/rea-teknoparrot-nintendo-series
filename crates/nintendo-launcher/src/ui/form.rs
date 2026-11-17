@@ -5,8 +5,9 @@
 
 use std::path::Path;
 
-use nintendo_core::settings::{Settings, Size, Upscaler};
+use nintendo_core::settings::Settings;
 use rea_launcher::catalog::Host;
+use rea_launcher::gamescope::{Size, Upscaler};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Row {
@@ -211,13 +212,7 @@ impl Form {
 /// Write `settings` into the file at `path`, keeping the player's comments
 /// and unknown keys; atomically (temporary file, then rename).
 pub fn save(path: &Path, settings: &Settings) -> std::io::Result<()> {
-    let existing = std::fs::read_to_string(path).unwrap_or_default();
-    if let Some(p) = path.parent() {
-        std::fs::create_dir_all(p)?;
-    }
-    let tmp = path.with_extension("cfg.tmp");
-    std::fs::write(&tmp, settings.save(&existing))?;
-    std::fs::rename(tmp, path)
+    nintendo_core::settings::write(path, settings)
 }
 
 #[cfg(test)]
@@ -232,10 +227,13 @@ mod tests {
     fn every_row_has_a_settings_key_and_crt_is_not_one() {
         for row in Row::ALL {
             assert_eq!(Row::from_key(row.key()), Some(row));
-            assert!(nintendo_core::settings::KEYS.contains(&row.key()));
+            assert!(
+                rea_launcher::cfg::spec::find(nintendo_core::settings::OPTIONS, row.key())
+                    .is_some()
+            );
         }
         assert_eq!(Row::from_key("crt"), None);
-        assert_eq!(Row::ALL.len(), nintendo_core::settings::KEYS.len() - 1);
+        assert_eq!(Row::ALL.len(), nintendo_core::settings::OPTIONS.len() - 1);
     }
 
     #[test]
@@ -353,7 +351,7 @@ mod tests {
             "{text}"
         );
         let (back, problems) = Settings::parse(&text);
-        assert!(problems.is_empty());
+        assert_eq!(problems.len(), 1, "only the unknown key: {problems:?}");
         assert_eq!(back, f.settings);
         assert_eq!(back.output, Size::new(1920, 1080));
         assert!(!back.fullscreen);

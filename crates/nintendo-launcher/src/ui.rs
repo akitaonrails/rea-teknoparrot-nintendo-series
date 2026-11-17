@@ -2603,7 +2603,8 @@ fn ellipsized_text(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use nintendo_core::settings::{Settings, Size};
+    use nintendo_core::settings::Settings;
+    use rea_launcher::gamescope::Size;
     use rea_launcher_ui::testing::kittest::NodeT as _;
     use rea_launcher_ui::testing::{self, Harness, Queryable};
     use std::path::Path;
@@ -2940,7 +2941,7 @@ mod tests {
         assert!(h.query_by_label_contains("crt").is_none());
 
         let mut expect = Settings {
-            crt: nintendo_core::settings::Crt::Lottes,
+            crt: rea_launcher::gamescope::Crt::Lottes,
             ..Settings::default()
         };
         type Change = Box<dyn Fn(&mut Settings)>;
@@ -2961,7 +2962,7 @@ mod tests {
                 Row::Upscaler,
                 "next",
                 "Upscaler",
-                Box::new(|s| s.upscaler = nintendo_core::settings::Upscaler::Nis),
+                Box::new(|s| s.upscaler = rea_launcher::gamescope::Upscaler::Nis),
             ),
             (
                 Row::Sharpness,
@@ -3085,7 +3086,7 @@ mod tests {
         h.run_steps(3);
         assert_eq!(
             settings_of(&paths, GAMES[0].slug).0.upscaler,
-            nintendo_core::settings::Upscaler::Nis
+            rea_launcher::gamescope::Upscaler::Nis
         );
         h.get_by_role_and_label(Role::Button, "Upscaler").click();
         h.run_steps(3);
@@ -3100,7 +3101,7 @@ mod tests {
         }
         assert_eq!(
             settings_of(&paths, GAMES[0].slug).0.upscaler,
-            nintendo_core::settings::Upscaler::Fsr
+            rea_launcher::gamescope::Upscaler::Fsr
         );
         assert!(!testing::disabled(
             &h.get_by_role_and_label(Role::Button, "Sharpness")

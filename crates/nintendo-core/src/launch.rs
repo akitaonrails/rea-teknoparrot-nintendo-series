@@ -20,7 +20,9 @@ use rea_launcher::catalog::Host;
 
 use crate::catalog::{Game, Patch, Route};
 use crate::input::{DolphinPad, StickLayout};
-use crate::settings::{Crt, Settings, Size};
+use rea_launcher::gamescope::{Crt, Size};
+
+use crate::settings::Settings;
 
 /// A process to start.
 #[derive(Debug, Clone, PartialEq, Eq)]

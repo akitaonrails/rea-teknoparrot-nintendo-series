@@ -17,8 +17,9 @@ use std::process::Command;
 use nintendo_core::catalog::{GAMES, Route};
 use nintendo_core::launch::{self, Components, DolphinWheel, Places};
 use nintendo_core::runtime::{self, Item};
-use nintendo_core::settings::{Crt, Settings, Size, Upscaler};
+use nintendo_core::settings::Settings;
 use rea_launcher::catalog::Host;
+use rea_launcher::gamescope::{Crt, Size, Upscaler};
 
 /// A path as the snapshot spells it on every system (Windows joins with `\`).
 fn p(path: &Path) -> String {

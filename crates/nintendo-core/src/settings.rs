@@ -1,100 +1,95 @@
 //! Per-game settings, stored as `key = value` lines in
-//! `<data>/settings/<slug>.cfg`. Unknown keys and comments are kept when the
-//! launcher rewrites the file, so a player's notes survive.
+//! `<data>/settings/<slug>.cfg`.
+//!
+//! [`OPTIONS`] names every setting once (`rea_launcher::cfg` option specs):
+//! its key, its flag, the values it takes, and the label and description
+//! the window and `--help` show. The file parser, the command line,
+//! `--help`, the template and the window rows all come from it. A save
+//! writes only the keys that changed, keeping comments, unknown keys and
+//! lines the launcher couldn't read as the player wrote them.
 
-use std::fmt;
+use std::io;
+use std::path::Path;
 
-/// How gamescope scales the game's picture to the screen.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Upscaler {
-    /// Bilinear, gamescope's default.
-    Linear,
-    /// AMD FidelityFX Super Resolution 1 (spatial; any GPU).
-    Fsr,
-    /// NVIDIA Image Scaling (spatial; any GPU).
-    Nis,
-    /// Sharp pixels.
-    Nearest,
-}
+use rea_launcher::cfg::{self, Kind, OptionSpec, Rejected, Resolution, Value};
+use rea_launcher::gamescope::{CRTS, Crt, SIZE_MAX, SIZE_MIN, Size, UPSCALERS, Upscaler};
 
-impl Upscaler {
-    pub const ALL: [Upscaler; 4] = [
-        Upscaler::Fsr,
-        Upscaler::Nis,
-        Upscaler::Linear,
-        Upscaler::Nearest,
-    ];
-    pub fn key(self) -> &'static str {
-        match self {
-            Upscaler::Linear => "linear",
-            Upscaler::Fsr => "fsr",
-            Upscaler::Nis => "nis",
-            Upscaler::Nearest => "nearest",
-        }
-    }
-    pub fn label(self) -> &'static str {
-        match self {
-            Upscaler::Linear => "Smooth",
-            Upscaler::Fsr => "FSR 1 (sharp upscale)",
-            Upscaler::Nis => "NVIDIA Image Scaling",
-            Upscaler::Nearest => "Sharp pixels",
-        }
-    }
-    pub fn parse(s: &str) -> Option<Self> {
-        Self::ALL.into_iter().find(|u| u.key() == s)
-    }
-}
+/// `render = native`: the cabinet's own size.
+const NATIVE: &cfg::Aliases = &[("native", Resolution::Original)];
 
-/// A CRT look drawn over the game by gamescope (a ReShade effect).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Crt {
-    Off,
-    /// Timothy Lottes' CRT shader: scanlines, shadow mask, slight curvature.
-    Lottes,
-}
+/// What the dead zone takes (a fraction of the stick's travel, stored as
+/// written: `0.05`).
+const DEADZONE: &str = "0 to 0.3";
 
-impl Crt {
-    pub const ALL: [Crt; 2] = [Crt::Off, Crt::Lottes];
-    pub fn key(self) -> &'static str {
-        match self {
-            Crt::Off => "off",
-            Crt::Lottes => "lottes",
-        }
-    }
-    pub fn label(self) -> &'static str {
-        match self {
-            Crt::Off => "Off",
-            Crt::Lottes => "CRT (scanlines and mask)",
-        }
-    }
-    pub fn parse(s: &str) -> Option<Self> {
-        Self::ALL.into_iter().find(|c| c.key() == s)
-    }
-}
+/// Every per-game setting. `crt` has no window row (command line only
+/// until it was checked on a real screen); the gamescope rows are Linux's
+/// (shown off on Windows, where the games draw full screen themselves).
+pub static OPTIONS: &[OptionSpec] = &[
+    OptionSpec::new(
+        "render",
+        Kind::Size {
+            min: SIZE_MIN,
+            max: SIZE_MAX,
+            aliases: NATIVE,
+        },
+        "Game render size",
+        "The size the game draws at. Bigger is sharper and needs a stronger GPU.",
+    )
+    .with_placeholder("<WxH|native>"),
+    OptionSpec::new(
+        "output",
+        Kind::Size {
+            min: SIZE_MIN,
+            max: SIZE_MAX,
+            aliases: cfg::SIZES_ONLY,
+        },
+        "Output size",
+        "The size of the picture on your screen. Pick your screen's size.",
+    )
+    .helper_owned(),
+    OptionSpec::new(
+        "upscaler",
+        Kind::Choice(UPSCALERS),
+        "Upscaler",
+        "How the game's picture is stretched to the output size.",
+    )
+    .helper_owned(),
+    OptionSpec::new(
+        "sharpness",
+        Kind::Range { min: 0, max: 20 },
+        "Sharpness",
+        "How crisp the upscaler makes edges. 0 is the sharpest.",
+    )
+    .helper_owned(),
+    OptionSpec::new(
+        "crt",
+        Kind::Choice(CRTS),
+        "CRT look",
+        "Scanlines and a shadow mask drawn over the game.",
+    )
+    .launcher_only()
+    .helper_owned(),
+    OptionSpec::new(
+        "fullscreen",
+        Kind::Toggle,
+        "Fullscreen",
+        "Fill the whole screen, or play in a window.",
+    )
+    .helper_owned(),
+    OptionSpec::new(
+        "deadzone",
+        Kind::Text,
+        "Dead zone",
+        "How far a controller stick moves before the car starts to steer.",
+    )
+    .with_needs(DEADZONE)
+    .with_placeholder("<0-0.3>"),
+];
 
-/// A width × height.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct Size {
-    pub w: u32,
-    pub h: u32,
-}
-
-impl Size {
-    pub const fn new(w: u32, h: u32) -> Self {
-        Self { w, h }
-    }
-    pub fn parse(s: &str) -> Option<Self> {
-        let (w, h) = s.trim().split_once(['x', 'X'])?;
-        let (w, h) = (w.trim().parse().ok()?, h.trim().parse().ok()?);
-        (w >= 320 && h >= 240 && w <= 15360 && h <= 8640).then_some(Self { w, h })
-    }
-}
-
-impl fmt::Display for Size {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}x{}", self.w, self.h)
-    }
-}
+/// Comment lines at the top of a new settings file.
+pub const HEADING: &str = "Settings for one game of the Nintendo arcade launcher.\n\
+    Every key is also a command-line flag with --set <game> or --play <game>: \
+    render = 1920x1080 is --render 1920x1080.";
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Settings {
@@ -125,67 +120,42 @@ impl Default for Settings {
     }
 }
 
-pub const KEYS: &[&str] = &[
-    "render",
-    "output",
-    "upscaler",
-    "sharpness",
-    "crt",
-    "fullscreen",
-    "deadzone",
-];
-
 impl Settings {
-    /// Read a settings file; bad values fall back to the default and are reported.
-    pub fn parse(text: &str) -> (Self, Vec<String>) {
-        let mut s = Settings::default();
-        let mut problems = Vec::new();
-        for (n, line) in text.lines().enumerate() {
-            let line = line.trim();
-            if line.is_empty() || line.starts_with('#') {
-                continue;
+    /// Takes one checked value (from the file or a flag).
+    pub fn apply(&mut self, key: &str, value: Value) -> Result<(), Rejected> {
+        match (key, value) {
+            ("render", Value::Size(Resolution::Size(w, h))) => self.render = Some(Size::new(w, h)),
+            ("render", Value::Size(_)) => self.render = None,
+            ("output", Value::Size(Resolution::Size(w, h))) => self.output = Size::new(w, h),
+            ("upscaler", Value::Choice(v)) => {
+                self.upscaler = Upscaler::parse(v).ok_or(Rejected::Unknown)?;
             }
-            let Some((k, v)) = line.split_once('=') else {
-                problems.push(format!("line {}: no '='", n + 1));
-                continue;
-            };
-            let (k, v) = (k.trim(), v.trim());
-            let ok = match k {
-                "render" => {
-                    if v == "native" {
-                        s.render = None;
-                        true
-                    } else {
-                        Size::parse(v).map(|z| s.render = Some(z)).is_some()
-                    }
-                }
-                "output" => Size::parse(v).map(|z| s.output = z).is_some(),
-                "upscaler" => Upscaler::parse(v).map(|u| s.upscaler = u).is_some(),
-                "sharpness" => v
-                    .parse::<u8>()
-                    .ok()
-                    .filter(|x| *x <= 20)
-                    .map(|x| s.sharpness = x)
-                    .is_some(),
-                "crt" => Crt::parse(v).map(|c| s.crt = c).is_some(),
-                "fullscreen" => parse_bool(v).map(|b| s.fullscreen = b).is_some(),
-                "deadzone" => v
+            ("sharpness", Value::Number(n)) => self.sharpness = n as u8,
+            ("crt", Value::Choice(v)) => self.crt = Crt::parse(v).ok_or(Rejected::Unknown)?,
+            ("fullscreen", Value::Toggle(b)) => self.fullscreen = b,
+            ("deadzone", Value::Text(v)) => {
+                self.deadzone = v
                     .parse::<f32>()
                     .ok()
                     .filter(|x| (0.0..=0.3).contains(x))
-                    .map(|x| s.deadzone = x)
-                    .is_some(),
-                _ => true, // unknown keys are kept, not an error
-            };
-            if !ok {
-                problems.push(format!("line {}: bad value for {k}: {v}", n + 1));
+                    .ok_or_else(|| Rejected::needs(DEADZONE))?;
             }
+            _ => return Err(Rejected::Unknown),
         }
+        Ok(())
+    }
+
+    /// Reads a settings file; bad values fall back to the default and are
+    /// reported.
+    pub fn parse(text: &str) -> (Self, Vec<String>) {
+        let mut s = Settings::default();
+        let problems = cfg::spec::parse_file(text, "settings", OPTIONS, |k, v| s.apply(k, v));
         (s, problems)
     }
 
-    pub fn value(&self, key: &str) -> String {
-        match key {
+    /// The file value of `key`.
+    pub fn value(&self, key: &str) -> Option<String> {
+        Some(match key {
             "render" => self.render.map_or("native".into(), |z| z.to_string()),
             "output" => self.output.to_string(),
             "upscaler" => self.upscaler.key().into(),
@@ -193,43 +163,60 @@ impl Settings {
             "crt" => self.crt.key().into(),
             "fullscreen" => self.fullscreen.to_string(),
             "deadzone" => format!("{:.2}", self.deadzone),
-            _ => unreachable!("unknown settings key {key}"),
-        }
+            _ => return None,
+        })
     }
 
-    /// Rewrite `existing` with these settings' values, keeping comments and
-    /// unknown keys in place and appending missing keys.
+    /// Rewrites `existing` with these settings, keeping comments and
+    /// unknown keys in place: a key is written when its value differs from
+    /// what `existing` says, or `existing` doesn't have it. A line the
+    /// launcher couldn't read (`fullscreen = off # mine`) stays as the
+    /// player wrote it unless that setting is changed. A new file starts
+    /// from the commented template.
     pub fn save(&self, existing: &str) -> String {
-        let mut seen = Vec::new();
-        let mut out = Vec::new();
-        for line in existing.lines() {
-            let key = line
-                .split_once('=')
-                .map(|(k, _)| k.trim())
-                .filter(|k| KEYS.contains(k));
-            match key {
-                Some(k) if !line.trim_start().starts_with('#') => {
-                    seen.push(k.to_string());
-                    out.push(format!("{k} = {}", self.value(k)));
-                }
-                _ => out.push(line.to_string()),
+        let new = existing.trim().is_empty();
+        let (was, _) = Settings::parse(existing);
+        let mut out = if new {
+            template()
+        } else {
+            existing.to_string()
+        };
+        for spec in OPTIONS {
+            let Some(now) = self.value(spec.key) else {
+                continue;
+            };
+            let has_line = cfg::entries(existing).any(|e| spec.answers_to(e.key));
+            if new || !has_line || Some(&now) != was.value(spec.key).as_ref() {
+                out = cfg::spec::set_key(&out, spec, &now);
             }
         }
-        for k in KEYS {
-            if !seen.iter().any(|s| s == k) {
-                out.push(format!("{k} = {}", self.value(k)));
-            }
-        }
-        out.join("\n") + "\n"
+        out
     }
 }
 
-fn parse_bool(v: &str) -> Option<bool> {
-    match v {
-        "true" | "1" | "yes" | "on" => Some(true),
-        "false" | "0" | "no" | "off" => Some(false),
-        _ => None,
-    }
+/// A game's settings file and the lines it couldn't read (`None`: no file
+/// yet). An unreadable file is an error, never defaults a later save would
+/// write over it.
+pub fn read(file: &Path) -> io::Result<Option<(Settings, Vec<String>)>> {
+    Ok(cfg::read_file(file)?.map(|text| Settings::parse(&text)))
+}
+
+/// A game's settings and the lines its file couldn't read; defaults when
+/// there is no file yet.
+pub fn load(file: &Path) -> io::Result<(Settings, Vec<String>)> {
+    Ok(read(file)?.unwrap_or_default())
+}
+
+/// Writes `s` into `file` ([`Settings::save`]) as a whole-file swap; a
+/// file that can't be read is left alone and the error returned.
+pub fn write(file: &Path, s: &Settings) -> io::Result<()> {
+    let existing = cfg::read_file(file)?.unwrap_or_default();
+    rea_launcher::fsx::write_atomic(file, s.save(&existing))
+}
+
+/// The template a new settings file starts from.
+pub fn template() -> String {
+    cfg::spec::template(HEADING, OPTIONS)
 }
 
 #[cfg(test)]
@@ -240,24 +227,105 @@ mod tests {
     fn round_trip_keeps_comments_and_unknown_keys() {
         let text = "# my notes\nupscaler = nis\nfuture_key = 7\noutput=2560x1440\ncrt = lottes\n";
         let (s, problems) = Settings::parse(text);
-        assert!(problems.is_empty());
+        assert_eq!(problems.len(), 1, "the unknown key, kept: {problems:?}");
         assert_eq!(s.upscaler, Upscaler::Nis);
         assert_eq!(s.output, Size::new(2560, 1440));
         assert_eq!(s.crt, Crt::Lottes);
         let saved = s.save(text);
-        assert!(saved.starts_with(
-            "# my notes\nupscaler = nis\nfuture_key = 7\noutput = 2560x1440\ncrt = lottes\n"
-        ));
-        assert!(saved.contains("render = native"));
+        assert!(saved.starts_with(text), "lines kept as written: {saved}");
+        assert!(saved.contains("\nrender = native\n"), "missing keys added");
         assert_eq!(Settings::parse(&saved).0, s);
+        assert_eq!(s.save(&saved), saved, "nothing changed, nothing written");
     }
 
     #[test]
     fn bad_values_fall_back_and_are_reported() {
         let (s, p) = Settings::parse(
-            "output = 99x99\nsharpness = 50\nfullscreen = maybe\ncrt = rainbow\nnonsense",
+            "output = 99x99\nsharpness = 50\nfullscreen = maybe\ncrt = rainbow\ndeadzone = 0.9\n",
         );
         assert_eq!(s, Settings::default());
         assert_eq!(p.len(), 5, "{p:?}");
+        assert!(p[4].contains("deadzone needs 0 to 0.3"), "{p:?}");
+    }
+
+    /// A line the launcher couldn't read stays as the player wrote it
+    /// when another setting is saved: it was replaced by the default.
+    #[test]
+    fn a_bad_line_is_never_replaced_by_the_default() {
+        let text = "fullscreen = off # mine\nsharpness = 5\n";
+        let (mut s, problems) = Settings::parse(text);
+        assert_eq!(problems.len(), 1);
+        assert!(s.fullscreen, "the default, for this run");
+        s.sharpness = 9;
+        assert!(
+            s.save(text)
+                .starts_with("fullscreen = off # mine\nsharpness = 9\n")
+        );
+    }
+
+    #[test]
+    fn a_byte_order_mark_hides_no_key() {
+        let text = "\u{feff}render = 1920x1080\n";
+        let (s, problems) = Settings::parse(text);
+        assert!(problems.is_empty(), "{problems:?}");
+        assert_eq!(s.render, Some(Size::new(1920, 1080)));
+        let saved = s.save(text);
+        assert!(saved.starts_with(text), "the BOM kept: {saved:?}");
+        assert_eq!(saved.matches("render =").count(), 1, "no duplicate key");
+    }
+
+    /// An unreadable file is an error, and a save leaves it alone (it was
+    /// read as empty and overwritten with defaults).
+    #[test]
+    fn an_unreadable_file_is_never_overwritten() {
+        let t = tempfile::tempdir().unwrap();
+        let file = t.path().join("mkdx.cfg");
+        std::fs::create_dir(&file).unwrap();
+        assert!(load(&file).is_err());
+        assert!(write(&file, &Settings::default()).is_err());
+        assert!(file.is_dir());
+        // Latin-1 is read, not refused
+        let file = t.path().join("fzax.cfg");
+        std::fs::write(&file, b"# Jo\xe3o\nsharpness = 3\n").unwrap();
+        assert_eq!(load(&file).unwrap().0.sharpness, 3);
+    }
+
+    #[test]
+    fn a_new_file_is_the_template_filled_in() {
+        let text = Settings::default().save("");
+        assert!(text.starts_with("# Settings for one game"), "{text}");
+        assert!(text.contains("\nrender = native\n") && text.contains("\ndeadzone = 0.05\n"));
+        assert_eq!(Settings::parse(&text), (Settings::default(), vec![]));
+    }
+
+    #[test]
+    fn every_option_reads_its_stored_format() {
+        let mut s = Settings::default();
+        for (key, value) in [
+            ("render", "2560x1440"),
+            ("output", "1920x1080"),
+            ("upscaler", "NIS"),
+            ("sharpness", "20"),
+            ("crt", "lottes"),
+            ("fullscreen", "false"),
+            ("deadzone", "0.3"),
+        ] {
+            let spec = cfg::spec::find(OPTIONS, key).unwrap();
+            s.apply(key, spec.parse(value).unwrap()).unwrap();
+        }
+        assert_eq!(
+            s,
+            Settings {
+                render: Some(Size::new(2560, 1440)),
+                output: Size::new(1920, 1080),
+                upscaler: Upscaler::Nis,
+                sharpness: 20,
+                crt: Crt::Lottes,
+                fullscreen: false,
+                deadzone: 0.3,
+            }
+        );
+        assert_eq!(s.value("fullscreen").as_deref(), Some("false"));
+        assert_eq!(s.value("deadzone").as_deref(), Some("0.30"));
     }
 }

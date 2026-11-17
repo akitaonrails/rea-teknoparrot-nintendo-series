@@ -18,7 +18,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
 
 use nintendo_core::catalog;
-use nintendo_core::settings::Settings;
+use nintendo_core::settings::{self, Settings};
 use rea_launcher::catalog::{Host, Support};
 use rea_launcher::library::Found;
 
@@ -103,21 +103,22 @@ fn parse_args(mut it: impl Iterator<Item = String>) -> Result<Option<Args>, Stri
 }
 
 fn load_settings(paths: &Paths, slug: &str) -> Settings {
-    let text = std::fs::read_to_string(paths.settings(slug)).unwrap_or_default();
-    Settings::parse(&text).0
+    settings::load(&paths.settings(slug)).unwrap_or_default().0
 }
 
 /// Apply `key = value` options to a game's settings file, keeping the rest.
 fn save_options(paths: &Paths, slug: &str, options: &[String]) -> std::io::Result<()> {
     let file = paths.settings(slug);
-    let old = std::fs::read_to_string(&file).unwrap_or_default();
-    let (settings, _) = Settings::parse(&format!("{old}\n{}", options.join("\n")));
-    if let Some(p) = file.parent() {
-        std::fs::create_dir_all(p)?;
+    let (mut s, _) = settings::load(&file)?;
+    let (given, _) = Settings::parse(&options.join("\n"));
+    for line in options {
+        let key = line.split_once(" = ").map_or("", |(k, _)| k);
+        if let Some(v) = given.value(key) {
+            let spec = rea_launcher::cfg::spec::find(settings::OPTIONS, key).expect("checked");
+            let _ = s.apply(key, spec.parse(&v).expect("its own value"));
+        }
     }
-    let tmp = file.with_extension("tmp");
-    std::fs::write(&tmp, settings.save(&old))?;
-    std::fs::rename(tmp, file)
+    settings::write(&file, &s)
 }
 
 fn main() -> ExitCode {

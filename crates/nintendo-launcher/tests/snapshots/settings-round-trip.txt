@@ -12,10 +12,11 @@ Settings {
     deadzone: 0.125,
 }
 --- problems
-line 8: bad value for sharpness: 50
-line 9: bad value for fullscreen: maybe
-line 10: no '='
-line 15: no '='
+settings line 3: unknown setting "future_key" (ignored, kept in the file)
+settings line 4: unknown setting "segaboot" (ignored, kept in the file)
+settings line 5: unknown setting "library" (ignored, kept in the file)
+settings line 8: sharpness needs 0 to 20, not "50"
+settings line 9: fullscreen needs on or off, not "maybe"
 --- saved
 # my notes about Mario Kart
 upscaler = nis
@@ -23,15 +24,15 @@ future_key = 7
 segaboot = /bios/segaboot.gcm
 library = /games
 # crt = lottes
-output = 2560x1440
-sharpness = 5
-fullscreen = true
+output=2560x1440
+sharpness = 50
+fullscreen = maybe
 no equals sign
+render = 1920x1080
 render = native
-render = native
-deadzone = 0.12
+deadzone = 0.125
 
 [section]
 crt = off
---- read back the same: false
---- problems: ["line 10: no '='", "line 15: no '='"]
+--- read back the same: true
+--- problems: ["settings line 3: unknown setting \"future_key\" (ignored, kept in the file)", "settings line 4: unknown setting \"segaboot\" (ignored, kept in the file)", "settings line 5: unknown setting \"library\" (ignored, kept in the file)", "settings line 8: sharpness needs 0 to 20, not \"50\"", "settings line 9: fullscreen needs on or off, not \"maybe\""]

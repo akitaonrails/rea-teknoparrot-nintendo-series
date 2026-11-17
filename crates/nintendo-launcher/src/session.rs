@@ -403,7 +403,7 @@ mod tests {
         assert!(!plain.join(" ").contains("bwrap"));
         // the CRT effect: gamescope with the runtime's HOME, the game with the player's
         let crt = Settings {
-            crt: nintendo_core::settings::Crt::Lottes,
+            crt: rea_launcher::gamescope::Crt::Lottes,
             ..Settings::default()
         };
         let plan = launch::plan(
@@ -452,7 +452,7 @@ mod tests {
     #[test]
     fn golden_command_lines() {
         let crt = Settings {
-            crt: nintendo_core::settings::Crt::Lottes,
+            crt: rea_launcher::gamescope::Crt::Lottes,
             ..Settings::default()
         };
         let libraries: Vec<PathBuf> = vec!["/lib".into(), "/tf games".into()];
