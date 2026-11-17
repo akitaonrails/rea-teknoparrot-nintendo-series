@@ -27,5 +27,5 @@ crt = off
 fullscreen = true
 
 # How far a controller stick moves before the car starts to steer.
-# Values: 0 to 0.3.
+# Values: 0.00 to 0.30.
 deadzone = 0.05

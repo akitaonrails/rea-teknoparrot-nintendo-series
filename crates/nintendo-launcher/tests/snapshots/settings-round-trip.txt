@@ -9,7 +9,7 @@ Settings {
     sharpness: 5,
     crt: Off,
     fullscreen: true,
-    deadzone: 0.125,
+    deadzone: 0.13,
 }
 --- problems
 settings line 3: unknown setting "future_key" (ignored, kept in the file)

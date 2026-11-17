@@ -17,10 +17,6 @@ use rea_launcher::gamescope::{CRTS, Crt, SIZE_MAX, SIZE_MIN, Size, UPSCALERS, Up
 /// `render = native`: the cabinet's own size.
 const NATIVE: &cfg::Aliases = &[("native", Resolution::Original)];
 
-/// What the dead zone takes (a fraction of the stick's travel, stored as
-/// written: `0.05`).
-const DEADZONE: &str = "0 to 0.3";
-
 /// Every per-game setting. `crt` has no window row (command line only
 /// until it was checked on a real screen); the gamescope rows are Linux's
 /// (shown off on Windows, where the games draw full screen themselves).
@@ -76,14 +72,17 @@ pub static OPTIONS: &[OptionSpec] = &[
         "Fill the whole screen, or play in a window.",
     )
     .helper_owned(),
+    // a fraction of the stick's travel, stored with two places: 0.05
     OptionSpec::new(
         "deadzone",
-        Kind::Text,
+        Kind::Decimal {
+            min: 0,
+            max: 30,
+            places: 2,
+        },
         "Dead zone",
         "How far a controller stick moves before the car starts to steer.",
-    )
-    .with_needs(DEADZONE)
-    .with_placeholder("<0-0.3>"),
+    ),
 ];
 
 /// Comment lines at the top of a new settings file.
@@ -133,13 +132,7 @@ impl Settings {
             ("sharpness", Value::Number(n)) => self.sharpness = n as u8,
             ("crt", Value::Choice(v)) => self.crt = Crt::parse(v).ok_or(Rejected::Unknown)?,
             ("fullscreen", Value::Toggle(b)) => self.fullscreen = b,
-            ("deadzone", Value::Text(v)) => {
-                self.deadzone = v
-                    .parse::<f32>()
-                    .ok()
-                    .filter(|x| (0.0..=0.3).contains(x))
-                    .ok_or_else(|| Rejected::needs(DEADZONE))?;
-            }
+            ("deadzone", Value::Decimal(d)) => self.deadzone = d.as_f32(),
             _ => return Err(Rejected::Unknown),
         }
         Ok(())
@@ -245,7 +238,7 @@ mod tests {
         );
         assert_eq!(s, Settings::default());
         assert_eq!(p.len(), 5, "{p:?}");
-        assert!(p[4].contains("deadzone needs 0 to 0.3"), "{p:?}");
+        assert!(p[4].contains("deadzone needs 0.00 to 0.30"), "{p:?}");
     }
 
     /// A line the launcher couldn't read stays as the player wrote it
