@@ -377,6 +377,7 @@ fn every_plan_of_every_game() {
                             runtime: PathBuf::from("/d/runtimes").join(g.slug),
                             wal_root: "/d/wal".into(),
                             segaboot: segaboot.clone(),
+                            wal_port: launch::WAL_PORT,
                         };
                         let headless_name = if headless { " headless" } else { "" };
                         let _ =

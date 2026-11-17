@@ -97,6 +97,8 @@ pub struct Places {
     pub wal_root: PathBuf,
     /// The Triforce test-menu program (`segaboot.gcm`), when the player has it.
     pub segaboot: Option<PathBuf>,
+    /// windowsarcadeloader's input port for this start.
+    pub wal_port: u16,
 }
 
 /// A wheel for Dolphin's own SDL backend (Windows): its SDL name and the
@@ -347,22 +349,24 @@ pub const WAL_PREFIX_TRICKS: &[&str] = &[
     "vcrun2022",
 ];
 
-/// The TCP port of windowsarcadeloader's input server for this launcher's
-/// games: not its default (33700), which the sister launchers' games use;
-/// one of them running stopped a game here ("Address already in use").
+/// The first TCP port tried for windowsarcadeloader's input server
+/// (`rea_launcher::wal::free_port_block` takes the first free block from
+/// it at each start): not its default (33700), where the sister
+/// launchers' games start; a port in use stopped a game here ("Address
+/// already in use").
 pub const WAL_PORT: u16 = 33790;
 
 /// The profile layer the launcher gives windowsarcadeloader: the runner,
-/// the launcher's own prefix with [`WAL_PREFIX_TRICKS`], its own input
-/// port, no ReShade or gamescope of its own (the launcher wraps the game).
+/// the launcher's own prefix with [`WAL_PREFIX_TRICKS`], the input
+/// `port` of this start, no ReShade or gamescope of its own (the launcher wraps the game).
 /// A headless run (a test in the background) reads no lightgun or mouse:
 /// windowsarcadeloader reads them itself (patches/wal/0003), and the desk's
 /// own mouse joined a test game as player 2.
-pub fn wal_layer(headless: bool) -> String {
+pub fn wal_layer(headless: bool, port: u16) -> String {
     let mut s = format!(
         "# Written by the launcher before every start.\n\
          runner: runner\nprefix: wine-prefix/nintendo\nprefix_tricks: [{}]\nreshade: false\n\
-         port: {WAL_PORT}\ngamescope:\n  enabled: false\n",
+         port: {port}\ngamescope:\n  enabled: false\n",
         WAL_PREFIX_TRICKS.join(", ")
     );
     if headless {
@@ -470,7 +474,7 @@ pub fn plan(
                 format!("{}\n", game.loader_path()),
             ));
             let layer = root.join(format!("layer-{}.yaml", game.slug));
-            files.push((layer.clone(), wal_layer(headless)));
+            files.push((layer.clone(), wal_layer(headless, places.wal_port)));
             links.push((root.join("systemprofiles"), c.wal.join("systemprofiles")));
             links.push((root.join("dist/payloads"), c.wal.join("payloads")));
             if host == Host::Linux {
@@ -547,6 +551,7 @@ mod tests {
             runtime: PathBuf::from("/d/runtimes").join(slug),
             wal_root: "/d/wal".into(),
             segaboot: None,
+            wal_port: WAL_PORT,
         }
     }
 
@@ -754,7 +759,7 @@ mod tests {
         assert!(layer.contains("prefix: wine-prefix/nintendo"));
         assert!(layer.contains("\nport: 33790\n"));
         assert!(!layer.contains("guns_enabled"));
-        assert!(wal_layer(true).ends_with("input:\n  guns_enabled: false\n"));
+        assert!(wal_layer(true, WAL_PORT).ends_with("input:\n  guns_enabled: false\n"));
         assert!(layer.contains("prefix_tricks: [dmband, "));
         assert!(
             layer.contains("fakejapanese")

@@ -21,6 +21,7 @@ use rea_launcher::gamescope::CommandLine;
 use rea_launcher::library::Entry;
 use rea_launcher::linkfarm::{self, Occupied, Op};
 use rea_launcher::session;
+use rea_launcher::wal;
 use rea_launcher::wheel::Script;
 use rea_launcher_native::feeder::{self, Feeding, Scripted, Tuning, WheelInfo};
 use rea_launcher_native::group::{Group, Tag};
@@ -139,6 +140,7 @@ pub fn prepare(
         runtime: rt.clone(),
         wal_root: paths.wal_root(),
         segaboot: config.segaboot.clone().filter(|s| s.is_file()),
+        wal_port: wal::free_port_block(launch::WAL_PORT),
     };
     let plan = launch::plan(
         game,
@@ -375,6 +377,7 @@ mod tests {
             runtime: "/d/rt/mkdx".into(),
             wal_root: "/d/wal".into(),
             segaboot: None,
+            wal_port: launch::WAL_PORT,
         };
         let plan = launch::plan(
             game(GameId::MarioKartDx),
@@ -459,6 +462,57 @@ mod tests {
         assert_eq!(out.leftovers, 0);
     }
 
+    /// windowsarcadeloader's port is a free one at each start: a fixed
+    /// 33790 held by another program stopped the game.
+    #[test]
+    fn a_held_input_port_is_not_given_to_the_loader() {
+        let held = std::net::TcpListener::bind(("127.0.0.1", launch::WAL_PORT));
+        let t = tempfile::tempdir().unwrap();
+        let root = t.path();
+        for c in [
+            "components/wal/arcade-launcher",
+            "components/wal/payloads/x",
+            "components/wal/systemprofiles/x",
+            "components/runner/bin/wine",
+            "library/mkdx/MK_AGP3_FINAL.exe",
+        ] {
+            fs::create_dir_all(root.join(c).parent().unwrap()).unwrap();
+            fs::write(root.join(c), b"placeholder").unwrap();
+        }
+        let paths = Paths {
+            data: root.join("data"),
+            components: root.join("components"),
+        };
+        let g = game(GameId::MarioKartDx);
+        let dir = root.join("library/mkdx");
+        let entry = Entry {
+            file: dir.join(g.main_file),
+            dir,
+            found: rea_launcher::library::Found::Known {
+                game: g,
+                edition: &g.editions[0],
+            },
+        };
+        let p = prepare(
+            &paths,
+            g,
+            &entry,
+            &Settings::default(),
+            Display::Headless,
+            None,
+        )
+        .unwrap();
+        let layer = &p
+            .plan
+            .files
+            .iter()
+            .find(|(f, _)| f.ends_with("layer-mkdx.yaml"))
+            .unwrap()
+            .1;
+        assert!(held.is_err() || !layer.contains("port: 33790\n"), "{layer}");
+        assert!(layer.contains("port: "), "{layer}");
+    }
+
     /// A game that closed by itself at once says why (it said nothing).
     #[test]
     fn a_game_that_ends_at_once_says_why() {
@@ -538,6 +592,7 @@ mod tests {
                 runtime: Path::new("/d/rt").join(g.slug),
                 wal_root: "/d/wal".into(),
                 segaboot: None,
+                wal_port: launch::WAL_PORT,
             };
             let file = Path::new("/lib").join(g.slug).join(g.main_file);
             for (look, s) in [("default", Settings::default()), ("crt", crt.clone())] {
