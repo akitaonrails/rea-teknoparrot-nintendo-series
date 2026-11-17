@@ -115,6 +115,10 @@ jobs:
         run: |
           sdk/packaging/build-launcher.sh windows nintendo-launcher
           scripts/package.sh windows
+      - name: Allowlists (nothing else ships)
+        run: |
+          sdk/packaging/smoke-package.sh dist/pkg/NintendoArcadeLauncher-*-linux-x86_64 packaging/allowlist-linux.txt
+          sdk/packaging/smoke-package.sh dist/pkg/NintendoArcadeLauncher-*-windows-x86_64.zip packaging/allowlist-windows.txt
       - name: Contents
         run: |
           cd dist/pkg

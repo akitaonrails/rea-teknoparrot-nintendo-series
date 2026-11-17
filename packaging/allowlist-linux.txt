@@ -1,0 +1,18 @@
+# Every file of the Linux package (sdk/packaging/smoke-package.sh): anything
+# else fails the check, so no game file or stray build output can ship.
+nintendo-launcher x
+lib/libSDL2-2.0.so.0
+README.txt
+licenses/*
+components/art/*.jpg
+components/shaders/crt-lottes.fx
+components/dolphin/dolphin-emu-nogui x
+components/dolphin/COPYING
+components/dolphin/LICENSES/*
+components/dolphin/Sys/*
+components/dolphin/lib/*
+components/wal/arcade-launcher x
+components/wal/payloads/*
+components/wal/systemprofiles/*
+components/runner/*
+components/winetricks x
