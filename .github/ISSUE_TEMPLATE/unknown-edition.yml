@@ -1,0 +1,46 @@
+name: Unknown edition
+description: "The launcher listed one of your games as an unknown build."
+title: "Unknown edition: "
+labels: ["edition"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The launcher only starts builds it has identified by SHA-256, so it listed yours as
+        unknown and left it untouched. Tell us about your copy: a build we can verify gets
+        added. Never attach or link game files.
+  - type: dropdown
+    id: game
+    attributes:
+      label: Which game?
+      options:
+        - F-Zero AX Monster Ride
+        - Mario Kart Arcade GP 2
+        - Mario Kart Arcade GP DX
+        - Luigi's Mansion Arcade
+    validations:
+      required: true
+  - type: input
+    id: sha256
+    attributes:
+      label: SHA-256
+      description: >-
+        The SHA-256 that `nintendo-launcher --list` (or the window) showed: 64 characters, digits 0-9
+        and letters a-f.
+    validations:
+      required: true
+  - type: input
+    id: file
+    attributes:
+      label: The file it named, and its size in bytes
+      description: e.g. "MK_AGP3_FINAL.exe, 31457280".
+  - type: input
+    id: details
+    attributes:
+      label: Version and region
+      description: e.g. "1.18.16, Export". Where the folder name or the game's test menu says it.
+  - type: input
+    id: version
+    attributes:
+      label: Launcher version
+      description: The first line of `nintendo-launcher --help`, or the release you downloaded.

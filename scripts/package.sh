@@ -7,11 +7,12 @@
 # Built pieces (scripts/build-launcher.sh, the release workflow):
 #   linux    dist/linux/nintendo-launcher, dist/linux/lib/libSDL2-2.0.so.0
 #   windows  target/x86_64-pc-windows-gnu/release/nintendo-launcher.exe, dist/sdl2/SDL2.dll
+#            (sdk/packaging/build-launcher.sh --root . windows nintendo-launcher)
 # The components are built or fetched once into dist/components with
 # scripts/build-components.sh (Dolphin for Linux from its tag, with the
 # libraries it needs; Dolphin for Windows, GE-Proton and winetricks by
 # SHA-256; windowsarcadeloader from source with patches/wal, both its
-# launchers; the CRT effect, the art and fonts), then copied into each
+# launchers; the CRT effect and the art), then copied into each
 # package. No game file is ever packaged.
 set -eu
 
@@ -35,7 +36,7 @@ copy_wal() { # the launcher's own program of windowsarcadeloader
 	cp "$comps/wal/$1" "$out/components/wal/"
 	cp -r "$comps/wal/payloads" "$comps/wal/systemprofiles" "$out/components/wal/"
 	cp "$comps/wal/LICENSE" "$out/licenses/windowsarcadeloader-LICENSE.txt"
-	cp -r "$comps/art" "$comps/fonts" "$comps/shaders" "$out/components/"
+	cp -r "$comps/art" "$comps/shaders" "$out/components/"
 }
 
 if [ "$os" = linux ]; then
@@ -55,12 +56,11 @@ if [ "$os" = linux ]; then
 	cp "$comps/dolphin/COPYING" "$out/licenses/Dolphin-COPYING.txt"
 else
 	exe=${CARGO_TARGET_DIR:-$root/target}/x86_64-pc-windows-gnu/release/nintendo-launcher.exe
-	[ -f "$exe" ] || die "missing $exe - run scripts/build-launcher.sh windows"
+	[ -f "$exe" ] || die "missing $exe - run sdk/packaging/build-launcher.sh --root . windows nintendo-launcher"
 	[ -f "$root/dist/sdl2/SDL2.dll" ] || die "missing dist/sdl2/SDL2.dll"
 	"$root/scripts/build-components.sh" "$comps" dolphin-win wal shaders assets
 	cp "$exe" "$root/dist/sdl2/SDL2.dll" "$out/"
-	sdl=$(sed -n 's/^dir=//p' "$root/packaging/sdl2.pin")
-	cp "$root/dist/sdl2/${sdl%/*}/LICENSE.txt" "$out/licenses/SDL2-LICENSE.txt"
+	cp "$(ls -d "$root"/dist/sdl2/SDL2-*/ | head -1)LICENSE.txt" "$out/licenses/SDL2-LICENSE.txt"
 	copy_wal arcade-launcher.exe
 	cp -r "$comps/dolphin-win" "$out/components/dolphin-win"
 	cp "$comps/dolphin-win/COPYING" "$out/licenses/Dolphin-COPYING.txt"

@@ -1,38 +1,78 @@
-# Builds the release packages for Linux and Windows from pinned sources
-# and pinned downloads (scripts/build-components.sh). A manual run uploads
-# them as workflow artifacts; pushing a tag vX.Y.Z (matching the workspace
-# version) also publishes a GitHub release with the packages and SHA256SUMS.
-#
-# Everything a game needs is in its package: Dolphin (built from its tag
-# for Linux, the project's own release for Windows), windowsarcadeloader
-# with its Wine (Linux) and the launcher's SDL. Never in a package: game
-# files.
-name: Release
+name: build
 
+# Checks every push (the SDK's launcher-ci: fmt, tests, clippy, deny, the
+# family rules), runs the Windows-target tests under Wine, builds both
+# packages (Linux and Windows, every component bundled: Dolphin built from
+# its tag for Linux and the project's own release for Windows,
+# windowsarcadeloader with its Wine, the launcher's SDL) and, on a vX.Y.Z
+# tag, publishes them once all of that passed (the SDK's launcher-release).
+# Never in a package: game files.
 on:
   push:
+    branches: [main]
     tags: ["v*"]
+  pull_request:
   workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
 permissions:
   contents: read
-
-concurrency:
-  group: release-${{ github.ref }}
-  cancel-in-progress: false
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  # Both packages from one build of windowsarcadeloader (its Linux and
-  # Windows launchers, the Windows payloads) and one of Dolphin for Linux,
-  # on Debian bookworm (glibc 2.36, GCC 12: Dolphin's minimum) so the Linux
-  # programs run on older distributions too. The Windows programs link
-  # with LLD (.cargo/config.toml).
+  ci:
+    uses: akitaonrails/rea-launcher-sdk/.github/workflows/launcher-ci.yml@v0.10.0
+    with:
+      concurrency-key: linux
+      rust-target: ""
+      apt-packages: libsdl2-dev
+      shell-syntax: scripts/*.sh sdk/packaging/*.sh sdk/rea-play.sh
+      shell-tests: ""
+      imports-check: false
+
+  # The Windows build: linted for its target and its tests run under Wine,
+  # headless (STANDARDS: Windows code is run, not only linted), with the
+  # SDK's pinned SDL2 MinGW package linked in. GE-Proton's Wine (the Linux
+  # package's runner): Ubuntu's Wine 9 does not follow directory junctions,
+  # which the Windows runtime folder uses.
+  windows-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - name: System packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gcc-mingw-w64-x86-64 lld curl
+      - name: Rust
+        run: |
+          rustup toolchain install stable --profile minimal --component clippy
+          rustup default stable
+          rustup target add x86_64-pc-windows-gnu
+      - name: SDL2 (the SDK's pinned MinGW package)
+        run: sdk/packaging/build-launcher.sh sdl2
+      - name: Wine (GE-Proton, pinned)
+        run: |
+          scripts/build-components.sh "$RUNNER_TEMP/c" runner
+          echo "$RUNNER_TEMP/c/runner/bin" >> "$GITHUB_PATH"
+      - name: Clippy and tests under Wine (x86_64-pc-windows-gnu)
+        run: |
+          sdl="$(ls -d "$PWD"/dist/sdl2/SDL2-*/x86_64-w64-mingw32)/lib"
+          export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=lld -L $sdl"
+          cargo clippy --workspace --all-targets --locked --target x86_64-pc-windows-gnu -- -D warnings
+          export WINEPATH="Z:$(printf '%s' "$PWD/dist/sdl2" | tr / '\\')"
+          wine --version
+          sdk/scripts/wine-test --target x86_64-pc-windows-gnu --locked --workspace
+
   packages:
     runs-on: ubuntu-24.04
     container: debian:bookworm
+    needs: [ci, windows-tests]
     timeout-minutes: 240
     steps:
       - name: System packages
@@ -73,7 +113,7 @@ jobs:
           scripts/package.sh linux
       - name: Windows package
         run: |
-          scripts/build-launcher.sh windows
+          sdk/packaging/build-launcher.sh windows nintendo-launcher
           scripts/package.sh windows
       - name: Contents
         run: |
@@ -104,27 +144,12 @@ jobs:
 
   release:
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [packages]
-    runs-on: ubuntu-24.04
+    needs: [ci, windows-tests, packages]
     permissions:
       contents: write
-    steps:
-      - uses: actions/checkout@v5
-      - name: Tag matches the workspace version
-        run: |
-          version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)
-          [ "v$version" = "$GITHUB_REF_NAME" ] || { echo "tag $GITHUB_REF_NAME != v$version"; exit 1; }
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: "{linux,windows}"
-          path: dist/pkg
-          merge-multiple: true
-      - name: Checksums
-        run: cd dist/pkg && sha256sum NintendoArcadeLauncher-* > SHA256SUMS && cat SHA256SUMS
-      - name: Publish
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release create "$GITHUB_REF_NAME" dist/pkg/NintendoArcadeLauncher-* dist/pkg/SHA256SUMS \
-            --repo "$GITHUB_REPOSITORY" --title "Nintendo arcade launcher ${GITHUB_REF_NAME#v}" \
-            --notes-file packaging/RELEASE_NOTES.md
+      id-token: write
+      attestations: write
+    uses: akitaonrails/rea-launcher-sdk/.github/workflows/launcher-release.yml@v0.10.0
+    with:
+      package: nintendo-launcher
+      artifact-pattern: "{linux,windows}"

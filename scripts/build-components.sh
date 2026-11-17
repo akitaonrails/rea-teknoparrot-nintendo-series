@@ -12,10 +12,16 @@
 #   runner/       GE-Proton 11-12, checked by SHA-256
 #   winetricks    pinned, checked by SHA-256 (windowsarcadeloader installs the game's runtimes)
 #   shaders/      the launcher's own CRT effect
-#   art/ fonts/   the window's original illustrations and the Barlow typefaces (OFL)
+#   art/          the window's original illustrations (the fonts are in the program)
+# The downloads are pinned in packaging/components.pins and fetched through the SDK's
+# pins.sh (sdk/packaging): checked by SHA-256, a download cut short never wedges a rebuild.
 # usage: scripts/build-components.sh <components dir> [dolphin|dolphin-win|wal|runner|winetricks|shaders|assets ...]
 set -eu
 here=$(cd "$(dirname "$0")/.." && pwd)
+. "$here/sdk/packaging/pins.sh"
+PIN_FILE=$here/packaging/components.pins
+PIN_DIR=''
+export PIN_FILE PIN_DIR
 out=$(mkdir -p "$1" && cd "$1" && pwd); shift
 parts=${*:-dolphin wal runner winetricks shaders assets}
 work="$out/.build"; mkdir -p "$work"
@@ -23,15 +29,9 @@ work="$out/.build"; mkdir -p "$work"
 DOLPHIN_REPO=https://github.com/dolphin-emu/dolphin
 DOLPHIN_TAG=2609b
 DOLPHIN_COMMIT=3a5b3743b18da3e8f04cbc44f20dc50fbd3a9ef3
-DOLPHIN_WIN_URL=https://dl.dolphin-emu.org/releases/2609b/dolphin-2609b-x64.7z
-DOLPHIN_WIN_SHA256=926eb7594d885b4fba8fd9807058d90618efab4b3d75d1ef297022ba14925133
 WAL_REPO=https://github.com/aderumier/windowsarcadeloader
 WAL_COMMIT=4f42c6d86ddaaa9d2e4e8c21e0046bb3027b111d
 RUNNER=GE-Proton11-12-x86_64
-RUNNER_URL=https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton11-12/$RUNNER.tar.gz
-RUNNER_SHA256=0595159e417c3dbbfb7cc3ae0d3ed15a617cc607aa23ef756ea79029d7af5d70
-WINETRICKS_URL=https://raw.githubusercontent.com/Winetricks/winetricks/20260125/src/winetricks
-WINETRICKS_SHA256=431f82fc74000e6c864409f1d8fb495d696c03928808e3e8acffc45179312a7b
 
 checkout() { # repo commit dir
   [ -d "$3/.git" ] || git clone -q "$1" "$3"
@@ -97,9 +97,7 @@ dolphin)
   echo "$stamp" > "$out/dolphin/.stamp"
   ;;
 dolphin-win)
-  f="$work/dolphin-win.7z"
-  [ -f "$f" ] || curl -fsSL -A "Mozilla/5.0" -o "$f" "$DOLPHIN_WIN_URL"
-  echo "$DOLPHIN_WIN_SHA256  $f" | sha256sum -c -
+  f=$(pin_fetch dolphin-win "$work")
   rm -rf "$out/dolphin-win" "$work/Dolphin-x64"
   (cd "$work" && 7z x -y -bd "$f" >/dev/null)
   mv "$work/Dolphin-x64" "$out/dolphin-win"
@@ -130,23 +128,19 @@ wal)
   echo "$stamp" > "$out/wal/.stamp"
   ;;
 runner)
-  f="$work/$RUNNER.tar.gz"
-  [ -f "$f" ] || curl -fsSL -o "$f" "$RUNNER_URL"
-  echo "$RUNNER_SHA256  $f" | sha256sum -c -
+  f=$(pin_fetch runner "$work")
   tar -xzf "$f" -C "$work"
   rm -rf "$out/runner"; mv "$work/$RUNNER/files" "$out/runner"
   ;;
 winetricks)
-  f="$work/winetricks"
-  [ -f "$f" ] || curl -fsSL -o "$f" "$WINETRICKS_URL"
-  echo "$WINETRICKS_SHA256  $f" | sha256sum -c -
+  f=$(pin_fetch winetricks "$work")
   install -m 755 "$f" "$out/winetricks"
   ;;
 shaders)
   mkdir -p "$out/shaders"; cp "$here"/assets/shaders/*.fx "$out/shaders/"
   ;;
 assets)
-  rm -rf "$out/art" "$out/fonts"; cp -r "$here/assets/art" "$out/art"; cp -r "$here/assets/fonts" "$out/fonts"
+  rm -rf "$out/art" "$out/fonts"; cp -r "$here/assets/art" "$out/art"
   ;;
 *) echo "unknown part $part" >&2; exit 2;;
 esac; done
