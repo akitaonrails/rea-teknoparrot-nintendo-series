@@ -5,8 +5,9 @@ Nintendo arcade games the owner dumped: F-Zero AX Monster Ride and Mario
 Kart Arcade GP 2 (Sega Triforce), Mario Kart Arcade GP DX (Namco ES3),
 Luigi's Mansion Arcade (Sega Nu, a gun game; added 2026-11-15 on the
 owner's request).
-Built on `~/Projects/rea-launcher-sdk`; read its `docs/STANDARDS.md`
-(binding) and `docs/RESEARCH.md` here first. Sister projects:
+Built on rea-launcher-sdk (vendored in `sdk/` by its `scripts/sdk-sync`).
+Read sdk/docs/STANDARDS.md before any work; the playbooks are in
+sdk/docs/playbooks/. Then `docs/RESEARCH.md` here. Sister projects:
 `rea-teknoparrot-initial-d-series` (this repository started from its
 code), `rea-teknoparrot-wangan-series`.
 
@@ -36,3 +37,29 @@ code), `rea-teknoparrot-wangan-series`.
   `docs/RUNTIME_NOTES.md`. Game runs are headless (`--headless`) unless the
   owner is told first; `.work/probe/run.sh` (not committed) takes the
   screenshots.
+
+## Layout and checks (2026-11-17: moved onto the SDK's hub modules)
+
+- `crates/nintendo-core`: the game knowledge, host-tested: `catalog`
+  (games as `rea_launcher::catalog::Title`, `library()` with the disc-image
+  size bound), `settings` (the `cfg::spec` OPTIONS table; stored formats
+  kept), `runtime` (the `linkfarm::Policy`), `input` (cabinet buttons, the
+  windowsarcadeloader bit tables, Dolphin's pipe pad), `launch` (plans).
+- `crates/nintendo-launcher`: `ui.rs` (the `rea_launcher_ui::hub`
+  backend: theme, form, session, controls), `session.rs` (prepare, and the
+  run through `rea_launcher_native::{group, supervise}` with the
+  Dolphin-asked-alone watcher), `input.rs` (the feeder `Wire`s and
+  Dolphin's FIFO sink), `paths.rs`, `main.rs` (`hub::cli`, instance lock,
+  `hub::fatal`). Everything else is the SDK's: fix it there, never copy it.
+- Checks before a commit: `cargo fmt --all --check`, `cargo clippy
+  --workspace --all-targets -- -D warnings` (and with `--target
+  x86_64-pc-windows-gnu`), `cargo test --workspace`,
+  `sdk/scripts/wine-test --target x86_64-pc-windows-gnu --locked
+  --workspace`, `sdk/scripts/launcher-check`. Golden snapshots
+  (`crates/nintendo-launcher/tests/snapshots/`): regenerate with
+  `REA_UPDATE_SNAPSHOTS=1` only after reading every diff.
+- Packaging: `sdk/packaging/build-launcher.sh`, `scripts/build-components.sh`
+  (downloads pinned in `packaging/components.pins`, fetched with the SDK's
+  `pins.sh`), `scripts/package.sh`. CI and releases: `.github/workflows/build.yml`
+  (the SDK's launcher-ci and launcher-release; a release waits for CI, the
+  Wine tests and the packages).

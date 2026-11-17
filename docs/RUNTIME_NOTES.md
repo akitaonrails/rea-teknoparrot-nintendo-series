@@ -85,6 +85,30 @@ Its programs need glibc 2.35 at most; `ldd` finds every library Dolphin
 needs on the system or in `components/dolphin/lib` (libevdev, libbluetooth,
 libusb).
 
+## On rea-launcher-sdk's hub modules (2026-11-17)
+
+The launcher after its move onto the SDK's hub (window, command line,
+process group and run loop, input thread, runtime folder of links), built
+against the SDK's `feat/hub` branch, with a fresh data folder: the
+launcher's `--play <game> --headless` in the `gaming` box, the library
+bound read-only, inputs from `--input-script`. After every run the box
+was checked for the session's programs (gamescope, Dolphin,
+windowsarcadeloader, the launcher's Wine server).
+
+| Game, how it ended | Seen |
+|---|---|
+| F-Zero AX, `--seconds 120` (the window's Stop) | calibration, attract, coin and Start: the race's start line (1/8 lap, 120 s); Dolphin alone got the signal ("A signal was received"), saved and quit, then gamescope; `# exit: … after 120 s; stopped 0 leftover process(es)`; nothing left |
+| F-Zero AX, Dolphin ended by itself at 45 s (the game window closed) | the session ended on its own, `stopped 0 leftover`; no early-end error (after 20 s); nothing left |
+| F-Zero AX, the launcher killed (SIGKILL) at 45 s | gamescope and Dolphin gone 3 s later (the session dies with the launcher) |
+| Mario Kart DX, first start, `--seconds 450` | the Wine prefix built (winetricks), payload connected on port 33790 (the first free block), attract in FREE PLAY at 420 s; `stopped 0 leftover`; nothing left |
+| Mario Kart DX, the input script, SIGTERM to the launcher at 150 s (quit from a terminal) | coins, Start, character and cup chosen through the launcher's pipe: "Select Round", Toad Cup; the launcher stopped the session on the signal, `stopped 0 leftover`; nothing left |
+| Mario Kart DX, `--no-input`, the launcher killed at 100 s | the game kept running with no input (the loader's input is held open; it quit at once before), "Press item button" at 90 s; after the kill no windowsarcadeloader, Wine server or gamescope was left |
+
+Not run headless: closing the hub window itself (it needs a display);
+the window's close-stops-the-game path is covered by the SDK's window
+tests, and the quit from the game's own menu doesn't exist on these
+cabinets (the window-close row above is Dolphin ending by itself).
+
 ## Not checked yet
 
 - A real wheel, and the synthetic centring force on it (Triforce games).
