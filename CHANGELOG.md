@@ -10,12 +10,24 @@ All notable changes to this launcher. The format follows
 
 - Looks, as in the family's other launchers: **Original** (the game as
   shipped), **Recommended** (as large as your screen allows, with FSR) and
-  **Steam Deck**, in the Settings page and as `--look`. The first time a
-  game's settings are read, the look for your screen is chosen and saved;
-  changing a picture option by hand makes the look Custom.
+  **Steam Deck**, in the Settings page and as `--look`. The first time the
+  window reads a game's settings, the look for your screen is chosen and
+  saved (on Windows the command line does this too). A Linux command line
+  doesn't know your screen: it plays the Recommended look for 1920×1080
+  for that run and saves no look, so the window chooses it later.
+  Changing a picture option by hand, or giving a picture option with
+  `--look` (`--look steam_deck --upscaler nis`), makes the look Custom.
 
 ### Changed
 
+- If you have no settings file for a game yet, it now starts with the
+  Recommended look (or Steam Deck on a Deck) instead of the old fixed
+  defaults (4K output, the cabinet's own size).
+- A dead zone written with more than two decimals is used rounded to two
+  (`deadzone = 0.125` plays as 0.13); the line stays as you wrote it.
+- On Windows, a file in a game's private folder that differs from your
+  game folder and wasn't copied there by the launcher is now refused, with
+  a message naming it, instead of being overwritten.
 - Updated rea-launcher-sdk to v0.10.0: the window, the command line, the
   game sessions, the controller input and the packaging are now the SDK's
   shared hub, the same as the Initial D, Sega and Wangan launchers'.
@@ -50,7 +62,7 @@ All notable changes to this launcher. The format follows
   defaults; a value the launcher can't read stays in the file as you wrote
   it (and is reported in `launcher.log`); a file saved by Notepad with a
   byte-order mark no longer loses its first setting; `deadzone = 0.125`
-  stays as written.
+  stays as written in the file.
 - `launcher.cfg` keeps your comments and other lines, and a folder listed
   twice is saved once.
 - Starting a game or `--list` no longer reads every disc image in your

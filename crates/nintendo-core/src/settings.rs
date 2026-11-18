@@ -277,7 +277,10 @@ pub fn read(file: &Path) -> io::Result<Option<(Settings, Vec<String>)>> {
 /// A game's settings for a start or its settings page, and the lines its
 /// file couldn't read. The first time (no file yet) the recommended look
 /// for `screen` is decided for a cabinet of size `native` and saved, so a
-/// Play or `--play` before the settings page ever opened uses it too.
+/// Play or `--play` before the settings page ever opened uses it too. With
+/// the screen unknown (the command line on Linux) it is the look for
+/// 1920x1080 for this run only, saved nowhere: the window decides it from
+/// the real screen later.
 pub fn load(
     file: &Path,
     native: Size,
@@ -288,6 +291,9 @@ pub fn load(
     }
     let mut s = Settings::default();
     Look::recommended(screen).apply(&mut s, native, screen);
+    if screen.is_none() {
+        return Ok((s, Vec::new()));
+    }
     let problems = match write(file, &s) {
         Ok(()) => Vec::new(),
         Err(e) => vec![format!(
@@ -437,6 +443,20 @@ mod tests {
                 .0,
             s
         );
+    }
+
+    /// The command line on Linux doesn't know the screen: it plays the
+    /// recommended look for 1920x1080 but saves nothing, so the window
+    /// decides the look from the real screen later.
+    #[test]
+    fn an_unknown_screen_plays_the_recommended_look_and_saves_nothing() {
+        let t = tempfile::tempdir().unwrap();
+        let file = t.path().join("settings/fzax.cfg");
+        let (s, problems) = load(&file, Size::new(640, 480), None).unwrap();
+        assert!(problems.is_empty(), "{problems:?}");
+        assert_eq!(s.look, Some(Look::Recommended));
+        assert_eq!(s.output, Size::new(1920, 1080));
+        assert!(!file.exists(), "nothing saved");
     }
 
     #[test]

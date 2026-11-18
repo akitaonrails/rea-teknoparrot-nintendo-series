@@ -796,6 +796,40 @@ mod tests {
         assert!(p.gamescope.is_empty());
     }
 
+    /// The Recommended look on a 4K screen, on Windows: Dolphin draws at 5x
+    /// (2400 lines for 2160), with no gamescope around it.
+    #[test]
+    fn the_recommended_look_sets_dolphins_internal_resolution_on_windows() {
+        use crate::settings::Look;
+        let mut s = Settings::default();
+        Look::Recommended.apply(&mut s, game(GameId::FZeroAx).native, Some((3840, 2160)));
+        assert_eq!(s.render, Some(Size::new(2880, 2160)));
+        let p = plan(
+            game(GameId::FZeroAx),
+            Path::new("C:/games/f.iso"),
+            &places("fzax"),
+            &comps(),
+            &s,
+            false,
+            Host::Windows,
+            None,
+        );
+        assert!(file(&p, "Config/GFX.ini").contains("InternalResolution = 5"));
+        assert!(p.gamescope.is_empty());
+        Look::Recommended.apply(&mut s, game(GameId::FZeroAx).native, Some((1920, 1080)));
+        let p = plan(
+            game(GameId::FZeroAx),
+            Path::new("C:/games/f.iso"),
+            &places("fzax"),
+            &comps(),
+            &s,
+            false,
+            Host::Windows,
+            None,
+        );
+        assert!(file(&p, "Config/GFX.ini").contains("InternalResolution = 3"));
+    }
+
     #[test]
     fn crt_upscaler_and_headless_reach_gamescope() {
         let s = Settings {

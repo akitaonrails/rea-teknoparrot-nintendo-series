@@ -390,7 +390,7 @@ fullscreen = false
 # Values: 0.00 to 0.30.
 deadzone = 0.10
 
-$ nintendo-launcher --game fzax --render native
+$ nintendo-launcher --game fzax --render native --output 1920x1080
 exit Some(0)
 --- stdout
 --- stderr

@@ -170,8 +170,17 @@ fn every_cli_mode() {
         ],
         &["data/settings/mkdx.cfg"],
     );
+    // the output given too: a first file's look comes from the screen,
+    // which Windows knows (Wine's 1024x768) and a Linux command line doesn't
     step(
-        &["--game", "fzax", "--render", "native"],
+        &[
+            "--game",
+            "fzax",
+            "--render",
+            "native",
+            "--output",
+            "1920x1080",
+        ],
         &["data/settings/fzax.cfg"],
     );
     rea_launcher::snapshot!("cli.txt", out);

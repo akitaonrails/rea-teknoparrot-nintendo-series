@@ -169,10 +169,19 @@ fn configure(paths: &HubPaths, config: &mut HubConfig, inv: &Invocation) -> Resu
 /// A game's settings; each line its file couldn't read is a warning.
 fn load_settings(paths: &HubPaths, game: &Game) -> Result<Settings, String> {
     let file = paths.settings(game.slug);
-    let (s, problems) = settings::load(&file, game.native, None)
+    let (s, problems) = settings::load(&file, game.native, screen())
         .map_err(|e| format!("Couldn't read {}: {e}", display_path(&file)))?;
     problems.iter().for_each(|p| warn(p));
     Ok(s)
+}
+
+/// The player's screen, for the looks: known on Windows, not from a
+/// Linux command line (the window decides there).
+fn screen() -> Option<(u32, u32)> {
+    #[cfg(windows)]
+    return rea_launcher_win32::display::screen_size();
+    #[cfg(not(windows))]
+    None
 }
 
 /// A warning of the command line, on stderr.
@@ -185,30 +194,34 @@ fn set(paths: &HubPaths, game: &Game, inv: &Invocation) -> Result<(), String> {
     if inv.options.is_empty() {
         return Ok(());
     }
+    let file = paths.settings(game.slug);
+    let new = !file.exists();
     let mut s = load_settings(paths, game)?;
-    let before = s.clone();
-    // a look first, so the flags after it win
-    inv.apply_options(settings::OPTIONS, &["look"], |spec, v| match v {
+    // a look first, then the other flags, which win
+    inv.apply_options(settings::OPTIONS, &[], |spec, v| match v {
         Value::Choice(key) if spec.key == "look" => {
             if let Some(look) = Look::from_key(key) {
-                look.apply(&mut s, game.native, None);
+                look.apply(&mut s, game.native, screen());
             }
         }
-        v => {
+        _ => {}
+    });
+    let looked = s.clone();
+    inv.apply_options(settings::OPTIONS, &[], |spec, v| {
+        if spec.key != "look" {
             let _ = s.apply(spec.key, v);
         }
     });
-    // a picture value changed without --look: the look is custom now
-    let looked = inv.options.iter().any(|(k, _)| *k == "look");
-    if !looked
-        && settings::PICTURE
-            .iter()
-            .any(|k| s.value(k) != before.value(k))
-    {
+    // a picture value changed by a flag: the look is custom now, as in
+    // the window; nor is a look decided for no screen saved
+    let custom = settings::PICTURE
+        .iter()
+        .any(|k| s.value(k) != looked.value(k));
+    let undecided = new && screen().is_none() && !inv.options.iter().any(|(k, _)| *k == "look");
+    if custom || undecided {
         s.look = None;
     }
-    settings::write(&paths.settings(game.slug), &s)
-        .map_err(|e| format!("Could not save the options: {e}"))
+    settings::write(&file, &s).map_err(|e| format!("Could not save the options: {e}"))
 }
 
 fn state(game: &Game) -> String {
@@ -395,7 +408,7 @@ mod tests {
     }
 
     /// `--look` sets the look's values; a flag given with it wins, wherever
-    /// it stands.
+    /// it stands, and makes the picture custom.
     #[test]
     fn a_look_sets_its_values_and_the_other_flags_win() {
         let t = tempfile::tempdir().unwrap();
@@ -407,7 +420,7 @@ mod tests {
         let inv = parse_v(&["--set", "mkdx", "--upscaler=nis", "--look", "steam_deck"]).unwrap();
         set(&p, game_of("mkdx"), &inv).unwrap();
         let (s, _) = settings::read(&p.settings("mkdx")).unwrap().unwrap();
-        assert_eq!(s.look, Some(Look::SteamDeck));
+        assert_eq!(s.look, None, "custom");
         assert_eq!(s.output, rea_launcher::gamescope::Size::new(1280, 800));
         assert_eq!(
             s.upscaler,
@@ -425,6 +438,49 @@ mod tests {
             settings::read(&p.settings("fzax")).unwrap().unwrap().0.look,
             None
         );
+    }
+
+    /// `--look X` then a picture flag is a custom picture, as in the window.
+    #[test]
+    fn a_picture_flag_after_a_look_makes_it_custom() {
+        let t = tempfile::tempdir().unwrap();
+        let p = HubPaths {
+            data: t.path().into(),
+            components: t.path().join("c"),
+            dev_assets: None,
+        };
+        let inv = parse_v(&["--set", "mkdx", "--look", "steam_deck", "--upscaler", "nis"]).unwrap();
+        set(&p, game_of("mkdx"), &inv).unwrap();
+        let (s, _) = settings::read(&p.settings("mkdx")).unwrap().unwrap();
+        assert_eq!(s.look, None, "custom");
+        assert_eq!(
+            s.output,
+            rea_launcher::gamescope::Size::new(1280, 800),
+            "the look's values"
+        );
+        assert_eq!(s.upscaler, rea_launcher::gamescope::Upscaler::Nis);
+        // a look with a flag that changes nothing it set stays
+        let inv = parse_v(&["--set", "mkdx", "--look", "steam_deck", "--deadzone", "0.1"]).unwrap();
+        set(&p, game_of("mkdx"), &inv).unwrap();
+        let (s, _) = settings::read(&p.settings("mkdx")).unwrap().unwrap();
+        assert_eq!(s.look, Some(Look::SteamDeck));
+    }
+
+    /// `--set` on a game without a settings file and with the screen
+    /// unknown saves the flags but not a look decided for no screen.
+    #[test]
+    #[cfg(not(windows))]
+    fn set_without_a_file_saves_no_look_for_an_unknown_screen() {
+        let t = tempfile::tempdir().unwrap();
+        let p = HubPaths {
+            data: t.path().into(),
+            components: t.path().join("c"),
+            dev_assets: None,
+        };
+        let inv = parse_v(&["--set", "fzax", "--deadzone", "0.1"]).unwrap();
+        set(&p, game_of("fzax"), &inv).unwrap();
+        let (s, _) = settings::read(&p.settings("fzax")).unwrap().unwrap();
+        assert_eq!((s.look, s.deadzone), (None, 0.1));
     }
 
     #[test]

@@ -112,6 +112,18 @@ while Dolphin was still booting: it didn't answer the stop within the 8 s
 grace and was ended, nothing left behind (stopped at 120 s, in a race, it
 saves and quits by itself).
 
+Recommended look on Mario Kart DX (2026-11-17): `--set mkdx --look
+recommended` from a Linux command line (screen unknown, so for 1920×1080):
+`render = 1912x1080`, `output = 1920x1080`, `upscaler = fsr` saved;
+`--play mkdx --headless` with the race script started gamescope with
+`-w 1912 -h 1080 -W 1920 -H 1080` (headless scales `linear`), the menus
+reached "Select Round" (Toad Cup) by 145 s, stopped at 150 s with
+`stopped 0 leftover`. gamescope's screenshot of it is 1368×768: whether
+the game itself draws at the render size was not checked here.
+Dolphin on Windows, by plan only (a test, `launch.rs`): the Recommended
+look gives `InternalResolution = 5` on a 3840×2160 screen and 3 on
+1920×1080, with no gamescope.
+
 Not run headless: closing the hub window itself (it needs a display);
 the window's close-stops-the-game path is covered by the SDK's window
 tests, and the quit from the game's own menu doesn't exist on these

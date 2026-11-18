@@ -103,7 +103,11 @@ game and press **Play**.
 | **Recommended** | The game drawn as large as your screen allows, FSR to fill it (chosen for you the first time) |
 | **Steam Deck** | Sized for the Deck's 1280×800 screen (chosen for you on a Deck) |
 
-Changing one of the picture rows by hand makes the look **Custom**.
+The window chooses the look for your screen the first time it opens a
+game's settings. Changing one of the picture rows by hand makes the look
+**Custom**; so does a picture option given with `--look` on the command
+line. A command line on Linux doesn't know your screen: before the window
+has chosen, it plays the Recommended look for 1920×1080 without saving it.
 
 Everything works with a mouse, the keyboard or a pad: the d-pad or left
 stick moves, A chooses, B goes back, Start plays, Y opens Settings, the
