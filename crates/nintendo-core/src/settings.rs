@@ -241,26 +241,27 @@ impl Settings {
     }
 
     /// Rewrites `existing` with these settings, keeping comments and
-    /// unknown keys in place: a key is written when its value differs from
-    /// what `existing` says, or `existing` doesn't have it. A line the
-    /// launcher couldn't read (`fullscreen = off # mine`) stays as the
-    /// player wrote it unless that setting is changed; a look no longer in
-    /// use is cleared. A new file starts from the commented template.
+    /// unknown keys in place ([`Settings::save_over`] what `existing` says).
     pub fn save(&self, existing: &str) -> String {
-        let new = existing.trim().is_empty();
-        let (was, _) = Settings::parse(existing);
-        let mut out = if new {
+        self.save_over(existing, &Settings::parse(existing).0, &[])
+    }
+
+    /// Rewrites `existing` (or a new file's template) with the keys whose
+    /// value differs from `base`, what the launcher took the file to mean,
+    /// and the keys in `given` (the player's own flags): a line it couldn't
+    /// read (`fullscreen = off # mine`) stays as the player wrote it unless
+    /// that setting is changed; a look no longer in use is cleared.
+    pub fn save_over(&self, existing: &str, base: &Settings, given: &[&str]) -> String {
+        let mut out = if existing.trim().is_empty() {
             template()
         } else {
             existing.to_string()
         };
         for spec in OPTIONS {
-            let has_line = cfg::entries(existing).any(|e| spec.answers_to(e.key));
-            match (self.value(spec.key), was.value(spec.key)) {
-                (now, then) if now == then && has_line => {}
-                (Some(now), _) => out = cfg::spec::set_key(&out, spec, &now),
-                (None, _) if has_line => out = cfg::clear_key(&out, spec.key),
-                (None, _) => {}
+            match (self.value(spec.key), base.value(spec.key)) {
+                (now, then) if now == then && !given.contains(&spec.key) => {}
+                (Some(v), _) => out = cfg::spec::set_key(&out, spec, &v),
+                (None, _) => out = cfg::clear_key(&out, spec.key),
             }
         }
         out
@@ -275,32 +276,32 @@ pub fn read(file: &Path) -> io::Result<Option<(Settings, Vec<String>)>> {
 }
 
 /// A game's settings for a start or its settings page, and the lines its
-/// file couldn't read. The first time (no file yet) the recommended look
-/// for `screen` is decided for a cabinet of size `native` and saved, so a
-/// Play or `--play` before the settings page ever opened uses it too. With
-/// the screen unknown (the command line on Linux) it is the look for
-/// 1920x1080 for this run only, saved nowhere: the window decides it from
-/// the real screen later.
+/// file couldn't read. While the player chose no picture (no file yet, or
+/// no look and no picture key in it) the recommended look for `screen` is
+/// decided for a cabinet of size `native`: saved when the screen is known,
+/// so a Play or `--play` before the settings page uses it too; for this
+/// run only when it isn't (the command line on Linux), so the window
+/// decides it later from the real screen.
 pub fn load(
     file: &Path,
     native: Size,
     screen: Option<(u32, u32)>,
 ) -> io::Result<(Settings, Vec<String>)> {
-    if let Some(read) = read(file)? {
-        return Ok(read);
+    let text = cfg::read_file(file)?.unwrap_or_default();
+    let (mut s, mut problems) = Settings::parse(&text);
+    let chosen = cfg::entries(&text).any(|e| e.key == "look" || PICTURE.contains(&e.key));
+    if chosen {
+        return Ok((s, problems));
     }
-    let mut s = Settings::default();
     Look::recommended(screen).apply(&mut s, native, screen);
-    if screen.is_none() {
-        return Ok((s, Vec::new()));
-    }
-    let problems = match write(file, &s) {
-        Ok(()) => Vec::new(),
-        Err(e) => vec![format!(
+    if screen.is_some()
+        && let Err(e) = write(file, &s)
+    {
+        problems.push(format!(
             "couldn't save the recommended look to {}: {e}",
             file.display()
-        )],
-    };
+        ));
+    }
     Ok((s, problems))
 }
 
@@ -309,6 +310,14 @@ pub fn load(
 pub fn write(file: &Path, s: &Settings) -> io::Result<()> {
     let existing = cfg::read_file(file)?.unwrap_or_default();
     rea_launcher::fsx::write_atomic(file, s.save(&existing))
+}
+
+/// [`write`] of the keys that differ from `base`, what [`load`] gave (a
+/// look decided for this run only stays out of the file), and of the keys
+/// in `given`, the player's own flags.
+pub fn write_over(file: &Path, s: &Settings, base: &Settings, given: &[&str]) -> io::Result<()> {
+    let existing = cfg::read_file(file)?.unwrap_or_default();
+    rea_launcher::fsx::write_atomic(file, s.save_over(&existing, base, given))
 }
 
 /// The template a new settings file starts from.
@@ -329,10 +338,18 @@ mod tests {
         assert_eq!(s.output, Size::new(2560, 1440));
         assert_eq!(s.crt, Crt::Lottes);
         let saved = s.save(text);
-        assert!(saved.starts_with(text), "lines kept as written: {saved}");
-        assert!(saved.contains("\nrender = native\n"), "missing keys added");
-        assert_eq!(Settings::parse(&saved).0, s);
-        assert_eq!(s.save(&saved), saved, "nothing changed, nothing written");
+        assert_eq!(saved, text, "nothing changed, nothing written");
+        let changed = Settings {
+            render: Some(Size::new(1920, 1080)),
+            ..s.clone()
+        };
+        let saved = changed.save(text);
+        assert_eq!(
+            saved,
+            format!("{text}render = 1920x1080\n"),
+            "only the change"
+        );
+        assert_eq!(Settings::parse(&saved).0, changed);
     }
 
     #[test]
@@ -459,12 +476,50 @@ mod tests {
         assert!(!file.exists(), "nothing saved");
     }
 
+    /// `--set` on the command line on Linux: only the given keys are
+    /// saved over that run's look, so the window still decides the look
+    /// from the real screen later.
     #[test]
-    fn a_new_file_is_the_template_filled_in() {
-        let text = Settings::default().save("");
+    fn without_a_screen_the_look_is_used_but_not_saved_and_decided_later() {
+        let t = tempfile::tempdir().unwrap();
+        let file = t.path().join("settings/mkdx.cfg");
+        let native = Size::new(1360, 768);
+        let (base, _) = load(&file, native, None).unwrap();
+        let mut set = base.clone();
+        set.deadzone = 0.1;
+        set.crt = Crt::Off; // given, though it is the value already
+        write_over(&file, &set, &base, &["deadzone", "crt"]).unwrap();
+        let text = std::fs::read_to_string(&file).unwrap();
+        assert!(text.contains("\ndeadzone = 0.10\n"), "{text}");
+        assert!(
+            text.contains("\ncrt = off\n"),
+            "a flag is always saved: {text}"
+        );
+        assert!(
+            !text.contains("\nlook =") && !text.contains("\noutput ="),
+            "{text}"
+        );
+        // the window, with the real screen, decides and saves the look then
+        let (w, _) = load(&file, native, Some((1280, 800))).unwrap();
+        assert_eq!((w.look, w.deadzone), (Some(Look::SteamDeck), 0.1));
+        assert_eq!(read(&file).unwrap().unwrap().0, w);
+    }
+
+    #[test]
+    fn a_new_file_is_the_template_with_what_differs_from_it() {
+        assert_eq!(
+            Settings::default().save(""),
+            template(),
+            "the defaults: all commented"
+        );
+        let s = Settings {
+            deadzone: 0.1,
+            ..Settings::default()
+        };
+        let text = s.save("");
         assert!(text.starts_with("# Settings for one game"), "{text}");
-        assert!(text.contains("\nrender = native\n") && text.contains("\ndeadzone = 0.05\n"));
-        assert_eq!(Settings::parse(&text), (Settings::default(), vec![]));
+        assert!(text.contains("\ndeadzone = 0.10\n") && !text.contains("\nrender ="));
+        assert_eq!(Settings::parse(&text), (s, vec![]));
     }
 
     #[test]

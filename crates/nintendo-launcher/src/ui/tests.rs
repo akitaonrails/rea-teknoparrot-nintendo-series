@@ -208,9 +208,14 @@ fn settings_text(t: &Path, slug: &str) -> String {
 #[test]
 fn every_settings_row_reaches_its_key_in_the_file() {
     let t = tempfile::tempdir().unwrap();
-    // the defaults, written: no look decided on the first load
+    // a picture the player chose: no look decided on the first load
     let file = paths_in(t.path()).settings("mkdx");
-    settings::write(&file, &Settings::default()).unwrap();
+    std::fs::create_dir_all(file.parent().unwrap()).unwrap();
+    std::fs::write(
+        &file,
+        "render = native\noutput = 3840x2160\nupscaler = fsr\n",
+    )
+    .unwrap();
     let mut h = hub(t.path());
     select(&mut h, "mkdx");
     open_tab(&mut h, Tab::Settings);

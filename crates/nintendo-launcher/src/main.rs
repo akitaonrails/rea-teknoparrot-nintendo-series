@@ -194,9 +194,8 @@ fn set(paths: &HubPaths, game: &Game, inv: &Invocation) -> Result<(), String> {
     if inv.options.is_empty() {
         return Ok(());
     }
-    let file = paths.settings(game.slug);
-    let new = !file.exists();
-    let mut s = load_settings(paths, game)?;
+    let base = load_settings(paths, game)?;
+    let mut s = base.clone();
     // a look first, then the other flags, which win
     inv.apply_options(settings::OPTIONS, &[], |spec, v| match v {
         Value::Choice(key) if spec.key == "look" => {
@@ -213,15 +212,18 @@ fn set(paths: &HubPaths, game: &Game, inv: &Invocation) -> Result<(), String> {
         }
     });
     // a picture value changed by a flag: the look is custom now, as in
-    // the window; nor is a look decided for no screen saved
-    let custom = settings::PICTURE
+    // the window
+    if settings::PICTURE
         .iter()
-        .any(|k| s.value(k) != looked.value(k));
-    let undecided = new && screen().is_none() && !inv.options.iter().any(|(k, _)| *k == "look");
-    if custom || undecided {
+        .any(|k| s.value(k) != looked.value(k))
+    {
         s.look = None;
     }
-    settings::write(&file, &s).map_err(|e| format!("Could not save the options: {e}"))
+    // only what changed and what was given: a look decided for no screen
+    // stays out of the file
+    let given: Vec<&str> = inv.options.iter().map(|(k, _)| *k).collect();
+    settings::write_over(&paths.settings(game.slug), &s, &base, &given)
+        .map_err(|e| format!("Could not save the options: {e}"))
 }
 
 fn state(game: &Game) -> String {

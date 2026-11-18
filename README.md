@@ -107,7 +107,8 @@ The window chooses the look for your screen the first time it opens a
 game's settings. Changing one of the picture rows by hand makes the look
 **Custom**; so does a picture option given with `--look` on the command
 line. A command line on Linux doesn't know your screen: before the window
-has chosen, it plays the Recommended look for 1920×1080 without saving it.
+has chosen, it plays the Recommended look for 1920×1080 without saving it,
+and `--set` saves only the options you give it.
 
 Everything works with a mouse, the keyboard or a pad: the d-pad or left
 stick moves, A chooses, B goes back, Start plays, Y opens Settings, the

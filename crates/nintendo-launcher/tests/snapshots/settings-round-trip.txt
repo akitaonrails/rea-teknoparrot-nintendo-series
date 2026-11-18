@@ -34,6 +34,5 @@ render = native
 deadzone = 0.125
 
 [section]
-crt = off
 --- read back the same: true
 --- problems: ["settings line 3: unknown setting \"future_key\" (ignored, kept in the file)", "settings line 4: unknown setting \"segaboot\" (ignored, kept in the file)", "settings line 5: unknown setting \"library\" (ignored, kept in the file)", "settings line 8: sharpness needs 0 to 20, not \"50\"", "settings line 9: fullscreen needs on or off, not \"maybe\""]

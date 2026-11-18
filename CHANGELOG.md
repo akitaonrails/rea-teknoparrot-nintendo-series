@@ -14,7 +14,9 @@ All notable changes to this launcher. The format follows
   window reads a game's settings, the look for your screen is chosen and
   saved (on Windows the command line does this too). A Linux command line
   doesn't know your screen: it plays the Recommended look for 1920×1080
-  for that run and saves no look, so the window chooses it later.
+  for that run and saves no look, so the window chooses it later;
+  `--set` saves only the options you gave. A settings file holds only
+  what you changed (the rest are commented lines with the defaults).
   Changing a picture option by hand, or giving a picture option with
   `--look` (`--look steam_deck --upscaler nis`), makes the look Custom.
 

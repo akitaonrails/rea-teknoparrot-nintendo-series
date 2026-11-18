@@ -9,28 +9,28 @@
 
 # The size the game draws at. Bigger is sharper and needs a stronger GPU.
 # Values: WIDTHxHEIGHT or native.
-render = native
+#render =
 
 # The size of the picture on your screen. Pick your screen's size.
 # Values: WIDTHxHEIGHT.
-output = 3840x2160
+#output =
 
 # How the game's picture is stretched to the output size.
 # Values: fsr, nis, linear or nearest.
-upscaler = fsr
+#upscaler =
 
 # How crisp the upscaler makes edges. 0 is the sharpest.
 # Values: 0 to 20.
-sharpness = 5
+#sharpness =
 
 # Scanlines and a shadow mask drawn over the game.
 # Values: off or lottes.
-crt = off
+#crt =
 
 # Fill the whole screen, or play in a window.
 # Values: on or off.
-fullscreen = true
+#fullscreen =
 
 # How far a controller stick moves before the car starts to steer.
 # Values: 0.00 to 0.30.
-deadzone = 0.05
+#deadzone =
