@@ -18,6 +18,7 @@ settings line 4: unknown setting "segaboot" (ignored, kept in the file)
 settings line 5: unknown setting "library" (ignored, kept in the file)
 settings line 8: sharpness needs 0 to 20, not "50"
 settings line 9: fullscreen needs on or off, not "maybe"
+settings line 10: "no equals sign" is not a setting (key = value): ignored, kept in the file
 --- saved
 # my notes about Mario Kart
 upscaler = nis
@@ -35,4 +36,4 @@ deadzone = 0.125
 
 [section]
 --- read back the same: true
---- problems: ["settings line 3: unknown setting \"future_key\" (ignored, kept in the file)", "settings line 4: unknown setting \"segaboot\" (ignored, kept in the file)", "settings line 5: unknown setting \"library\" (ignored, kept in the file)", "settings line 8: sharpness needs 0 to 20, not \"50\"", "settings line 9: fullscreen needs on or off, not \"maybe\""]
+--- problems: ["settings line 3: unknown setting \"future_key\" (ignored, kept in the file)", "settings line 4: unknown setting \"segaboot\" (ignored, kept in the file)", "settings line 5: unknown setting \"library\" (ignored, kept in the file)", "settings line 8: sharpness needs 0 to 20, not \"50\"", "settings line 9: fullscreen needs on or off, not \"maybe\"", "settings line 10: \"no equals sign\" is not a setting (key = value): ignored, kept in the file"]

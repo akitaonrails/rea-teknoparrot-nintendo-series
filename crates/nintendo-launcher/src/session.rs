@@ -16,6 +16,7 @@ use nintendo_core::catalog::{Game, Route};
 use nintendo_core::launch::{self, Feed as Wiring, Places, Plan};
 use nintendo_core::settings::Settings;
 use rea_launcher::catalog::{Host, Support};
+use rea_launcher::fsx;
 use rea_launcher::gamescope::CommandLine;
 use rea_launcher::library::Entry;
 use rea_launcher::linkfarm::{self, Occupied, Op};
@@ -42,6 +43,9 @@ pub struct Prepared {
     pub runtime: PathBuf,
     /// The library folders, bound read-only around the game (Linux).
     pub libraries: Vec<PathBuf>,
+    /// The folders the session writes (the launcher's data: runtimes,
+    /// windowsarcadeloader's prefix), bound back writable after them.
+    pub writable: Vec<PathBuf>,
 }
 
 pub fn check_components(game: &Game, p: &HubPaths) -> Result<()> {
@@ -136,7 +140,7 @@ pub fn prepare(
             linkfarm::remove_link(&d)?;
         }
     }
-    linkfarm::apply(&ops, Occupied::Refuse)
+    linkfarm::apply(&rt, &ops, Occupied::Refuse)
         .with_context(|| format!("building {}", rt.display()))?;
     let places = Places {
         runtime: rt.clone(),
@@ -155,10 +159,7 @@ pub fn prepare(
         wheel.map(input::dolphin_wheel).as_ref(),
     );
     for (file, text) in &plan.files {
-        if let Some(d) = file.parent() {
-            fs::create_dir_all(d)?;
-        }
-        fs::write(file, text).with_context(|| format!("writing {}", file.display()))?;
+        fsx::write_atomic(file, text).with_context(|| format!("writing {}", file.display()))?;
     }
     let mut links = Vec::new();
     for (at, target) in &plan.links {
@@ -170,7 +171,9 @@ pub fn prepare(
             at: at.clone(),
         });
     }
-    linkfarm::apply(&links, Occupied::Refuse)?;
+    // the links go into the runtime and windowsarcadeloader's root, both
+    // in the data folder
+    linkfarm::apply(&paths.data, &links, Occupied::Refuse)?;
     if let Wiring::DolphinPipe(pipe) = &plan.feed {
         make_fifo(pipe)?;
     }
@@ -178,6 +181,7 @@ pub fn prepare(
         plan,
         runtime: rt,
         libraries: config.libraries.clone(),
+        writable: vec![paths.data.clone()],
     })
 }
 
@@ -188,6 +192,7 @@ pub fn prepare(
 pub fn command_line(
     plan: &Plan,
     libraries: &[PathBuf],
+    writable: &[PathBuf],
     bwrap: bool,
     user_home: &str,
 ) -> Vec<String> {
@@ -198,6 +203,7 @@ pub fn command_line(
             .clone()
             .map(|home| (home, user_home.to_string())),
         read_only: bwrap.then(|| libraries.to_vec()),
+        writable: writable.to_vec(),
         cpus: None,
     }
     .argv(&plan.game.program, &plan.game.args)
@@ -205,7 +211,8 @@ pub fn command_line(
 
 /// The command the session starts: on Linux [`command_line`], on Windows
 /// the game's own (no gamescope, no bubblewrap).
-fn session_argv(plan: &Plan, libraries: &[PathBuf]) -> Vec<String> {
+fn session_argv(p: &Prepared) -> Vec<String> {
+    let plan = &p.plan;
     if Host::current() == Host::Windows {
         return std::iter::once(plan.game.program.to_string_lossy().into_owned())
             .chain(plan.game.args.iter().cloned())
@@ -213,7 +220,7 @@ fn session_argv(plan: &Plan, libraries: &[PathBuf]) -> Vec<String> {
     }
     let bwrap = which("bwrap").is_some();
     let user_home = std::env::var("HOME").unwrap_or_default();
-    command_line(plan, libraries, bwrap, &user_home)
+    command_line(plan, &p.libraries, &p.writable, bwrap, &user_home)
 }
 
 /// What drives the game.
@@ -308,7 +315,7 @@ impl supervise::Watcher for Polite {
 pub fn run(p: &Prepared, feed: Feed, stop: &AtomicBool) -> Result<ExitStatus> {
     let log_path = p.runtime.join("session.log");
     let file = fs::File::create(&log_path)?;
-    let argv = session_argv(&p.plan, &p.libraries);
+    let argv = session_argv(p);
     let mut cmd = Command::new(&argv[0]);
     cmd.args(&argv[1..])
         .current_dir(&p.plan.game.cwd)
@@ -395,11 +402,31 @@ mod tests {
             Host::Linux,
             None,
         );
-        let v = command_line(&plan, &["/lib".into(), "/tf".into()], true, "/home/p");
+        let v = command_line(
+            &plan,
+            &["/lib".into(), "/tf".into()],
+            &["/d".into()],
+            true,
+            "/home/p",
+        );
         let s = v.join(" ");
         assert!(s.starts_with("gamescope -w 1360 -h 768 "), "{s}");
-        assert!(s.contains(" -- bwrap --dev-bind / / --ro-bind /lib /lib --ro-bind /tf /tf /c/wal/arcade-launcher run "), "{s}");
-        let plain = command_line(&plan, &["/lib".into()], false, "/home/p");
+        assert!(s.contains(" -- bwrap --dev-bind / / --ro-bind-try /lib /lib --ro-bind-try /tf /tf /c/wal/arcade-launcher run "), "{s}");
+        let plain = command_line(&plan, &["/lib".into()], &["/d".into()], false, "/home/p");
+        // a library holding the launcher's data (`--library ~`): the data is
+        // bound back writable, or the game couldn't write its runtime
+        let home = command_line(
+            &plan,
+            &["/home/p".into()],
+            &["/home/p/.local/share/rea-nintendo".into()],
+            true,
+            "/home/p",
+        )
+        .join(" ");
+        assert!(
+            home.contains("--ro-bind-try /home/p /home/p --bind /home/p/.local/share/rea-nintendo /home/p/.local/share/rea-nintendo "),
+            "{home}"
+        );
         assert!(!plain.join(" ").contains("bwrap"));
         // the CRT effect: gamescope with the runtime's HOME, the game with the player's
         let crt = Settings {
@@ -419,7 +446,7 @@ mod tests {
             Host::Linux,
             None,
         );
-        let s = command_line(&plan, &["/lib".into()], true, "/home/p").join(" ");
+        let s = command_line(&plan, &["/lib".into()], &["/d".into()], true, "/home/p").join(" ");
         assert!(
             s.starts_with("env HOME=/d/rt/fzax/gamescope-home gamescope "),
             "{s}"
@@ -614,7 +641,7 @@ mod tests {
                             if headless { " headless" } else { "" },
                             if bwrap { "" } else { " no-bwrap" }
                         ));
-                        for a in command_line(&plan, &libraries, bwrap, "/home/p") {
+                        for a in command_line(&plan, &libraries, &["/d".into()], bwrap, "/home/p") {
                             out.push_str(&format!("  {a}\n"));
                         }
                     }

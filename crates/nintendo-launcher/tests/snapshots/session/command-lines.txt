@@ -20,10 +20,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/dolphin/dolphin-emu-nogui
@@ -79,10 +79,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/dolphin/dolphin-emu-nogui
@@ -144,10 +144,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/dolphin/dolphin-emu-nogui
@@ -215,10 +215,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/dolphin/dolphin-emu-nogui
@@ -280,10 +280,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/dolphin/dolphin-emu-nogui
@@ -339,10 +339,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/dolphin/dolphin-emu-nogui
@@ -404,10 +404,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/dolphin/dolphin-emu-nogui
@@ -475,10 +475,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/dolphin/dolphin-emu-nogui
@@ -540,10 +540,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/wal/arcade-launcher
@@ -601,10 +601,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/wal/arcade-launcher
@@ -668,10 +668,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/wal/arcade-launcher
@@ -741,10 +741,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/wal/arcade-launcher
@@ -808,10 +808,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/wal/arcade-launcher
@@ -869,10 +869,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/wal/arcade-launcher
@@ -936,10 +936,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/wal/arcade-launcher
@@ -1009,10 +1009,10 @@
   --dev-bind
   /
   /
-  --ro-bind
+  --ro-bind-try
   /lib
   /lib
-  --ro-bind
+  --ro-bind-try
   /tf games
   /tf games
   /c/wal/arcade-launcher

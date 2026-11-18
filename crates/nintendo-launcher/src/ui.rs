@@ -328,6 +328,7 @@ fn controls_view(s: &Snapshot) -> ControlsView {
             })
             .collect(),
         feeding: s.feeding,
+        lines: Vec::new(),
     }
 }
 

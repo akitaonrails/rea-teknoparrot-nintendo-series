@@ -117,7 +117,7 @@ mod tests {
         // an older launcher linked the log: replaced by a copy
         fs::create_dir_all(&rt).unwrap();
         std::os::unix::fs::symlink(src.join("error.log"), rt.join("error.log")).unwrap();
-        apply(&ops, Occupied::Refuse).unwrap();
+        apply(&rt, &ops, Occupied::Refuse).unwrap();
         let log = rt.join("error.log");
         assert!(!fs::symlink_metadata(&log).unwrap().file_type().is_symlink());
         assert!(
@@ -127,7 +127,7 @@ mod tests {
                 .is_symlink()
         );
         fs::write(&log, b"the game's").unwrap();
-        apply(&ops, Occupied::Refuse).unwrap();
+        apply(&rt, &ops, Occupied::Refuse).unwrap();
         assert_eq!(fs::read(&log).unwrap(), b"the game's");
         assert_eq!(fs::read(src.join("error.log")).unwrap(), b"old");
     }
@@ -141,14 +141,14 @@ mod tests {
         fs::write(src.join("FTestMode/testmode_1.bin"), b"camera off").unwrap();
         fs::write(src.join("GTestMode/testmode_1.bin"), b"camera off").unwrap();
         let ops = real(GameId::MarioKartDx, &src, &rt);
-        apply(&ops, Occupied::Refuse).unwrap();
+        apply(&rt, &ops, Occupied::Refuse).unwrap();
         let f = rt.join("F/TestMode/testmode_1.bin");
         assert_eq!(fs::read(&f).unwrap(), b"camera off");
         assert!(rt.join("G/TestMode/testmode_1.bin").is_file());
         // the game rewrites its settings: they are its own from then on
         fs::remove_file(&f).unwrap();
         fs::write(rt.join("F/TestMode/testmode_2.bin"), b"the player's").unwrap();
-        apply(&ops, Occupied::Refuse).unwrap();
+        apply(&rt, &ops, Occupied::Refuse).unwrap();
         assert!(!f.exists());
         assert_eq!(
             fs::read(src.join("FTestMode/testmode_1.bin")).unwrap(),
@@ -179,7 +179,7 @@ mod tests {
         fs::create_dir_all(&rt).unwrap();
         std::os::unix::fs::symlink(src.join("exe"), rt.join("exe")).unwrap();
         let ops = real(GameId::LuigisMansion, &src, &rt);
-        apply(&ops, Occupied::Refuse).unwrap();
+        apply(&rt, &ops, Occupied::Refuse).unwrap();
         let is_link = |p: &str| {
             fs::symlink_metadata(rt.join(p))
                 .unwrap()
@@ -193,7 +193,7 @@ mod tests {
         // the loader's save folder lands in the runtime, not in the dump
         fs::create_dir_all(rt.join("exe/x64/sv")).unwrap();
         assert!(!src.join("exe/x64/sv").exists());
-        apply(&ops, Occupied::Refuse).unwrap();
+        apply(&rt, &ops, Occupied::Refuse).unwrap();
         assert!(rt.join("exe/x64/sv").is_dir());
     }
 }

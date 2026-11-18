@@ -61,6 +61,7 @@ const CLI: CliSpec = CliSpec {
     style: KeyStyle::Underscore,
     paths: &FIELDS,
     offers: None,
+    test_options: &[],
 };
 
 /// The family's view of this run, for who sees its messages.
