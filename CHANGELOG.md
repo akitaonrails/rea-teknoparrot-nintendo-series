@@ -6,54 +6,14 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
-### Added
-
-- Looks, as in the family's other launchers: **Original** (the game as
-  shipped), **Recommended** (as large as your screen allows, with FSR) and
-  **Steam Deck**, in the Settings page and as `--look`. The first time the
-  window reads a game's settings, the look for your screen is chosen and
-  saved (on Windows the command line does this too). A Linux command line
-  doesn't know your screen: it plays the Recommended look for 1920×1080
-  for that run and saves no look, so the window chooses it later;
-  `--set` saves only the options you gave. A settings file holds only
-  what you changed (the rest are commented lines with the defaults).
-  Changing a picture option by hand, or giving a picture option with
-  `--look` (`--look steam_deck --upscaler nis`), makes the look Custom.
-
-### Changed
-
-- If you have no settings file for a game yet, it now starts with the
-  Recommended look (or Steam Deck on a Deck) instead of the old fixed
-  defaults (4K output, the cabinet's own size).
-- A dead zone written with more than two decimals is used rounded to two
-  (`deadzone = 0.125` plays as 0.13); the line stays as you wrote it.
-- On Windows, a file in a game's private folder that differs from your
-  game folder and wasn't copied there by the launcher is now refused, with
-  a message naming it, instead of being overwritten.
-- Updated rea-launcher-sdk to v0.10.0: the window, the command line, the
-  game sessions, the controller input and the packaging are now the SDK's
-  shared hub, the same as the Initial D, Sega and Wangan launchers'.
-- The window works with a pad: the d-pad or left stick moves, A chooses,
-  B goes back, Start plays, Y opens Settings, the shoulder buttons change
-  tabs. While a game runs the pad belongs to the game.
-- On Windows the Settings page shows the screen-size, upscaler, sharpness
-  and full-screen rows greyed out with the reason (they are for gamescope
-  on Linux) instead of hiding them.
-- A new game settings file starts with a comment above each option.
-- New `--check [<game>]` says whether a game (or every game) can start
-  without starting it; `--set <game> <options>` saves options (`--game`
-  still works, and now refuses to run without options instead of doing
-  nothing).
-- Only one launcher runs at a time; `--list` still works while the window
-  is open.
-
 ### Fixed
 
 - Closing the launcher (or killing it) on Linux no longer leaves the game
   running.
-- Stopping a game on Windows asks Dolphin to close its window, so it saves;
-  it was ended after 8 seconds. On Linux Dolphin is asked on its own and
-  gets the time to save before anything else stops.
+- Stopping a game asks it to close first, so it saves: on Windows every
+  window of the game gets the close (Dolphin saved nothing and every stop
+  waited 8 seconds); on Linux Dolphin is asked on its own and gets the
+  time to save before anything else stops.
 - `--no-input` no longer makes Mario Kart DX and Luigi's Mansion quit at
   once.
 - A game that closes by itself right after starting (Windows refusing a
@@ -63,8 +23,7 @@ All notable changes to this launcher. The format follows
 - A settings file that can't be read is no longer overwritten with the
   defaults; a value the launcher can't read stays in the file as you wrote
   it (and is reported in `launcher.log`); a file saved by Notepad with a
-  byte-order mark no longer loses its first setting; `deadzone = 0.125`
-  stays as written in the file.
+  byte-order mark no longer loses its first setting.
 - `launcher.cfg` keeps your comments and other lines, and a folder listed
   twice is saved once.
 - Starting a game or `--list` no longer reads every disc image in your
@@ -75,10 +34,53 @@ All notable changes to this launcher. The format follows
 - Paths show the system's separator on Windows; `~` in a typed path works
   on Windows too; an empty or relative `XDG_DATA_HOME`/`LOCALAPPDATA` no
   longer puts the launcher's data in the current folder.
+- A library folder that holds the launcher's own data (your home folder)
+  no longer stops the games from writing their saves.
 - A failed Windows job assignment no longer stops a game from starting;
   the force feedback lets go of the wheel when a game's input breaks.
-- A download cut short while building the packages no longer wedges the
-  next build; a release now waits for the checks and the Windows tests.
+
+### Added
+
+- The window works with a pad: the d-pad or left stick moves, A chooses,
+  B goes back, Start plays, Y opens Settings, the shoulder buttons change
+  tabs. While a game runs the pad belongs to the game.
+- Looks, as in the family's other launchers: **Original** (the game as
+  shipped), **Recommended** (as large as your screen allows, with FSR) and
+  **Steam Deck**, in the Settings page and as `--look`. The first time the
+  window reads a game's settings, the look for your screen is chosen and
+  saved (on Windows the command line does this too). A Linux command line
+  doesn't know your screen: it plays the Recommended look for 1920×1080
+  for that run and saves no look, so the window chooses it later.
+  Changing a picture option by hand, or giving a picture option with
+  `--look` (`--look steam_deck --upscaler nis`), makes the look Custom.
+- On Windows the Settings page shows the screen-size, upscaler, sharpness
+  and full-screen rows greyed out with the reason (they are for gamescope
+  on Linux) instead of hiding them.
+- `--check [<game>]` says whether a game (or every game) can start without
+  starting it; `--set <game> <options>` saves options (`--game` still
+  works, and now refuses to run without options instead of doing
+  nothing).
+- Only one launcher runs at a time; `--list` still works while the window
+  is open.
+
+### Changed
+
+- If you have no settings file for a game yet, it starts with the
+  Recommended look (or Steam Deck on a Deck) instead of the old fixed
+  defaults (4K output, the cabinet's own size).
+- A settings file holds only what you changed, the rest as commented lines
+  with a note above each option; `--set` saves only the options you gave.
+- A dead zone written with more than two decimals is used rounded to two
+  (`deadzone = 0.125` plays as 0.13); the line stays as you wrote it.
+- On Windows, a file in a game's private folder that differs from your
+  game folder and wasn't copied there by the launcher is now refused, with
+  a message naming it, instead of being overwritten.
+- Packages are built from pinned downloads that a cut-short download can
+  no longer wedge, and a release waits for the checks and the Windows
+  tests.
+- Updated rea-launcher-sdk to v0.10.0: the window, the command line, the
+  game sessions, the controller input and the packaging are now the SDK's
+  shared hub, the same as the Initial D, Sega and Wangan launchers'.
 
 ## 0.1.0 - 2026-11-15
 
