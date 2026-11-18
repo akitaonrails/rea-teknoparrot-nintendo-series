@@ -124,6 +124,23 @@ Dolphin on Windows, by plan only (a test, `launch.rs`): the Recommended
 look gives `InternalResolution = 5` on a 3840×2160 screen and 3 on
 1920×1080, with no gamescope.
 
+Final state on the SDK's `feat/hub` at 860e4da (2026-11-17), every run's
+sound on a private PipeWire with only a null sink (started for the run,
+no hardware monitors; the run stops itself if a stream ever appears on
+the desktop's sound server) — each game's stream was seen on the null
+sink:
+
+| Run | Seen |
+|---|---|
+| F-Zero AX, `--seconds 120` | race start line; Dolphin alone got the signal, quit, and gamescope ended by itself: `# exit: exit status: 0 after 120 s; stopped 0 leftover`. (The run before this fix killed gamescope the moment Dolphin was gone: `signal: 9`.) |
+| F-Zero AX, launcher killed at 45 s | nothing left |
+| Mario Kart DX, the race script, `--seconds 150` | menus to round select; `exit status: 0 after 150 s; stopped 0 leftover`; nothing left |
+| Mario Kart DX, launcher killed at 100 s | no gamescope, windowsarcadeloader or Wine server left |
+
+The Windows Stop (every session process's window gets `WM_CLOSE`, so
+Mario Kart DX and Luigi's Mansion end without waiting the grace) is the
+SDK's and covered by its tests; it wasn't run on Windows here.
+
 Not run headless: closing the hub window itself (it needs a display);
 the window's close-stops-the-game path is covered by the SDK's window
 tests, and the quit from the game's own menu doesn't exist on these

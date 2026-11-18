@@ -301,11 +301,6 @@ impl supervise::Watcher for Polite {
             _ => group.terminate(),
         }
     }
-
-    /// While the emulator asked alone still runs, it is saving.
-    fn saving(&mut self, group: &Group) -> bool {
-        self.alone.is_none() || self.pid(group).is_some()
-    }
 }
 
 /// Starts the game in its session (the window's or the command line's
@@ -566,6 +561,43 @@ mod tests {
         assert_eq!(early(&out(Ended::Stopped, 2), log), None);
     }
 
+    /// After Dolphin quits, gamescope (the leader) gets the rest of the
+    /// grace to end by itself: it was killed the moment Dolphin was gone.
+    #[test]
+    #[cfg(target_os = "linux")]
+    fn the_leader_ends_by_itself_after_dolphin_quits() {
+        use std::os::unix::process::ExitStatusExt;
+        let t = tempfile::tempdir().unwrap();
+        let dolphin = t.path().join("dolphin-emu-nogui");
+        std::os::unix::fs::symlink("/bin/sleep", &dolphin).unwrap();
+        let mut cmd = Command::new("sh");
+        // the leader takes a moment to end once its child is gone
+        cmd.args(["-c", "\"$0\" 30; sleep 1; exit 0"])
+            .arg(&dolphin)
+            .stdout(Stdio::null())
+            .stderr(Stdio::null());
+        let group = Group::spawn(&mut cmd, &Tag::new(TAG, "nintendo-test-leader")).unwrap();
+        let stop = AtomicBool::new(false);
+        let opts = Options {
+            stop: &stop,
+            log: Arc::new(Mutex::new(Vec::<u8>::new())),
+            grace: Duration::from_secs(5),
+            sink: None,
+        };
+        let mut polite = Polite {
+            alone: Some("dolphin-emu-nogui"),
+        };
+        let out = std::thread::scope(|s| {
+            s.spawn(|| {
+                std::thread::sleep(Duration::from_millis(500));
+                stop.store(true, std::sync::atomic::Ordering::SeqCst);
+            });
+            supervise::run(group, &mut Hold::default(), &mut polite, opts).unwrap()
+        });
+        assert_eq!(out.ended, Ended::Stopped);
+        assert_eq!(out.status.code(), Some(0), "{:?}", out.status.signal());
+    }
+
     /// A stop asks Dolphin alone (it saves, then quits); the rest of the
     /// session (gamescope) keeps running until Dolphin is gone.
     #[test]
@@ -584,12 +616,12 @@ mod tests {
         while polite.pid(&group).is_none() && started.elapsed() < Duration::from_secs(5) {
             std::thread::sleep(Duration::from_millis(20));
         }
-        assert!(polite.saving(&group), "Dolphin runs");
+        assert!(polite.pid(&group).is_some(), "Dolphin runs");
         polite.ask_to_stop(&group);
-        while polite.saving(&group) && started.elapsed() < Duration::from_secs(5) {
+        while polite.pid(&group).is_some() && started.elapsed() < Duration::from_secs(5) {
             std::thread::sleep(Duration::from_millis(20));
         }
-        assert!(!polite.saving(&group), "Dolphin stopped");
+        assert!(polite.pid(&group).is_none(), "Dolphin stopped");
         assert!(
             group.exited().unwrap().is_none(),
             "the leader was not asked"
