@@ -16,4 +16,4 @@ Tab "Settings" [off] @568,19 101x42
 Label = "Controller: No controller"
 Label = "Mario Kart Arcade GP DX couldn't start"
 Label = "Mario Kart Arcade GP DX needs launcher components that are missing:\n  <tmp>/components/wal/arcade-launcher\n  <tmp>/components/wal/payloads\n  <tmp>/components/wal/systemprofiles\n  <tmp>/components/runner/bin/wine\n(see README, \"For developers\").\n\nCheck that the game folder is complete, then try again. Details are in <tmp>/data/launcher.log."
-Button "OK" @322,498 156x56
+Button "OK" @322,538 156x56

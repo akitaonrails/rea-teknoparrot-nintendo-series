@@ -16,4 +16,4 @@ Tab "Settings" [off] @568,19 101x42
 Label = "Controller: No controller"
 Label = "Mario Kart Arcade GP DX stopped with an error"
 Label = "Dolphin crashed.\n\nTry again. If it happens again, the game's log is <tmp>/data/runtimes/mkdx/session.log."
-Button "OK" @322,448 156x56
+Button "OK" @322,458 156x56

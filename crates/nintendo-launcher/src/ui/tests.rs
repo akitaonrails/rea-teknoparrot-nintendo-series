@@ -588,8 +588,14 @@ fn every_page_fits_and_matches_its_golden_dump() {
     let host = if cfg!(windows) { "windows" } else { "linux" };
     for (state, library, segaboot, setup) in states() {
         for size in [SIZE_720, SIZE_800] {
-            let t = tempfile::tempdir().unwrap();
-            let root = t.path();
+            // a fixed, relative folder (tests run in the crate's folder): a
+            // message showing the path wraps the same way on every machine
+            // (a random temp name's letters have other widths)
+            let at = format!("{state}-{}x{}", size.x, size.y);
+            let dir = Path::new("target/ui-snapshots").join(&at);
+            let _ = std::fs::remove_dir_all(&dir);
+            std::fs::create_dir_all(&dir).unwrap();
+            let root = dir.as_path();
             let lib = root.join("games");
             std::fs::create_dir_all(&lib).unwrap();
             let libraries = if library { vec![lib] } else { vec![] };
@@ -601,15 +607,16 @@ fn every_page_fits_and_matches_its_golden_dump() {
             h.run_steps(3);
             let misfits = testing::misfits(&h);
             assert!(misfits.is_empty(), "{state} at {size:?}: {misfits:#?}");
-            let shown = |p: &Path| {
-                let s = p.display().to_string();
-                (s.replace('\\', "\\\\"), s)
-            };
-            let (escaped, plain) = shown(root);
-            let dump = testing::dump(&h)
-                .replace(&escaped, "<tmp>")
-                .replace(&plain, "<tmp>");
-            let at = format!("{state}-{}x{}", size.x, size.y);
+            // the folder as the window shows it (Windows: with `\`), and as
+            // the dump escapes it
+            let plain = root.display().to_string();
+            let shown = hub::display_path(root);
+            let mut dump = testing::dump(&h);
+            for p in [&shown, &plain] {
+                dump = dump
+                    .replace(&p.replace('\\', "\\\\"), "<tmp>")
+                    .replace(p, "<tmp>");
+            }
             rea_launcher::snapshot!(&format!("ui/{host}/{at}.txt"), dump);
         }
     }

@@ -60,14 +60,24 @@ jobs:
         run: |
           scripts/build-components.sh "$RUNNER_TEMP/c" runner
           echo "$RUNNER_TEMP/c/runner/bin" >> "$GITHUB_PATH"
-      - name: Clippy and tests under Wine (x86_64-pc-windows-gnu)
+      - name: Clippy (x86_64-pc-windows-gnu)
         run: |
           sdl="$(ls -d "$PWD"/dist/sdl2/SDL2-*/x86_64-w64-mingw32)/lib"
+          echo "SDL2_LIB=$sdl" >> "$GITHUB_ENV"
           export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=lld -L $sdl"
           cargo clippy --workspace --all-targets --locked --target x86_64-pc-windows-gnu -- -D warnings
+      # GE-Proton's runner has no wineboot, which sdk/scripts/wine-test
+      # needs: the tests run through `wine` directly, in a fresh prefix,
+      # with no display (a message never opens a window)
+      - name: Tests under Wine
+        run: |
+          unset DISPLAY WAYLAND_DISPLAY
+          export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=lld -L $SDL2_LIB"
+          export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_RUNNER=wine
+          export WINEPREFIX="$RUNNER_TEMP/wineprefix" WINEDEBUG=-all
           export WINEPATH="Z:$(printf '%s' "$PWD/dist/sdl2" | tr / '\\')"
           wine --version
-          sdk/scripts/wine-test --target x86_64-pc-windows-gnu --locked --workspace
+          cargo test --workspace --locked --target x86_64-pc-windows-gnu
 
   packages:
     runs-on: ubuntu-24.04
