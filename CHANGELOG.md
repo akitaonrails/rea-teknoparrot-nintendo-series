@@ -6,6 +6,8 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
+## 0.2.1 - 2026-11-18
+
 The first published release with everything in 0.2.0 below: 0.2.0 was
 tagged, but its release build stopped on CI setup problems (no
 `deny.toml` for the dependency audit, and the Windows tests needed a Wine
