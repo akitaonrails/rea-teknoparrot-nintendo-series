@@ -2,16 +2,17 @@ Label = "Controls"
 Label = "Turn the wheel or move the stick, press the pedals and buttons: the bars should follow."
 Label = "No controller found. Plug in a wheel or a pad; it shows up here."
 Label = "Steer: Left stick"
-Label = "Gas: RT"
-Label = "Brake: LT"
-Label = "Item / boost: A"
-Label = "Mario button / view change: B"
-Label = "Left paddle / menu up: LB"
-Label = "Right paddle / menu down: RB"
-Label = "Enter (Mario Kart DX): X"
-Label = "Start: START"
-Label = "Insert / remove card: Y"
-Label = "Insert coin: BACK"
+Button "Gas: RT. Change" @76,460 231x24
+Button "Brake: LT. Change" @76,488 231x24
+Button "Item / boost: A. Change" @76,516 231x24
+Button "Mario button / view change: B. Change" @76,544 231x24
+Button "Left paddle / menu up: LB. Change" @76,572 231x24
+Button "Right paddle / menu down: RB. Change" @319,432 231x24
+Button "Enter (Mario Kart DX): X. Change" @319,460 231x24
+Button "Start: START. Change" @319,488 231x24
+Button "Insert / remove card: Y. Change" @319,516 231x24
+Button "Insert coin: BACK. Change" @319,544 231x24
+Button "Reset" @442,598 120x38
 Meter "Steering" = "0%" #0
 Meter "Gas" = "0%" #0
 Meter "Brake" = "0%" #0
@@ -25,6 +26,8 @@ Label = "Insert / remove card: released"
 Label = "Insert coin: released"
 Label = "Operator test menu: released"
 Label = "Service: released"
+Button "Test the pad" (The pad is being tested.) [disabled] @626,598 190x38
+Label = "Your pad's buttons only light up here now. Press Back and Start together to move through the menu with it."
 Tab "Games" [off] @326,17 78x38
 Tab "Controls" [on] @412,17 91x38
 Tab "Settings" [off] @511,17 91x38

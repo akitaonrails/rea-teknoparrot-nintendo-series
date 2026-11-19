@@ -328,7 +328,8 @@ fn play(
     // for its mapping, and no input thread
     let reads_itself = game.route == Route::Dolphin && Host::current() == Host::Windows;
     let feeds = !inv.test.no_input && inv.test.script.is_none() && !reads_itself;
-    let input = feeds.then(input::service);
+    let input =
+        feeds.then(|| input::service(&input::bindings(paths, |w| Log::new(paths.log()).warn(w))));
     let wheel = reads_itself.then(feeder::find_wheel).flatten();
     let prepared = session::prepare(
         paths,

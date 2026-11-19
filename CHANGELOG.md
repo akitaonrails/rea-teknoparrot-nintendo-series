@@ -6,9 +6,27 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
+### Added
+
+- Controls: change a button. Choose a row of the pad layout (Gas,
+  Brake, a cabinet button), then press the pad button or trigger it
+  should use; Reset goes back to the launcher's layout. The layout is
+  saved in the data folder's `controls.cfg` and used by the window and
+  `--play`.
+
 ### Changed
 
 - Updated rea-launcher-sdk to v0.11.1.
+
+### Fixed
+
+- Controls: pressing the pad's buttons to try them on the Controls page
+  switched pages (LB/RB) or left it (B). The pad's presses now only light
+  up the live check there; press Back and Start together to move through
+  the menu with the pad, and "Test the pad" to try the buttons again.
+- A PXN wheel (the VD6 and other models with PXN's own USB ID) was
+  listed as "Other" and nothing drove the car ("No controller"); it is a
+  wheel now.
 
 ## 0.2.1 - 2026-11-18
 

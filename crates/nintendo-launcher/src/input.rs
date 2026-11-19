@@ -8,13 +8,29 @@
 use nintendo_core::input::{Aim, Button, DolphinPad, StickLayout, default_pad_map};
 use nintendo_core::launch::{DolphinWheel, Feed as Wiring};
 use rea_launcher::ffb::{FfbOutput, FfbSettings, SyntheticFfb, Tuning as Arcade};
+use rea_launcher::hub::HubPaths;
+use rea_launcher::hub::bindings::Bindings;
 use rea_launcher_native::feeder::{Frame, InputService, WheelInfo, Wire};
 
-/// The input thread, with the cabinets' pad layout; a wheel's shift
-/// paddles are the paddles (right, left).
-pub fn service() -> InputService {
+/// The player's pad layout: the cabinets', with the changes saved in the
+/// data folder's `controls.cfg`. A file that can't be read leaves the
+/// cabinets' layout, and `warn` hears why.
+pub fn bindings(paths: &HubPaths, warn: impl FnOnce(&str)) -> Bindings<Button> {
+    let file = paths.controls_file();
+    Bindings::load(&file, default_pad_map()).unwrap_or_else(|e| {
+        warn(&format!(
+            "{}: {e}; the default pad layout is used",
+            file.display()
+        ));
+        Bindings::new(default_pad_map())
+    })
+}
+
+/// The input thread, with the player's pad layout `bindings`; a wheel's
+/// shift paddles are the paddles (right, left).
+pub fn service(bindings: &Bindings<Button>) -> InputService {
     InputService::start(
-        default_pad_map(),
+        bindings.map().clone(),
         Some((Button::PaddleRight, Button::PaddleLeft)),
     )
 }

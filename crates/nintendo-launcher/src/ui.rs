@@ -8,15 +8,16 @@ use std::path::{Path, PathBuf};
 
 use eframe::egui::Color32;
 use nintendo_core::catalog::{self, GAMES, Game, Route};
-use nintendo_core::input::{Button, default_pad_map};
+use nintendo_core::input::Button;
 use nintendo_core::settings::{self, Look, Settings};
 use rea_launcher::catalog::{Host, Support};
 use rea_launcher::gamescope::{Size, Upscaler};
+use rea_launcher::hub::bindings::Bindings;
 use rea_launcher::hub::{self, HubConfig, HubPaths, Input};
 use rea_launcher::library::{self, HashCache, Scan};
 use rea_launcher::log::Log;
 use rea_launcher::pad::PadNav;
-use rea_launcher::wheel::{Action, Control};
+use rea_launcher::wheel::{Control, PadInput};
 use rea_launcher_native::feeder::{InputService, Snapshot};
 use rea_launcher_ui::hub::{
     ButtonView, ControlsView, Device, Found, HubBackend, HubForm, HubGame, HubLayout, HubSpec,
@@ -91,7 +92,10 @@ pub fn spec(paths: HubPaths) -> HubSpec {
 
 /// Opens the window and runs it until it is closed.
 pub fn run(paths: HubPaths) -> Result<(), String> {
-    let launcher = Launcher::new(paths.clone(), Some(crate::input::service()));
+    let log = Log::new(paths.log());
+    let bindings = crate::input::bindings(&paths, |w| log.warn(w));
+    let mut launcher = Launcher::new(paths.clone(), Some(crate::input::service(&bindings)));
+    launcher.bindings = bindings;
     rea_launcher_ui::hub::run(spec(paths), launcher)
 }
 
@@ -109,6 +113,8 @@ pub struct Launcher {
     pub snapshot: Snapshot,
     /// The pads' menu steps (one per press).
     nav: PadNav,
+    /// The player's pad layout (`controls.cfg`).
+    bindings: Bindings<Button>,
     /// The next Play's session, made by the test.
     #[cfg(test)]
     pub next: Option<Session>,
@@ -127,8 +133,24 @@ impl Launcher {
                 .collect(),
             snapshot: Snapshot::default(),
             nav: PadNav::default(),
+            bindings: Bindings::new(nintendo_core::input::default_pad_map()),
             #[cfg(test)]
             next: None,
+        }
+    }
+
+    /// Hands the changed pad layout to the input thread; what the
+    /// Controls page says (a save that failed also goes to `launcher.log`).
+    fn bindings_changed(&self, done: Result<String, String>) -> Note {
+        if let Some(i) = &self.input {
+            i.set_pad_map(self.bindings.map().clone());
+        }
+        match done {
+            Ok(said) => Note::ok(said),
+            Err(e) => {
+                self.log.error(&e);
+                Note::error(e)
+            }
         }
     }
 
@@ -265,30 +287,34 @@ impl HubBackend for Launcher {
     }
 
     fn controls(&self) -> ControlsView {
-        controls_view(&self.snapshot())
+        controls_view(&self.snapshot(), &self.bindings)
     }
 
     fn pad(&mut self) -> Vec<Input> {
         let bits = self.snapshot().nav;
         Input::from_pad(&mut self.nav, bits)
     }
-}
 
-/// The pad layout, as the Controls page lists it.
-fn layout() -> Vec<(String, String)> {
-    let map = default_pad_map();
-    let mut rows = vec![
-        ("Steer".to_string(), "Left stick".to_string()),
-        ("Gas".into(), map.describe(Action::Accelerate)),
-        ("Brake".into(), map.describe(Action::Brake)),
-    ];
-    for b in Button::ALL {
-        let keys = map.describe(Action::Press(*b));
-        if keys != "-" {
-            rows.push((b.label().to_string(), keys));
-        }
+    fn pad_now(&self) -> Option<(u16, Option<PadInput>)> {
+        let snap = self.snapshot();
+        Some((snap.nav, snap.held))
     }
-    rows
+
+    fn rebindable(&self) -> Vec<usize> {
+        self.bindings.rebindable()
+    }
+
+    fn rebind(&mut self, row: usize, input: PadInput) -> Note {
+        let file = self.paths.controls_file();
+        let done = self.bindings.rebind_saved(row, input, &file);
+        self.bindings_changed(done)
+    }
+
+    fn reset_bindings(&mut self) -> Note {
+        let file = self.paths.controls_file();
+        let done = self.bindings.reset_saved(&file);
+        self.bindings_changed(done)
+    }
 }
 
 const LAYOUT_NOTE: &str = if cfg!(windows) {
@@ -301,7 +327,7 @@ const LAYOUT_NOTE: &str = if cfg!(windows) {
      trigger, A or the left mouse button vacuums, B is the gun's button."
 };
 
-fn controls_view(s: &Snapshot) -> ControlsView {
+fn controls_view(s: &Snapshot, bindings: &Bindings<Button>) -> ControlsView {
     let c = s.controls;
     ControlsView {
         error: s.error.clone(),
@@ -314,7 +340,7 @@ fn controls_view(s: &Snapshot) -> ControlsView {
             })
             .collect(),
         driver: s.driver,
-        layout: layout(),
+        layout: bindings.layout(),
         layout_note: LAYOUT_NOTE.into(),
         steer: c.steer,
         accel: c.accel,

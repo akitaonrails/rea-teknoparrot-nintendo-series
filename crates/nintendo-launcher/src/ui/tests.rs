@@ -377,7 +377,8 @@ fn wheel_and_pad() -> Snapshot {
 
 #[test]
 fn the_controls_page_shows_the_layout_the_wheel_and_live_input() {
-    let v = controls_view(&wheel_and_pad());
+    let bindings = Bindings::new(nintendo_core::input::default_pad_map());
+    let v = controls_view(&wheel_and_pad(), &bindings);
     assert_eq!(v.devices[v.driver.unwrap()].name, "Test Wheel");
     assert!(v.layout.contains(&("Item / boost".into(), "A".into())));
     assert!(v.layout.contains(&("Gas".into(), "RT".into())));
@@ -390,6 +391,26 @@ fn the_controls_page_shows_the_layout_the_wheel_and_live_input() {
     open_tab(&mut h, Tab::Controls);
     assert!(says(&h, "Wheel: Test Wheel (drives the car)"));
     assert!(says(&h, "A game is running: it reads these controls."));
+}
+
+#[test]
+fn the_controls_page_tests_the_pad_and_saves_a_changed_button() {
+    use rea_launcher::wheel::PadInput;
+    let t = tempfile::tempdir().unwrap();
+    let mut h = hub(t.path());
+    open_tab(&mut h, Tab::Controls);
+    h.run_steps(2);
+    assert!(says(&h, "only light up here"));
+    click_button(&mut h, "Gas: RT. Change");
+    h.state_mut().backend_mut().snapshot.held = Some(PadInput::B);
+    h.run_steps(2);
+    h.state_mut().backend_mut().snapshot.held = None;
+    h.run_steps(2);
+    let paths = paths_in(t.path());
+    let text = std::fs::read_to_string(paths.controls_file()).unwrap();
+    assert!(text.contains("pad_accel = b"), "{text}");
+    let next = crate::input::bindings(&paths, |w| panic!("{w}"));
+    assert_eq!(next.layout()[1], ("Gas".to_string(), "B".to_string()));
 }
 
 // ------------------------------------------------------------ fit and goldens
