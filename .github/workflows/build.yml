@@ -26,7 +26,7 @@ env:
 
 jobs:
   ci:
-    uses: akitaonrails/rea-launcher-sdk/.github/workflows/launcher-ci.yml@v0.10.0
+    uses: akitaonrails/rea-launcher-sdk/.github/workflows/launcher-ci.yml@v0.11.1
     with:
       concurrency-key: linux
       rust-target: ""
@@ -163,7 +163,7 @@ jobs:
       contents: write
       id-token: write
       attestations: write
-    uses: akitaonrails/rea-launcher-sdk/.github/workflows/launcher-release.yml@v0.10.0
+    uses: akitaonrails/rea-launcher-sdk/.github/workflows/launcher-release.yml@v0.11.1
     with:
       package: nintendo-launcher
       artifact-pattern: "{linux,windows}"

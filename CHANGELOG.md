@@ -6,6 +6,10 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
+### Changed
+
+- Updated rea-launcher-sdk to v0.11.1.
+
 ## 0.2.1 - 2026-11-18
 
 The first published release with everything in 0.2.0 below: 0.2.0 was
