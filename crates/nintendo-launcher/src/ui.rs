@@ -275,10 +275,31 @@ impl HubBackend for Launcher {
                 wheel.as_ref(),
             )
             .map_err(|e| format!("{e:#}"))?;
-            r.playing();
-            session::run(&prepared, feed, &r.stop_flag())
-                .map(drop)
-                .map_err(|e| format!("{e:#}"))
+            if session::needs_wine_setup(&prepared) {
+                r.setting_up(
+                    "Setting up Wine for the first time…",
+                    "Installing Windows runtimes. This happens once and takes a few minutes.",
+                );
+            } else {
+                r.playing();
+            }
+            let r_run = r.clone();
+            session::run(&prepared, feed, &r.stop_flag(), move |stage| match stage {
+                session::Stage::Winetricks { verb, step, total } => {
+                    let body = match step {
+                        Some(n) => format!(
+                            "Installing {verb} ({n}/{total}). This happens once and takes a few minutes."
+                        ),
+                        None => format!(
+                            "Installing {verb}. This happens once and takes a few minutes."
+                        ),
+                    };
+                    r_run.setting_up("Setting up Wine for the first time…", body);
+                }
+                session::Stage::Playing => r_run.playing(),
+            })
+            .map(drop)
+            .map_err(|e| format!("{e:#}"))
         }))
     }
 

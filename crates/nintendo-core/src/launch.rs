@@ -349,6 +349,56 @@ pub const WAL_PREFIX_TRICKS: &[&str] = &[
     "vcrun2022",
 ];
 
+/// Whether `winetricks.log` in the shared Wine prefix already lists every
+/// verb in [`WAL_PREFIX_TRICKS`] (one per line).
+pub fn wal_prefix_ready(winetricks_log: Option<&str>) -> bool {
+    let Some(log) = winetricks_log else {
+        return false;
+    };
+    WAL_PREFIX_TRICKS
+        .iter()
+        .all(|verb| log.lines().any(|line| line.trim() == *verb))
+}
+
+/// Progress lines `windowsarcadeloader` writes while setting up its Wine
+/// prefix and starting a game.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum WalProgress<'a> {
+    /// Applying a winetricks verb (`step` is 1-based within [`WAL_PREFIX_TRICKS`]).
+    Winetricks {
+        verb: &'a str,
+        step: Option<usize>,
+        total: usize,
+    },
+    /// Prefix setup is done and the game is starting.
+    GameStarted,
+}
+
+/// Parses one output line of `windowsarcadeloader` for first-start setup
+/// progress.
+pub fn parse_wal_progress(line: &str) -> Option<WalProgress<'_>> {
+    let line = line.trim();
+    if let Some(rest) = line.strip_prefix("wine: applying winetricks ") {
+        let verb = rest.trim();
+        if verb.is_empty() {
+            return None;
+        }
+        let step = WAL_PREFIX_TRICKS
+            .iter()
+            .position(|&v| v == verb)
+            .map(|i| i + 1);
+        return Some(WalProgress::Winetricks {
+            verb,
+            step,
+            total: WAL_PREFIX_TRICKS.len(),
+        });
+    }
+    if line.starts_with("game: ") {
+        return Some(WalProgress::GameStarted);
+    }
+    None
+}
+
 /// The first TCP port tried for windowsarcadeloader's input server
 /// (`rea_launcher::wal::free_port_block` takes the first free block from
 /// it at each start): not its default (33700), where the sister
@@ -421,10 +471,18 @@ fn dolphin_plan(
                     "-e".into(),
                     disc,
                 ],
-                env: vec![(
-                    "LD_LIBRARY_PATH".into(),
-                    c.dolphin.join("lib").to_string_lossy().into_owned(),
-                )],
+                // Linux: present through gamescope's Xwayland, not gamescope's
+                // Vulkan WSI layer: through the layer, gamescope 3.17 on
+                // NVIDIA Wayland failed explicit sync (`SyncobjFdToHandle`,
+                // `vkImportSemaphoreFdKHR`) and segfaulted on the first frame
+                // (docs/RUNTIME_NOTES.md)
+                env: vec![
+                    (
+                        "LD_LIBRARY_PATH".into(),
+                        c.dolphin.join("lib").to_string_lossy().into_owned(),
+                    ),
+                    ("ENABLE_GAMESCOPE_WSI".into(), "0".into()),
+                ],
                 cwd: rt.to_path_buf(),
             };
             (cmd, Feed::DolphinPipe(pipe))
@@ -611,6 +669,11 @@ mod tests {
         assert_eq!(arg_after(&p.game.args, "-p").as_deref(), Some("x11"));
         let lib = comps().dolphin.join("lib").to_string_lossy().into_owned();
         assert!(p.game.env.contains(&("LD_LIBRARY_PATH".into(), lib)));
+        assert!(
+            p.game
+                .env
+                .contains(&("ENABLE_GAMESCOPE_WSI".into(), "0".into()))
+        );
         assert!(file(&p, "Config/Dolphin.ini").contains("SIDevice0 = 11"));
         assert!(file(&p, "Config/Dolphin.ini").contains("SerialPort1 = 6"));
         assert!(file(&p, "Config/Dolphin.ini").contains("UsePanicHandlers = False"));
@@ -734,6 +797,36 @@ mod tests {
             "{pad}"
         );
         assert!(file(&p, "Dolphin.ini").contains("GFXBackend = D3D11"));
+        assert!(p.game.env.is_empty());
+    }
+
+    #[test]
+    fn wal_prefix_readiness_and_progress_lines_are_detected() {
+        assert!(!wal_prefix_ready(None));
+        assert!(!wal_prefix_ready(Some("dmband\ndmcompos\n")));
+        let all = WAL_PREFIX_TRICKS.join("\n") + "\n";
+        assert!(wal_prefix_ready(Some(&all)));
+        assert_eq!(
+            parse_wal_progress("wine: applying winetricks dmscript"),
+            Some(WalProgress::Winetricks {
+                verb: "dmscript",
+                step: Some(5),
+                total: WAL_PREFIX_TRICKS.len(),
+            })
+        );
+        assert_eq!(
+            parse_wal_progress("wine: applying winetricks custom_verb"),
+            Some(WalProgress::Winetricks {
+                verb: "custom_verb",
+                step: None,
+                total: WAL_PREFIX_TRICKS.len(),
+            })
+        );
+        assert_eq!(
+            parse_wal_progress("game: Mario Kart Arcade GP DX (es3/mario-kart-arcade-gp-dx)"),
+            Some(WalProgress::GameStarted)
+        );
+        assert_eq!(parse_wal_progress("wine: drive f: -> /tmp/F"), None);
     }
 
     #[test]

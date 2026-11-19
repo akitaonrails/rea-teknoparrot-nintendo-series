@@ -146,6 +146,25 @@ the window's close-stops-the-game path is covered by the SDK's window
 tests, and the quit from the game's own menu doesn't exist on these
 cabinets (the window-close row above is Dolphin ending by itself).
 
+## Gamescope WSI on Dolphin + first-start Wine progress (2026-11-19)
+
+- On a real Wayland/Hyprland session (NVIDIA RTX 5090, gamescope 3.17.0),
+  both Triforce games (F-Zero AX and Mario Kart Arcade GP 2) crashed
+  gamescope on the first Vulkan frame (`SyncobjFdToHandle failed: Invalid
+  argument`, `vkImportSemaphoreFdKHR failed (VkResult: -3)`, `SIGSEGV`)
+  because `ENABLE_GAMESCOPE_WSI=0` was set only for `windowsarcadeloader`,
+  not for Dolphin. Adding `ENABLE_GAMESCOPE_WSI=0` to Dolphin on Linux
+  bypasses the Gamescope WSI layer; verified headless on F-Zero AX
+  (`shot-020.png`, `exit status: 0 after 25 s; stopped 0 leftover`, no
+  `[Gamescope WSI]` lines in `session.log`).
+- On first start of Mario Kart Arcade GP DX or Luigi's Mansion Arcade on
+  Linux, `windowsarcadeloader` runs `winetricks` for the 37 verbs in
+  `WAL_PREFIX_TRICKS` (~3 minutes). The window now parses `wine: applying
+  winetricks <verb>` and `game: ` lines from the session and shows
+  `"Setting up Wine for the first time…"` with the current verb and count
+  until the game starts, instead of showing `"<Game> is running"` during
+  prefix setup.
+
 ## Not checked yet
 
 - A real wheel, and the synthetic centring force on it (Triforce games).

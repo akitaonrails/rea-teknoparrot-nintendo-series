@@ -3,6 +3,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 3840 -H 2160 -r 60 -F fsr --sharpness 5 -f
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 file /d/runtimes/fzax/dolphin/Config/Dolphin.ini
@@ -87,6 +88,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 3840 -H 2160 -r 60 -F fsr --sharpness 5 -f
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 link /d/runtimes/fzax/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -172,6 +174,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 3840 -H 2160 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 file /d/runtimes/fzax/dolphin/Config/Dolphin.ini
@@ -256,6 +259,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 3840 -H 2160 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 link /d/runtimes/fzax/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -341,6 +345,7 @@ size 1920x1440
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 1920 -h 1440 -W 2560 -H 1440 -r 60 -F nis --sharpness 6 --reshade-effect crt-lottes.fx
 gamescope HOME /d/runtimes/fzax/gamescope-home
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
@@ -427,6 +432,7 @@ size 1920x1440
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 1920 -h 1440 -W 2560 -H 1440 -r 60 -F nis --sharpness 6 --reshade-effect crt-lottes.fx
 gamescope HOME /d/runtimes/fzax/gamescope-home
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
@@ -514,6 +520,7 @@ size 1920x1440
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 1920 -h 1440 -W 2560 -H 1440 -r 60 -F linear --reshade-effect crt-lottes.fx --backend headless
 gamescope HOME /d/runtimes/fzax/gamescope-home
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
@@ -600,6 +607,7 @@ size 1920x1440
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 1920 -h 1440 -W 2560 -H 1440 -r 60 -F linear --reshade-effect crt-lottes.fx --backend headless
 gamescope HOME /d/runtimes/fzax/gamescope-home
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
@@ -687,6 +695,7 @@ size 3200x2400
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 3200 -h 2400 -W 3840 -H 2160 -r 60 -F linear -f
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 file /d/runtimes/fzax/dolphin/Config/Dolphin.ini
@@ -771,6 +780,7 @@ size 3200x2400
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 3200 -h 2400 -W 3840 -H 2160 -r 60 -F linear -f
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 link /d/runtimes/fzax/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -856,6 +866,7 @@ size 3200x2400
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 3200 -h 2400 -W 3840 -H 2160 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 file /d/runtimes/fzax/dolphin/Config/Dolphin.ini
@@ -940,6 +951,7 @@ size 3200x2400
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 3200 -h 2400 -W 3840 -H 2160 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 link /d/runtimes/fzax/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -1025,6 +1037,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 1280 -H 720 -r 60 -F nearest -f
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 file /d/runtimes/fzax/dolphin/Config/Dolphin.ini
@@ -1109,6 +1122,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 1280 -H 720 -r 60 -F nearest -f
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 link /d/runtimes/fzax/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -1194,6 +1208,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 1280 -H 720 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 file /d/runtimes/fzax/dolphin/Config/Dolphin.ini
@@ -1278,6 +1293,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/fzax/dolphin -p x11 -e /lib/fzax/F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso
 cwd /d/runtimes/fzax
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 1280 -H 720 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/fzax/dolphin/Pipes/launcher
 link /d/runtimes/fzax/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -1363,6 +1379,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 3840 -H 2160 -r 60 -F fsr --sharpness 5 -f
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 file /d/runtimes/mkgp2/dolphin/Config/Dolphin.ini
@@ -1444,6 +1461,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 3840 -H 2160 -r 60 -F fsr --sharpness 5 -f
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 link /d/runtimes/mkgp2/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -1526,6 +1544,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 3840 -H 2160 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 file /d/runtimes/mkgp2/dolphin/Config/Dolphin.ini
@@ -1607,6 +1626,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 3840 -H 2160 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 link /d/runtimes/mkgp2/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -1689,6 +1709,7 @@ size 1920x1440
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 1920 -h 1440 -W 2560 -H 1440 -r 60 -F nis --sharpness 6 --reshade-effect crt-lottes.fx
 gamescope HOME /d/runtimes/mkgp2/gamescope-home
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
@@ -1772,6 +1793,7 @@ size 1920x1440
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 1920 -h 1440 -W 2560 -H 1440 -r 60 -F nis --sharpness 6 --reshade-effect crt-lottes.fx
 gamescope HOME /d/runtimes/mkgp2/gamescope-home
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
@@ -1856,6 +1878,7 @@ size 1920x1440
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 1920 -h 1440 -W 2560 -H 1440 -r 60 -F linear --reshade-effect crt-lottes.fx --backend headless
 gamescope HOME /d/runtimes/mkgp2/gamescope-home
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
@@ -1939,6 +1962,7 @@ size 1920x1440
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 1920 -h 1440 -W 2560 -H 1440 -r 60 -F linear --reshade-effect crt-lottes.fx --backend headless
 gamescope HOME /d/runtimes/mkgp2/gamescope-home
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
@@ -2023,6 +2047,7 @@ size 3200x2400
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 3200 -h 2400 -W 3840 -H 2160 -r 60 -F linear -f
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 file /d/runtimes/mkgp2/dolphin/Config/Dolphin.ini
@@ -2104,6 +2129,7 @@ size 3200x2400
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 3200 -h 2400 -W 3840 -H 2160 -r 60 -F linear -f
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 link /d/runtimes/mkgp2/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -2186,6 +2212,7 @@ size 3200x2400
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 3200 -h 2400 -W 3840 -H 2160 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 file /d/runtimes/mkgp2/dolphin/Config/Dolphin.ini
@@ -2267,6 +2294,7 @@ size 3200x2400
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 3200 -h 2400 -W 3840 -H 2160 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 link /d/runtimes/mkgp2/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -2349,6 +2377,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 1280 -H 720 -r 60 -F nearest -f
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 file /d/runtimes/mkgp2/dolphin/Config/Dolphin.ini
@@ -2430,6 +2459,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 1280 -H 720 -r 60 -F nearest -f
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 link /d/runtimes/mkgp2/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm
@@ -2512,6 +2542,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 1280 -H 720 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 file /d/runtimes/mkgp2/dolphin/Config/Dolphin.ini
@@ -2593,6 +2624,7 @@ size 640x480
 run /c/dolphin/dolphin-emu-nogui -u /d/runtimes/mkgp2/dolphin -p x11 -e /lib/mkgp2/Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso
 cwd /d/runtimes/mkgp2
 env LD_LIBRARY_PATH=/c/dolphin/lib
+env ENABLE_GAMESCOPE_WSI=0
 gamescope -w 640 -h 480 -W 1280 -H 720 -r 60 -F linear --backend headless
 feed Dolphin pipe /d/runtimes/mkgp2/dolphin/Pipes/launcher
 link /d/runtimes/mkgp2/dolphin/Triforce/segaboot.gcm -> /bios/segaboot.gcm

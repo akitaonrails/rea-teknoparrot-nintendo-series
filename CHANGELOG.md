@@ -27,6 +27,14 @@ All notable changes to this launcher. The format follows
 - A PXN wheel (the VD6 and other models with PXN's own USB ID) was
   listed as "Other" and nothing drove the car ("No controller"); it is a
   wheel now.
+- Linux: F-Zero AX and Mario Kart Arcade GP 2 crashed gamescope on the
+  first frame on NVIDIA Wayland (`vkImportSemaphoreFdKHR failed`,
+  `SIGSEGV`) because `ENABLE_GAMESCOPE_WSI=0` was only set for
+  `windowsarcadeloader` and not for Dolphin. Dolphin now sets it too.
+- Linux: on the first start of Mario Kart Arcade GP DX or Luigi's Mansion
+  Arcade, the launcher now shows Wine prefix setup progress (each
+  `winetricks` step) instead of saying the game is already running while
+  the one-time prefix build takes a few minutes.
 
 ## 0.2.1 - 2026-11-18
 

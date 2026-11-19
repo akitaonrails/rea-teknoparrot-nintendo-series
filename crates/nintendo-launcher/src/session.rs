@@ -41,11 +41,34 @@ pub enum Display {
 pub struct Prepared {
     pub plan: Plan,
     pub runtime: PathBuf,
+    /// windowsarcadeloader's root (holds `wine-prefix/nintendo` on Linux).
+    pub wal_root: PathBuf,
     /// The library folders, bound read-only around the game (Linux).
     pub libraries: Vec<PathBuf>,
     /// The folders the session writes (the launcher's data: runtimes,
     /// windowsarcadeloader's prefix), bound back writable after them.
     pub writable: Vec<PathBuf>,
+}
+
+/// Progress reported by a running session to the window.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Stage {
+    Winetricks {
+        verb: String,
+        step: Option<usize>,
+        total: usize,
+    },
+    Playing,
+}
+
+/// Whether the shared Wine prefix still needs first-start `winetricks` setup
+/// before `windowsarcadeloader` will launch the game (Linux only).
+pub fn needs_wine_setup(p: &Prepared) -> bool {
+    if Host::current() != Host::Linux || !matches!(p.plan.feed, Wiring::Wal(_)) {
+        return false;
+    }
+    let log = fs::read_to_string(p.wal_root.join("wine-prefix/nintendo/winetricks.log")).ok();
+    !launch::wal_prefix_ready(log.as_deref())
 }
 
 pub fn check_components(game: &Game, p: &HubPaths) -> Result<()> {
@@ -180,6 +203,7 @@ pub fn prepare(
     Ok(Prepared {
         plan,
         runtime: rt,
+        wal_root: places.wal_root,
         libraries: config.libraries.clone(),
         writable: vec![paths.data.clone()],
     })
@@ -267,18 +291,24 @@ fn pipe_sink(wiring: &Wiring) -> Option<Box<dyn Write + Send>> {
     }
 }
 
-/// Dolphin on Linux is asked alone to stop (it saves, then quits, and
-/// gamescope with it): a stop to the whole group took gamescope's display
-/// away from it first. Elsewhere the session is asked as a whole
-/// (Windows: Dolphin's window gets WM_CLOSE).
-#[cfg(target_os = "linux")]
-struct Polite {
+/// Watches a running session:
+/// - On Linux, Dolphin is asked alone to stop (it saves, then quits, and
+///   gamescope with it): a stop to the whole group took gamescope's display
+///   away from it first. Elsewhere the session is asked as a whole
+///   (Windows: Dolphin's window gets WM_CLOSE).
+/// - On Linux first starts of `windowsarcadeloader`, parses `winetricks`
+///   progress lines so the window tells the player what is happening until
+///   the game actually launches.
+struct SessionWatcher<F> {
     /// The program asked alone (`dolphin-emu-nogui`).
+    #[cfg(target_os = "linux")]
     alone: Option<&'static str>,
+    setting_up: bool,
+    on_stage: F,
 }
 
 #[cfg(target_os = "linux")]
-impl Polite {
+impl<F> SessionWatcher<F> {
     fn pid(&self, group: &Group) -> Option<u32> {
         let name = self.alone?;
         group
@@ -293,13 +323,35 @@ impl Polite {
     }
 }
 
-#[cfg(target_os = "linux")]
-impl supervise::Watcher for Polite {
-    fn ask_to_stop(&mut self, group: &Group) {
-        match self.pid(group) {
-            Some(pid) if group.terminate_one(pid) => {}
-            _ => group.terminate(),
+impl<F: FnMut(Stage)> supervise::Watcher for SessionWatcher<F> {
+    fn line(&mut self, line: &str) {
+        if !self.setting_up {
+            return;
         }
+        match launch::parse_wal_progress(line) {
+            Some(launch::WalProgress::Winetricks { verb, step, total }) => {
+                (self.on_stage)(Stage::Winetricks {
+                    verb: verb.to_string(),
+                    step,
+                    total,
+                });
+            }
+            Some(launch::WalProgress::GameStarted) => {
+                self.setting_up = false;
+                (self.on_stage)(Stage::Playing);
+            }
+            None => {}
+        }
+    }
+
+    fn ask_to_stop(&mut self, group: &Group) {
+        #[cfg(target_os = "linux")]
+        if let Some(pid) = self.pid(group)
+            && group.terminate_one(pid)
+        {
+            return;
+        }
+        group.terminate();
     }
 }
 
@@ -307,7 +359,12 @@ impl supervise::Watcher for Polite {
 /// thread), feeds it, and waits until it ends or `stop` is set; then
 /// nothing of it is left. A game that closed by itself within seconds
 /// didn't start: that is an error saying why.
-pub fn run(p: &Prepared, feed: Feed, stop: &AtomicBool) -> Result<ExitStatus> {
+pub fn run(
+    p: &Prepared,
+    feed: Feed,
+    stop: &AtomicBool,
+    on_stage: impl FnMut(Stage),
+) -> Result<ExitStatus> {
     let log_path = p.runtime.join("session.log");
     let file = fs::File::create(&log_path)?;
     let argv = session_argv(p);
@@ -326,12 +383,12 @@ pub fn run(p: &Prepared, feed: Feed, stop: &AtomicBool) -> Result<ExitStatus> {
     writeln!(log.lock().expect("the log"), "# {}", argv.join(" "))?;
     let tag = Tag::new(TAG, p.runtime.to_string_lossy());
     let group = Group::spawn(&mut cmd, &tag).with_context(|| format!("starting {}", argv[0]))?;
-    #[cfg(target_os = "linux")]
-    let mut watcher = Polite {
+    let mut watcher = SessionWatcher {
+        #[cfg(target_os = "linux")]
         alone: matches!(p.plan.feed, Wiring::DolphinPipe(_)).then_some("dolphin-emu-nogui"),
+        setting_up: needs_wine_setup(p),
+        on_stage,
     };
-    #[cfg(not(target_os = "linux"))]
-    let mut watcher = ();
     let opts = Options {
         stop,
         log,
@@ -344,10 +401,14 @@ pub fn run(p: &Prepared, feed: Feed, stop: &AtomicBool) -> Result<ExitStatus> {
         &mut watcher,
         opts,
     )?;
-    match early(&out, &fs::read_to_string(&log_path).unwrap_or_default()) {
-        Some(why) => bail!("{why}"),
-        None => Ok(out.status),
+    let log_text = fs::read_to_string(&log_path).unwrap_or_default();
+    if let Some(why) = early(&out, &log_text) {
+        bail!("{why}");
     }
+    if out.ended == Ended::Itself && !out.status.success() && watcher.setting_up {
+        bail!("Wine prefix setup did not finish ({})", out.status);
+    }
+    Ok(out.status)
 }
 
 /// Why a run that ended by itself within seconds didn't start (Windows
@@ -481,7 +542,11 @@ mod tests {
             supervise::run(
                 group,
                 feed_for(Feed::None, &wiring).as_mut(),
-                &mut Polite { alone: None },
+                &mut SessionWatcher {
+                    alone: None,
+                    setting_up: false,
+                    on_stage: |_| {},
+                },
                 opts,
             )
             .unwrap()
@@ -584,8 +649,10 @@ mod tests {
             grace: Duration::from_secs(5),
             sink: None,
         };
-        let mut polite = Polite {
+        let mut polite = SessionWatcher {
             alone: Some("dolphin-emu-nogui"),
+            setting_up: false,
+            on_stage: |_| {},
         };
         let out = std::thread::scope(|s| {
             s.spawn(|| {
@@ -609,8 +676,10 @@ mod tests {
         let mut cmd = Command::new("sh");
         cmd.args(["-c", "\"$0\" 30; sleep 30"]).arg(&dolphin);
         let mut group = Group::spawn(&mut cmd, &Tag::new(TAG, "nintendo-test-polite")).unwrap();
-        let mut polite = Polite {
+        let mut polite = SessionWatcher {
             alone: Some("dolphin-emu-nogui"),
+            setting_up: false,
+            on_stage: |_| {},
         };
         let started = std::time::Instant::now();
         while polite.pid(&group).is_none() && started.elapsed() < Duration::from_secs(5) {
@@ -628,6 +697,33 @@ mod tests {
         );
         group.kill();
         group.finish().unwrap();
+    }
+
+    #[test]
+    fn session_watcher_reports_winetricks_progress_until_game_starts() {
+        let mut seen = Vec::new();
+        let mut w = SessionWatcher {
+            #[cfg(target_os = "linux")]
+            alone: None,
+            setting_up: true,
+            on_stage: |s| seen.push(s),
+        };
+        w.line("wine: applying winetricks dmscript");
+        w.line("game: Mario Kart Arcade GP DX (es3/mario-kart-arcade-gp-dx)");
+        // once playing, further lines are ignored
+        w.line("wine: applying winetricks dmsynth");
+        assert!(!w.setting_up);
+        assert_eq!(
+            seen,
+            vec![
+                Stage::Winetricks {
+                    verb: "dmscript".into(),
+                    step: Some(5),
+                    total: launch::WAL_PREFIX_TRICKS.len(),
+                },
+                Stage::Playing,
+            ]
+        );
     }
 
     #[test]

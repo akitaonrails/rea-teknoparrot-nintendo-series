@@ -363,7 +363,7 @@ fn play(
     } else {
         Feed::None
     };
-    let status = session::run(&prepared, feed, &stop).map_err(|e| format!("{e:#}"))?;
+    let status = session::run(&prepared, feed, &stop, |_| {}).map_err(|e| format!("{e:#}"))?;
     eprintln!(
         "{} ended ({status}); log: {}",
         game.title,
