@@ -62,6 +62,9 @@ else
 	cp "$exe" "$root/dist/sdl2/SDL2.dll" "$out/"
 	cp "$(ls -d "$root"/dist/sdl2/SDL2-*/ | head -1)LICENSE.txt" "$out/licenses/SDL2-LICENSE.txt"
 	copy_wal arcade-launcher.exe
+	# Remove WAL profile files with colons (e.g. SegaRally2Resolution-4:3.cfg)
+	# that are illegal filenames on Windows and abort zip extraction (#1).
+	find "$out/components/wal/systemprofiles" -name '*:*' -delete
 	cp -r "$comps/dolphin-win" "$out/components/dolphin-win"
 	cp "$comps/dolphin-win/COPYING" "$out/licenses/Dolphin-COPYING.txt"
 fi

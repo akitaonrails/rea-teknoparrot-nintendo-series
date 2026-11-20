@@ -6,6 +6,22 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
+## 0.3.1 - 2026-11-20
+
+### Fixed
+
+- Windows: removed the two unused WAL profile files with colons in their
+  names (`SegaRally2Resolution-4:3.cfg`, `SegaRally2Resolution-16:9.cfg`)
+  from the Windows zip so extraction succeeds cleanly (#1).
+- `--check` and `--play` now report unreadable dump files (such as Windows
+  Defender's `os error 225` antivirus block, suggesting an exclusion)
+  instead of saying "not in your game folders", and `--list` flushes
+  warnings before printing entries (#2).
+- Windows: updated `rea-launcher-sdk` to v0.12.2 and WAL's `winhost` patch
+  so dumps on mapped network drives and UNC shares link cleanly (or mirror
+  with a notice) and non-zero game exit codes / crash logs are surfaced
+  (rea-launcher-sdk#2).
+
 ## 0.3.0 - 2026-11-19
 
 ### Added

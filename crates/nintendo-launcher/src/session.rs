@@ -467,7 +467,7 @@ mod tests {
         );
         let s = v.join(" ");
         assert!(s.starts_with("gamescope -w 1360 -h 768 "), "{s}");
-        assert!(s.contains(" -- bwrap --dev-bind / / --ro-bind-try /lib /lib --ro-bind-try /tf /tf /c/wal/arcade-launcher run "), "{s}");
+        assert!(s.contains(" -- env ENABLE_GAMESCOPE_WSI=0 DISABLE_GAMESCOPE_WSI=1 bwrap --dev-bind / / --ro-bind-try /lib /lib --ro-bind-try /tf /tf /c/wal/arcade-launcher run "), "{s}");
         let plain = command_line(&plan, &["/lib".into()], &["/d".into()], false, "/home/p");
         // a library holding the launcher's data (`--library ~`): the data is
         // bound back writable, or the game couldn't write its runtime
@@ -507,7 +507,12 @@ mod tests {
             s.starts_with("env HOME=/d/rt/fzax/gamescope-home gamescope "),
             "{s}"
         );
-        assert!(s.contains(" -- env HOME=/home/p bwrap "), "{s}");
+        assert!(
+            s.contains(
+                " -- env HOME=/home/p ENABLE_GAMESCOPE_WSI=0 DISABLE_GAMESCOPE_WSI=1 bwrap "
+            ),
+            "{s}"
+        );
         assert!(
             s.ends_with(
                 "/c/dolphin/dolphin-emu-nogui -u /d/rt/fzax/dolphin -p x11 -e /lib/x/f.iso"

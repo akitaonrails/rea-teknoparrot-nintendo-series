@@ -16,6 +16,9 @@
   5
   -f
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -51,6 +54,9 @@
   5
   -f
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/dolphin/dolphin-emu-nogui
   -u
   /d/rt/fzax/dolphin
@@ -75,6 +81,9 @@
   --backend
   headless
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -109,6 +118,9 @@
   --backend
   headless
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/dolphin/dolphin-emu-nogui
   -u
   /d/rt/fzax/dolphin
@@ -140,6 +152,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -181,6 +195,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/dolphin/dolphin-emu-nogui
   -u
   /d/rt/fzax/dolphin
@@ -211,6 +227,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -251,6 +269,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/dolphin/dolphin-emu-nogui
   -u
   /d/rt/fzax/dolphin
@@ -276,6 +296,9 @@
   5
   -f
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -311,6 +334,9 @@
   5
   -f
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/dolphin/dolphin-emu-nogui
   -u
   /d/rt/mkgp2/dolphin
@@ -335,6 +361,9 @@
   --backend
   headless
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -369,6 +398,9 @@
   --backend
   headless
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/dolphin/dolphin-emu-nogui
   -u
   /d/rt/mkgp2/dolphin
@@ -400,6 +432,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -441,6 +475,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/dolphin/dolphin-emu-nogui
   -u
   /d/rt/mkgp2/dolphin
@@ -471,6 +507,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -511,6 +549,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/dolphin/dolphin-emu-nogui
   -u
   /d/rt/mkgp2/dolphin
@@ -536,6 +576,9 @@
   5
   -f
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -572,6 +615,9 @@
   5
   -f
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/wal/arcade-launcher
   run
   /d/rt/mkdx
@@ -597,6 +643,9 @@
   --backend
   headless
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -632,6 +681,9 @@
   --backend
   headless
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/wal/arcade-launcher
   run
   /d/rt/mkdx
@@ -664,6 +716,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -706,6 +760,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/wal/arcade-launcher
   run
   /d/rt/mkdx
@@ -737,6 +793,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -778,6 +836,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/wal/arcade-launcher
   run
   /d/rt/mkdx
@@ -804,6 +864,9 @@
   5
   -f
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -840,6 +903,9 @@
   5
   -f
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/wal/arcade-launcher
   run
   /d/rt/luigi
@@ -865,6 +931,9 @@
   --backend
   headless
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -900,6 +969,9 @@
   --backend
   headless
   --
+  env
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/wal/arcade-launcher
   run
   /d/rt/luigi
@@ -932,6 +1004,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -974,6 +1048,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/wal/arcade-launcher
   run
   /d/rt/luigi
@@ -1005,6 +1081,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   bwrap
   --dev-bind
   /
@@ -1046,6 +1124,8 @@
   --
   env
   HOME=/home/p
+  ENABLE_GAMESCOPE_WSI=0
+  DISABLE_GAMESCOPE_WSI=1
   /c/wal/arcade-launcher
   run
   /d/rt/luigi

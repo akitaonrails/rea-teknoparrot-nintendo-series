@@ -199,6 +199,7 @@ mod tests {
                 ..Controls::default()
             },
             pitch,
+            dpad: 0,
             dt,
         }
     }

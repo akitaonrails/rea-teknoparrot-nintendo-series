@@ -244,7 +244,32 @@ fn scan(config: &HubConfig) -> Result<Scan<Game>, String> {
     for problem in &scan.problems {
         warn(&format!("couldn't read {problem}"));
     }
+    let _ = std::io::Write::flush(&mut std::io::stderr());
     Ok(scan)
+}
+
+/// If `problems` recorded a read failure on `game`'s main file, explains it
+/// (calling out Windows Defender's `os error 225` so the player adds an
+/// exclusion instead of hunting for a "missing" dump).
+fn read_problem_for(game: &Game, problems: &[rea_launcher::library::Problem]) -> Option<String> {
+    let want = game.main_file.replace('\\', "/").to_ascii_lowercase();
+    let problem = problems.iter().find(|p| {
+        let got = p
+            .path
+            .to_string_lossy()
+            .replace('\\', "/")
+            .to_ascii_lowercase();
+        got.ends_with(&format!("/{want}")) || got == want
+    })?;
+    let lower = problem.error.to_ascii_lowercase();
+    if lower.contains("os error 225") || lower.contains("virus") {
+        Some(format!(
+            "can't read a file in the dump: {} was blocked by antivirus (os error 225) — add an exclusion for this folder",
+            display_path(&problem.path)
+        ))
+    } else {
+        Some(format!("can't read a file in the dump: {problem}"))
+    }
 }
 
 fn list(config: &HubConfig) -> Result<u8, String> {
@@ -276,7 +301,8 @@ fn check(paths: &HubPaths, config: &HubConfig, only: Option<&str>) -> Result<u8,
     let mut problems = 0;
     for game in GAMES.iter().filter(|g| asked(g)) {
         let verdict = match (by_game.get(&game.id), game.support_on(Host::current())) {
-            (None, _) => Err("not in your game folders".to_string()),
+            (None, _) => Err(read_problem_for(game, &found.problems)
+                .unwrap_or_else(|| "not in your game folders".to_string())),
             (Some(_), Support::Blocked(why)) => Err(format!("not yet: {why}")),
             (Some(_), _) => session::check_components(game, paths)
                 .map(|()| state(game))
@@ -317,7 +343,10 @@ fn play(
         .by_game()
         .get(&game.id)
         .map(|e| (*e).clone())
-        .ok_or_else(|| format!("{} is not in your game folders.", game.title))?;
+        .ok_or_else(|| {
+            read_problem_for(game, &found.problems)
+                .unwrap_or_else(|| format!("{} is not in your game folders.", game.title))
+        })?;
     let settings = load_settings(paths, game)?;
     let display = if inv.test.headless {
         Display::Headless
