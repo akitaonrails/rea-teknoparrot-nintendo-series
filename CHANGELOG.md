@@ -6,6 +6,8 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
+## 0.3.2 - 2026-11-20
+
 ### Documentation
 
 - Windows: added an Antivirus (Windows Defender) troubleshooting note to
