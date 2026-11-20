@@ -33,6 +33,12 @@ What it needs on Windows
 
 - Windows 10 or 11, 64-bit. Dolphin and windowsarcadeloader are in this
   package.
+- Antivirus note: nintendo-launcher.exe is unsigned, so Windows Defender
+  may falsely quarantine it (e.g. Trojan:Win32/Bearfoos.B!ml). If the
+  exe disappears, restore it in Windows Security -> Protection history
+  and add exclusions for this folder, %LOCALAPPDATA%\rea-nintendo\, and
+  your games folder (some dumps, like Luigi's Mansion's VACUUM.exe, also
+  trigger Defender during --list or staging).
 
 Controls
 --------

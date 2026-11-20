@@ -181,6 +181,19 @@ Each run writes `runtimes/<game>/session.log`.
 
 ## Troubleshooting
 
+- **Antivirus (Windows Defender):**
+  - The Windows release binary (`nintendo-launcher.exe`) is currently unsigned,
+    so Windows Defender's machine-learning heuristic can falsely quarantine it
+    (for example as `Trojan:Win32/Bearfoos.B!ml`), making the `.exe` disappear
+    from the launcher folder mid-session. Restore it from **Windows Security →
+    Protection history** and add an exclusion for the launcher folder.
+  - Some game dumps also ship executables that Defender flags (for example
+    Luigi's Mansion Arcade's `VACUUM.exe` as `Trojan:Win32/Kepavll!rfn`). Even
+    reading a dump during `--list` can trigger Defender to quarantine files on
+    a local drive or writable network share, and staging a game into
+    `%LOCALAPPDATA%\rea-nintendo\runtimes\` can fail with `os error 225`.
+    Exclude both your games folder and `%LOCALAPPDATA%\rea-nintendo` before
+    scanning or launching if Defender blocks your dumps.
 - **A game says it is not in your folders**: run `nintendo-launcher --list`.
   An unknown build is listed with its SHA-256; please
   [report it](https://github.com/akitaonrails/rea-teknoparrot-nintendo-series/issues/new?template=unknown-edition.yml).

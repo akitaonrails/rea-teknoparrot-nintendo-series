@@ -6,6 +6,14 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
+### Documentation
+
+- Windows: added an Antivirus (Windows Defender) troubleshooting note to
+  `README.md` and the packaged `README.txt` covering false positives on
+  unsigned `nintendo-launcher.exe` (`Trojan:Win32/Bearfoos.B!ml`), dump
+  binaries such as `VACUUM.exe`, and excluding the launcher folder,
+  `%LOCALAPPDATA%\rea-nintendo\`, and game folders (#3).
+
 ## 0.3.1 - 2026-11-20
 
 ### Fixed
