@@ -6,6 +6,17 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
+## 0.5.3 - 2026-11-21
+
+### Fixed
+
+- Restored wheel pedal detection on Windows (`GCPadNew.ini`) by upgrading to
+  `rea-launcher-sdk v0.12.6`: `InputService` and `find_wheel` now use
+  `wheel::pick_wheel()` (preferring the haptic HID collection on
+  multi-collection wheels like the Fanatec CSL DD), inspect the live post-pump
+  axis state when SDL's initial sample arrives all-zero, and prefer a saved
+  `wheel.ini` profile in the data folder when present (#5).
+
 ## 0.5.0 - 2026-11-21
 
 ### Added
