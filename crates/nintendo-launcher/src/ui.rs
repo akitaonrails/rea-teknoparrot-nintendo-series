@@ -94,7 +94,10 @@ pub fn spec(paths: HubPaths) -> HubSpec {
 pub fn run(paths: HubPaths) -> Result<(), String> {
     let log = Log::new(paths.log());
     let bindings = crate::input::bindings(&paths, |w| log.warn(w));
-    let mut launcher = Launcher::new(paths.clone(), Some(crate::input::service(&bindings)));
+    let mut launcher = Launcher::new(
+        paths.clone(),
+        Some(crate::input::service(&paths, &bindings)),
+    );
     launcher.bindings = bindings;
     rea_launcher_ui::hub::run(spec(paths), launcher)
 }
