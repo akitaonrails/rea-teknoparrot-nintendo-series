@@ -1348,7 +1348,7 @@ dependencies = [
 
 [[package]]
 name = "nintendo-core"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "rea-launcher",
  "tempfile",
@@ -1356,7 +1356,7 @@ dependencies = [
 
 [[package]]
 name = "nintendo-launcher"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "anyhow",
  "eframe",
