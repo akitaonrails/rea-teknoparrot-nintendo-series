@@ -6,4 +6,5 @@ pub mod catalog;
 pub mod input;
 pub mod launch;
 pub mod runtime;
+pub mod saves;
 pub mod settings;

@@ -45,6 +45,8 @@ if [ "$os" = linux ]; then
 	[ -f "$bin/lib/libSDL2-2.0.so.0" ] || die "missing $bin/lib/libSDL2-2.0.so.0"
 	"$root/scripts/build-components.sh" "$comps" dolphin wal runner winetricks shaders assets
 	install -m 755 "$bin/nintendo-launcher" "$out/nintendo-launcher"
+	cp "$root/packaging/appimage/nintendo-launcher.png" "$out/nintendo-launcher.png"
+	cp "$root/packaging/appimage/nintendo-launcher.desktop" "$out/nintendo-launcher.desktop"
 	mkdir -p "$out/lib"
 	cp "$bin"/lib/* "$out/lib/"
 	[ -f "$bin/SDL2-copyright.txt" ] && cp "$bin/SDL2-copyright.txt" "$out/licenses/"

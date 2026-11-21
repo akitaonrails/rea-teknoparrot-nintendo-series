@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Nintendo Arcade Launcher
+Comment=One launcher for F-Zero AX, Mario Kart Arcade GP and Luigi's Mansion Arcade
+Exec=nintendo-launcher
+Icon=nintendo-launcher
+Terminal=false
+Categories=Game;ArcadeGame;

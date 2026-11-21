@@ -39,6 +39,8 @@ pub enum Display {
 }
 
 pub struct Prepared {
+    pub game: Game,
+    pub saves: PathBuf,
     pub plan: Plan,
     pub runtime: PathBuf,
     /// windowsarcadeloader's root (holds `wine-prefix/nintendo` on Linux).
@@ -165,6 +167,8 @@ pub fn prepare(
     }
     linkfarm::apply(&rt, &ops, Occupied::Refuse)
         .with_context(|| format!("building {}", rt.display()))?;
+    let saves = nintendo_core::saves::dir(&paths.data, game.slug);
+    nintendo_core::saves::sync_before(game, &rt, &saves).context("syncing save files")?;
     let places = Places {
         runtime: rt.clone(),
         wal_root: paths::wal_root(paths),
@@ -201,6 +205,8 @@ pub fn prepare(
         make_fifo(pipe)?;
     }
     Ok(Prepared {
+        game: *game,
+        saves,
         plan,
         runtime: rt,
         wal_root: places.wal_root,
@@ -401,6 +407,7 @@ pub fn run(
         &mut watcher,
         opts,
     )?;
+    let _ = nintendo_core::saves::sync_after(&p.game, &p.runtime, &p.saves);
     let log_text = fs::read_to_string(&log_path).unwrap_or_default();
     if let Some(why) = early(&out, &log_text) {
         bail!("{why}");

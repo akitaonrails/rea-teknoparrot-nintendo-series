@@ -1,4 +1,5 @@
 == fzax
+data/fzax/runtimes/fzax/.saves-state (0 bytes)
 data/fzax/runtimes/fzax/dolphin/
 data/fzax/runtimes/fzax/dolphin/Config/
 data/fzax/runtimes/fzax/dolphin/Config/Dolphin.ini (495 bytes)
@@ -11,6 +12,7 @@ data/fzax/runtimes/fzax/dolphin/Pipes/launcher (pipe)
 data/fzax/runtimes/fzax/dolphin/Triforce/
 data/fzax/runtimes/fzax/dolphin/Triforce/segaboot.gcm -> <tmp>/segaboot.gcm
 == mkgp2
+data/mkgp2/runtimes/mkgp2/.saves-state (0 bytes)
 data/mkgp2/runtimes/mkgp2/dolphin/
 data/mkgp2/runtimes/mkgp2/dolphin/Config/
 data/mkgp2/runtimes/mkgp2/dolphin/Config/Dolphin.ini (495 bytes)
@@ -23,6 +25,7 @@ data/mkgp2/runtimes/mkgp2/dolphin/Pipes/launcher (pipe)
 data/mkgp2/runtimes/mkgp2/dolphin/Triforce/
 data/mkgp2/runtimes/mkgp2/dolphin/Triforce/segaboot.gcm -> <tmp>/segaboot.gcm
 == mkdx
+data/mkdx/runtimes/mkdx/.saves-state (0 bytes)
 data/mkdx/runtimes/mkdx/F/
 data/mkdx/runtimes/mkdx/F/TestMode/
 data/mkdx/runtimes/mkdx/F/TestMode/settings.ini (4 bytes)
@@ -43,6 +46,7 @@ data/mkdx/wal/wine-runners/
 data/mkdx/wal/wine-runners/runner -> <tmp>/components/runner
 data/mkdx/wal/wine-runners/winetricks -> <tmp>/components/winetricks
 == luigi
+data/luigi/runtimes/luigi/.saves-state (0 bytes)
 data/luigi/runtimes/luigi/data -> <tmp>/library/luigi/data
 data/luigi/runtimes/luigi/exe/
 data/luigi/runtimes/luigi/exe/x64/

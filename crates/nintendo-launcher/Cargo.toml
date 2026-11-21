@@ -21,6 +21,9 @@ rea-launcher-win32.workspace = true
 nintendo-core = { path = "../nintendo-core" }
 signal-hook = "0.3"
 
+[build-dependencies]
+rea-launcher-build.workspace = true
+
 [dev-dependencies]
 rea-launcher-ui = { workspace = true, features = ["testing"] }
 tempfile = "3"

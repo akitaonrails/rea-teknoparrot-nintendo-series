@@ -103,15 +103,22 @@ fn main() -> ExitCode {
         };
         rea_launcher_ui::hub::fatal(&ui::THEME, &log, text, Some(link), says);
     };
-    // --list only reads: it works while the window is open
-    let _instance = match (inv.mode != Mode::List).then(|| rea_launcher::instance::single(INSTANCE))
-    {
-        Some(Err(running)) if inv.is_action() => {
-            fail("The Nintendo Arcade Launcher is already open. Close it first, then try again.");
+    // --list and --check only read: they work while the window is open
+    let writes = !inv.libraries.is_empty() || inv.paths.iter().any(Option::is_some);
+    let read_only = matches!(inv.mode, Mode::List | Mode::Check(_)) && !writes;
+    let _instance = match (!read_only).then(|| rea_launcher::instance::single(INSTANCE)) {
+        Some(Err(running)) if inv.is_action() || writes => {
+            fail(
+                "The Nintendo Arcade Launcher is already open. Close it first (or end it from \
+                 Task Manager if it isn't responding), then try again.",
+            );
             return ExitCode::from(running.exit_code() as u8);
         }
         Some(Err(_)) => {
-            eprintln!("The Nintendo Arcade Launcher is already open.");
+            eprintln!(
+                "The Nintendo Arcade Launcher is already open (end it from Task Manager if it \
+                 isn't responding)."
+            );
             return ExitCode::from(OK);
         }
         Some(Ok(guard)) => Some(guard),
