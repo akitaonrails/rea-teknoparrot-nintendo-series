@@ -47,6 +47,8 @@ pub struct Game {
     pub short: &'static str,
     pub year: u16,
     pub board: &'static str,
+    /// Short trivia/context shown over the top-right quarter of the hero art.
+    pub blurb: &'static str,
     pub route: Route,
     /// The file that identifies the edition, relative to the game folder.
     pub main_file: &'static str,
@@ -127,6 +129,7 @@ pub const GAMES: &[Game] = &[
         short: "F-ZERO",
         year: 2004,
         board: "Sega Triforce",
+        blurb: "Amusement Vision's arcade twin to F-Zero GX on Sega/Nintendo/Namco Triforce hardware — 10 exclusive pilots, 6 tracks and hydraulic Monster Ride motion.",
         route: Route::Dolphin,
         main_file: "F-Zero AX (Triforce) (Monster) [JAP][BHA6].iso",
         editions: &[sha(
@@ -153,6 +156,7 @@ pub const GAMES: &[Game] = &[
         short: "MKGP2",
         year: 2007,
         board: "Sega Triforce",
+        blurb: "Namco's second Triforce Mario Kart with Waluigi, Mametchi, commentary, 24 courses across 6 cups and a built-in cabinet camera.",
         route: Route::Dolphin,
         main_file: "Mario Kart Arcade GP 2 (MK2100-4-NA-MPRO-B00) (20-08-2007 094721) (E).iso",
         editions: &[sha(
@@ -177,6 +181,7 @@ pub const GAMES: &[Game] = &[
         short: "MKDX",
         year: 2013,
         board: "Namco ES3",
+        blurb: "HD widescreen arcade Mario Kart on Namco ES3 hardware, introducing gliders, underwater driving, fusion karts and Don-chan.",
         route: Route::Wal {
             system: "namcoes3",
             profile: "mario-kart-arcade-gp-dx",
@@ -204,6 +209,7 @@ pub const GAMES: &[Game] = &[
         short: "LUIGI",
         year: 2015,
         board: "Sega Nu",
+        blurb: "Capcom and Sega's lightgun Poltergust rail shooter based on Luigi's Mansion: Dark Moon, built on Sega Nu hardware.",
         route: Route::Wal {
             system: "seganu",
             profile: "luigis-mansion-arcade",

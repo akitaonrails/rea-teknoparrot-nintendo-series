@@ -41,6 +41,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -127,6 +129,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -212,6 +216,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -298,6 +304,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -385,6 +393,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -473,6 +483,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -560,6 +572,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -648,6 +662,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -733,6 +749,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -819,6 +837,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -904,6 +924,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -990,6 +1012,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1075,6 +1099,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1161,6 +1187,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1246,6 +1274,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1332,6 +1362,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1417,6 +1449,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1500,6 +1534,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1582,6 +1618,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1665,6 +1703,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1749,6 +1789,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1834,6 +1876,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -1918,6 +1962,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -2003,6 +2049,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -2085,6 +2133,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -2168,6 +2218,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -2250,6 +2302,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -2333,6 +2387,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -2415,6 +2471,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -2498,6 +2556,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -2580,6 +2640,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -2663,6 +2725,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3151,6 +3215,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3234,6 +3300,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3249,18 +3317,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -3317,6 +3385,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3332,18 +3402,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -3401,6 +3471,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3485,6 +3557,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3500,18 +3574,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -3569,6 +3643,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3584,18 +3660,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -3652,6 +3728,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3735,6 +3813,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3750,18 +3830,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -3818,6 +3898,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3833,18 +3915,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -3902,6 +3984,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -3986,6 +4070,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4001,18 +4087,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -4070,6 +4156,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4085,18 +4173,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -4153,6 +4241,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4236,6 +4326,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4251,18 +4343,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -4319,6 +4411,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4334,18 +4428,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -4403,6 +4497,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4487,6 +4583,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4502,18 +4600,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -4571,6 +4669,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4586,18 +4686,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -4654,6 +4754,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4737,6 +4839,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4752,18 +4856,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -4820,6 +4924,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4835,18 +4941,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -4904,6 +5010,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -4988,6 +5096,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5003,18 +5113,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -5072,6 +5182,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5087,18 +5199,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -5155,6 +5267,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5238,6 +5352,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5253,18 +5369,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -5321,6 +5437,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5336,18 +5454,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -5405,6 +5523,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5489,6 +5609,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5504,18 +5626,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -5573,6 +5695,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5588,18 +5712,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -5656,6 +5780,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5739,6 +5865,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5754,18 +5882,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -5822,6 +5950,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5837,18 +5967,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -5906,6 +6036,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -5990,6 +6122,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6005,18 +6139,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -6074,6 +6208,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6089,18 +6225,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -6157,6 +6293,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6240,6 +6378,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6255,18 +6395,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -6323,6 +6463,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6338,18 +6480,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -6407,6 +6549,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6491,6 +6635,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6506,18 +6652,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -6575,6 +6721,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6590,18 +6738,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -6658,6 +6806,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6741,6 +6891,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6756,18 +6908,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -6824,6 +6976,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6839,18 +6993,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -6908,6 +7062,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -6992,6 +7148,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7007,18 +7165,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -7076,6 +7234,8 @@ file /d/runtimes/fzax/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7091,18 +7251,18 @@ $Bypass CyCraft (no motion seat)
 file /d/runtimes/fzax/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -7159,6 +7319,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7239,6 +7401,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7251,18 +7415,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -7319,6 +7483,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7331,18 +7497,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -7400,6 +7566,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7481,6 +7649,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7493,18 +7663,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -7562,6 +7732,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7574,18 +7746,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -7642,6 +7814,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7722,6 +7896,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7734,18 +7910,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -7802,6 +7978,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7814,18 +7992,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -7883,6 +8061,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7964,6 +8144,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -7976,18 +8158,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -8045,6 +8227,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8057,18 +8241,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -8125,6 +8309,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8205,6 +8391,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8217,18 +8405,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -8285,6 +8473,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8297,18 +8487,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -8366,6 +8556,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8447,6 +8639,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8459,18 +8653,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -8528,6 +8722,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8540,18 +8736,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -8608,6 +8804,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8688,6 +8886,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8700,18 +8900,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -8768,6 +8968,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8780,18 +8982,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -8849,6 +9051,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8930,6 +9134,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -8942,18 +9148,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -9011,6 +9217,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 3
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9023,18 +9231,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -9091,6 +9299,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9171,6 +9381,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9183,18 +9395,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -9251,6 +9463,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9263,18 +9477,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -9332,6 +9546,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9413,6 +9629,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9425,18 +9643,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -9494,6 +9712,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9506,18 +9726,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -9574,6 +9794,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9654,6 +9876,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9666,18 +9890,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -9734,6 +9958,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9746,18 +9972,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -9815,6 +10041,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9896,6 +10124,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9908,18 +10138,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -9977,6 +10207,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 5
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -9989,18 +10221,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -10057,6 +10289,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10137,6 +10371,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10149,18 +10385,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -10217,6 +10453,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10229,18 +10467,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -10298,6 +10536,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10379,6 +10619,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10391,18 +10633,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -10460,6 +10702,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10472,18 +10716,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -10540,6 +10784,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10620,6 +10866,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10632,18 +10880,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -10700,6 +10948,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10712,18 +10962,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -10781,6 +11031,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10862,6 +11114,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10874,18 +11128,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Test Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Test Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Test Wheel:Button 1` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Test Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Test Wheel:Button 3` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Test Wheel:Button 7` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Test Wheel:Button 6` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Test Wheel:Axis 0-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`
@@ -10943,6 +11197,8 @@ file /d/runtimes/mkgp2/dolphin/Config/GFX.ini
 VSync = True
 [Settings]
 InternalResolution = 1
+AspectRatio = 1
+wideScreenHack = True
 ShaderCompilationMode = 0
 WaitForShadersBeforeStarting = True
 ShowFPS = False
@@ -10955,18 +11211,18 @@ $(2007/02/06 20:29:25) Skip Boot Check [mamefan2018]
 file /d/runtimes/mkgp2/dolphin/Config/GCPadNew.ini
 # Written by the launcher before every start.
 [GCPad1]
-Device = XInput/0/Gamepad
+Device = SDL/0/Other Wheel
 Main Stick/Gate Size = 100.0
 Main Stick/Dead Zone = 0.0
 Triggers/Threshold = 90.0
 Options/Always Connected = True
-Buttons/A = `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
-Buttons/B = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-D-Pad/Right = `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
-Buttons/X = `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
-Buttons/Y = `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
-Buttons/Start = `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
-Triforce/Coin = `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
+Buttons/A = `SDL/0/Other Wheel:Button 0` | `XInput/0/Gamepad:Button A` | `DInput/0/Keyboard Mouse:Z`
+Buttons/B = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+D-Pad/Right = `SDL/0/Other Wheel:Button 3` | `XInput/0/Gamepad:Button B` | `DInput/0/Keyboard Mouse:X`
+Buttons/X = `SDL/0/Other Wheel:Button 2` | `XInput/0/Gamepad:Shoulder L` | `DInput/0/Keyboard Mouse:A`
+Buttons/Y = `SDL/0/Other Wheel:Button 1` | `XInput/0/Gamepad:Shoulder R` | `DInput/0/Keyboard Mouse:S`
+Buttons/Start = `SDL/0/Other Wheel:Button 9` | `XInput/0/Gamepad:Start` | `DInput/0/Keyboard Mouse:RETURN`
+Triforce/Coin = `SDL/0/Other Wheel:Button 8` | `XInput/0/Gamepad:Back` | `DInput/0/Keyboard Mouse:5`
 Triforce/Test = `DInput/0/Keyboard Mouse:9`
 Triforce/Service = `DInput/0/Keyboard Mouse:0`
 Main Stick/Left = `SDL/0/Other Wheel:Axis 3-` | `XInput/0/Gamepad:Left X-` | `DInput/0/Keyboard Mouse:LEFT`

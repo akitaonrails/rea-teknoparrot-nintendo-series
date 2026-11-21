@@ -21,9 +21,9 @@ use rea_launcher::catalog::Host;
 use crate::catalog::{Game, Patch, Route};
 use crate::input::{DolphinPad, StickLayout};
 use rea_launcher::gamescope::{self, Picture, Size};
-use rea_launcher::wheel::PedalAxis;
+use rea_launcher::wheel::{PedalAxis, WheelButtons};
 
-use crate::settings::Settings;
+use crate::settings::{Look, Settings};
 
 /// A process to start.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -101,14 +101,15 @@ pub struct Places {
     pub wal_port: u16,
 }
 
-/// A wheel for Dolphin's own SDL backend (Windows): its SDL name and the
-/// raw axes the launcher's wheel profile found.
+/// A wheel for Dolphin's own SDL backend (Windows): its SDL name, raw axes,
+/// and button indices from [`WheelButtons`].
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct DolphinWheel {
     pub name: String,
     pub steer_axis: usize,
     pub gas: Option<PedalAxis>,
     pub brake: Option<PedalAxis>,
+    pub buttons: WheelButtons,
 }
 
 /// Dolphin's internal resolution (a multiple of the 640×480 picture) for a
@@ -190,13 +191,20 @@ pub fn game_settings_ini(patches: &[Patch]) -> String {
     s
 }
 
-/// Dolphin's graphics settings: the internal resolution, v-sync, and
+/// Dolphin's graphics settings: the internal resolution, v-sync, aspect
+/// ratio (16:9 with widescreen hack unless Original look is chosen), and
 /// shaders compiled before the game starts (no stutter in the first race).
-pub fn gfx_ini(scale: u32) -> String {
+pub fn gfx_ini(scale: u32, widescreen: bool) -> String {
+    let (aspect, hack) = if widescreen {
+        (1, "True")
+    } else {
+        (2, "False")
+    };
     format!(
         "# Written by the launcher before every start.\n\
          [Hardware]\nVSync = True\n\
-         [Settings]\nInternalResolution = {scale}\nShaderCompilationMode = 0\n\
+         [Settings]\nInternalResolution = {scale}\nAspectRatio = {aspect}\n\
+         wideScreenHack = {hack}\nShaderCompilationMode = 0\n\
          WaitForShadersBeforeStarting = True\nShowFPS = False\n"
     )
 }
@@ -262,8 +270,9 @@ fn pedal_expr(dev: &str, PedalAxis { axis, rest, peak }: PedalAxis) -> String {
     }
 }
 
-/// The pad on Windows: the first XInput pad and the keyboard, and the
-/// wheel through Dolphin's SDL backend when the launcher saw one.
+/// The pad on Windows: the wheel through Dolphin's SDL backend when the
+/// launcher saw one (both axes and buttons, and as the primary device),
+/// alongside the first XInput pad and the keyboard.
 pub fn gcpad_windows_ini(wheel: Option<&DolphinWheel>) -> String {
     let x = |c: &str| format!("`XInput/0/Gamepad:{c}`");
     let k = |c: &str| format!("`DInput/0/Keyboard Mouse:{c}`");
@@ -271,8 +280,15 @@ pub fn gcpad_windows_ini(wheel: Option<&DolphinWheel>) -> String {
     let mut steer_r = format!("{} | {}", x("Left X+"), k("RIGHT"));
     let mut gas = format!("{} | {}", x("Trigger R"), k("UP"));
     let mut brake = format!("{} | {}", x("Trigger L"), k("DOWN"));
-    if let Some(w) = wheel {
+    let mut btn_a = format!("{} | {}", x("Button A"), k("Z"));
+    let mut btn_b = format!("{} | {}", x("Button B"), k("X"));
+    let mut btn_x = format!("{} | {}", x("Shoulder L"), k("A"));
+    let mut btn_y = format!("{} | {}", x("Shoulder R"), k("S"));
+    let mut btn_start = format!("{} | {}", x("Start"), k("RETURN"));
+    let mut btn_coin = format!("{} | {}", x("Back"), k("5"));
+    let device = if let Some(w) = wheel {
         let dev = format!("SDL/0/{}", w.name);
+        let wb = |n: u8| format!("`{dev}:Button {n}`");
         steer_l = format!("`{dev}:Axis {}-` | {steer_l}", w.steer_axis);
         steer_r = format!("`{dev}:Axis {}+` | {steer_r}", w.steer_axis);
         if let Some(p) = w.gas {
@@ -281,15 +297,24 @@ pub fn gcpad_windows_ini(wheel: Option<&DolphinWheel>) -> String {
         if let Some(p) = w.brake {
             brake = format!("{} | {brake}", pedal_expr(&dev, p));
         }
-    }
+        btn_a = format!("{} | {btn_a}", wb(w.buttons.a));
+        btn_b = format!("{} | {btn_b}", wb(w.buttons.b));
+        btn_x = format!("{} | {btn_x}", wb(w.buttons.x));
+        btn_y = format!("{} | {btn_y}", wb(w.buttons.y));
+        btn_start = format!("{} | {btn_start}", wb(w.buttons.start));
+        btn_coin = format!("{} | {btn_coin}", wb(w.buttons.back));
+        dev
+    } else {
+        "XInput/0/Gamepad".to_string()
+    };
     let lines: Vec<(&str, String)> = vec![
-        ("Buttons/A", format!("{} | {}", x("Button A"), k("Z"))),
-        ("Buttons/B", format!("{} | {}", x("Button B"), k("X"))),
-        ("D-Pad/Right", format!("{} | {}", x("Button B"), k("X"))),
-        ("Buttons/X", format!("{} | {}", x("Shoulder L"), k("A"))),
-        ("Buttons/Y", format!("{} | {}", x("Shoulder R"), k("S"))),
-        ("Buttons/Start", format!("{} | {}", x("Start"), k("RETURN"))),
-        ("Triforce/Coin", format!("{} | {}", x("Back"), k("5"))),
+        ("Buttons/A", btn_a),
+        ("Buttons/B", btn_b.clone()),
+        ("D-Pad/Right", btn_b),
+        ("Buttons/X", btn_x),
+        ("Buttons/Y", btn_y),
+        ("Buttons/Start", btn_start),
+        ("Triforce/Coin", btn_coin),
         ("Triforce/Test", k("9")),
         ("Triforce/Service", k("0")),
         ("Main Stick/Left", steer_l),
@@ -299,8 +324,7 @@ pub fn gcpad_windows_ini(wheel: Option<&DolphinWheel>) -> String {
         ("Triggers/R-Analog", gas),
         ("Triggers/L-Analog", brake),
     ];
-    // the default device is the pad; the others are named in each line
-    pad_section("XInput/0/Gamepad", &lines)
+    pad_section(&device, &lines)
 }
 
 /// windowsarcadeloader's default `prefix_tricks` (its `defaults.yaml` at the
@@ -442,7 +466,10 @@ fn dolphin_plan(
             config.join("Dolphin.ini"),
             dolphin_ini(host, !game.patches.is_empty()),
         ),
-        (config.join("GFX.ini"), gfx_ini(dolphin_scale(s.render))),
+        (
+            config.join("GFX.ini"),
+            gfx_ini(dolphin_scale(s.render), s.look != Some(Look::Original)),
+        ),
     ];
     if !game.patches.is_empty() {
         files.push((
@@ -766,6 +793,7 @@ mod tests {
                 rest: 0,
                 peak: -32768,
             }),
+            buttons: WheelButtons::LOGITECH,
         };
         let p = plan(
             game(GameId::FZeroAx),
@@ -782,8 +810,20 @@ mod tests {
         assert_eq!(p.feed, Feed::None);
         assert!(p.gamescope.is_empty());
         let pad = file(&p, "GCPadNew.ini");
-        assert!(pad.contains("Device = XInput/0/Gamepad"));
+        assert!(pad.contains("Device = SDL/0/Logitech G29"), "{pad}");
         assert!(pad.contains("`SDL/0/Logitech G29:Axis 0-`"), "{pad}");
+        assert!(
+            pad.contains("Buttons/Start = `SDL/0/Logitech G29:Button 9` |"),
+            "{pad}"
+        );
+        assert!(
+            pad.contains("Triforce/Coin = `SDL/0/Logitech G29:Button 8` |"),
+            "{pad}"
+        );
+        assert!(
+            pad.contains("Buttons/A = `SDL/0/Logitech G29:Button 0` |"),
+            "{pad}"
+        );
         // a full-travel pedal resting at the top: both halves, inverted
         assert!(
             pad.contains(

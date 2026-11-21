@@ -1,5 +1,6 @@
 Label = "Mario Kart Arcade GP DX"
 Label = "Namco ES3 · 2013 · 1.18.16 (English mod 1.0)"
+Label = "HD widescreen arcade Mario Kart on Namco ES3 hardware, introducing gliders, underwater driving, fusion karts and Don-chan."
 Label = "Ready"
 Label = "Folder: /library/mkdx"
 Button "Play" @56,454 170x50

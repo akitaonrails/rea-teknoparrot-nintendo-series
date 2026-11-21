@@ -3,7 +3,7 @@ data/fzax/runtimes/fzax/dolphin/
 data/fzax/runtimes/fzax/dolphin/Config/
 data/fzax/runtimes/fzax/dolphin/Config/Dolphin.ini (495 bytes)
 data/fzax/runtimes/fzax/dolphin/Config/GCPadNew.ini (1257 bytes)
-data/fzax/runtimes/fzax/dolphin/Config/GFX.ini (182 bytes)
+data/fzax/runtimes/fzax/dolphin/Config/GFX.ini (220 bytes)
 data/fzax/runtimes/fzax/dolphin/GameSettings/
 data/fzax/runtimes/fzax/dolphin/GameSettings/GHAE6E.ini (154 bytes)
 data/fzax/runtimes/fzax/dolphin/Pipes/
@@ -15,7 +15,7 @@ data/mkgp2/runtimes/mkgp2/dolphin/
 data/mkgp2/runtimes/mkgp2/dolphin/Config/
 data/mkgp2/runtimes/mkgp2/dolphin/Config/Dolphin.ini (495 bytes)
 data/mkgp2/runtimes/mkgp2/dolphin/Config/GCPadNew.ini (1257 bytes)
-data/mkgp2/runtimes/mkgp2/dolphin/Config/GFX.ini (182 bytes)
+data/mkgp2/runtimes/mkgp2/dolphin/Config/GFX.ini (220 bytes)
 data/mkgp2/runtimes/mkgp2/dolphin/GameSettings/
 data/mkgp2/runtimes/mkgp2/dolphin/GameSettings/GNLJ82.ini (122 bytes)
 data/mkgp2/runtimes/mkgp2/dolphin/Pipes/

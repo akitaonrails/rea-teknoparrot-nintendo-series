@@ -1,5 +1,6 @@
 Label = "Mario Kart Arcade GP DX"
 Label = "Namco ES3 · 2013"
+Label = "HD widescreen arcade Mario Kart on Namco ES3 hardware, introducing gliders, underwater driving, fusion karts and Don-chan."
 Label = "Not in your library"
 Label = "Not found in your game folders. Add its folder in Settings, then choose Rescan."
 Button "Play" (Not found in your game folders.) [disabled] @56,472 170x50

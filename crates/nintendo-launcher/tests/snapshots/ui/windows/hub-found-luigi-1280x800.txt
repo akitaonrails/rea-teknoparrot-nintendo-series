@@ -1,5 +1,6 @@
 Label = "Luigi's Mansion Arcade"
 Label = "Sega Nu · 2015 · SDCF (Nu 1.1)"
+Label = "Capcom and Sega's lightgun Poltergust rail shooter based on Luigi's Mansion: Dark Moon, built on Sega Nu hardware."
 Label = "Starts, not verified"
 Label = "not yet played through the launcher"
 Label = "Folder: \\library\\luigi"

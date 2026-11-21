@@ -100,6 +100,7 @@ pub fn dolphin_wheel(w: &WheelInfo) -> DolphinWheel {
         steer_axis: w.steer_axis,
         gas: w.gas,
         brake: w.brake,
+        buttons: w.buttons,
     }
 }
 

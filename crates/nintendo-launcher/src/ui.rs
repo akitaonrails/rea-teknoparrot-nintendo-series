@@ -169,6 +169,10 @@ impl HubBackend for Launcher {
         &HUB_GAMES
     }
 
+    fn blurb(&self, i: usize) -> Option<&'static str> {
+        Some(GAMES[i].blurb)
+    }
+
     fn options(&self) -> &'static [rea_launcher::cfg::OptionSpec] {
         settings::OPTIONS
     }

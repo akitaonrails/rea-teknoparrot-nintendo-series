@@ -1,5 +1,6 @@
 Label = "F-Zero AX Monster Ride"
 Label = "Sega Triforce · 2004"
+Label = "Amusement Vision's arcade twin to F-Zero GX on Sega/Nintendo/Namco Triforce hardware — 10 exclusive pilots, 6 tracks and hydraulic Monster Ride motion."
 Label = "Not in your library"
 Label = "Not found in your game folders. Add its folder in Settings, then choose Rescan."
 Button "Play" (Not found in your game folders.) [disabled] @62,524 189x56

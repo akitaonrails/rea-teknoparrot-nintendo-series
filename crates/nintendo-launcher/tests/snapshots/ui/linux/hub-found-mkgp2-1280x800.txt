@@ -1,5 +1,6 @@
 Label = "Mario Kart Arcade GP 2"
 Label = "Sega Triforce · 2007 · MK21 Ver. A (2007-08-20)"
+Label = "Namco's second Triforce Mario Kart with Waluigi, Mametchi, commentary, 24 courses across 6 cups and a built-in cabinet camera."
 Label = "Starts, not verified"
 Label = "not yet raced through the launcher"
 Label = "Folder: /library/mkgp2"

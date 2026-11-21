@@ -344,6 +344,7 @@ fn wheels() -> [(&'static str, Option<DolphinWheel>); 3] {
                     rest: 0,
                     peak: -32768,
                 }),
+                buttons: rea_launcher::wheel::WheelButtons::GENERIC,
             }),
         ),
         (
@@ -361,6 +362,7 @@ fn wheels() -> [(&'static str, Option<DolphinWheel>); 3] {
                     rest: -32768,
                     peak: 32767,
                 }),
+                buttons: rea_launcher::wheel::WheelButtons::FANATEC,
             }),
         ),
     ]

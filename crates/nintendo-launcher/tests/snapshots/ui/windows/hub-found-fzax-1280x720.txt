@@ -1,5 +1,6 @@
 Label = "F-Zero AX Monster Ride"
 Label = "Sega Triforce · 2004 · Japan (SBHA6W)"
+Label = "Amusement Vision's arcade twin to F-Zero GX on Sega/Nintendo/Namco Triforce hardware — 10 exclusive pilots, 6 tracks and hydraulic Monster Ride motion."
 Label = "Starts, not verified"
 Label = "not yet raced through the launcher"
 Label = "Folder: \\library\\fzax"

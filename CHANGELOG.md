@@ -6,6 +6,24 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
+### Added
+
+- Games page: short trivia card over the top-right quarter of each game's
+  hero art (`HubBackend::blurb`).
+- Triforce games (`fzax`, `mkgp2`): widescreen 16:9 rendering in Dolphin
+  (`AspectRatio = 1`, `wideScreenHack = True`) for non-Original looks
+  (`Original` keeps 4:3).
+
+### Fixed
+
+- Windows: Triforce `GCPadNew.ini` now binds wheel buttons (Start, Coin,
+  A/B/X/Y, paddles) from `rea_launcher::wheel::WheelButtons` and sets
+  `Device = SDL/0/<wheel>` when a wheel is connected, instead of leaving
+  wheel-only rigs with no buttons (#4, rea-launcher-sdk#3).
+- Updated `rea-launcher-sdk` to v0.12.4 so wheels also map face/menu buttons
+  through `InputService` and re-guess resting pedal axes if SDL's first
+  sample arrived as zeros (fixes missing pedals on `mkgp2` in `--play` runs).
+
 ## 0.3.2 - 2026-11-20
 
 ### Documentation
