@@ -38,6 +38,10 @@ pixels.
 
 ## Screenshots
 
+| Games | Controls | Settings |
+| --- | --- | --- |
+| ![The Games page: F-Zero AX Monster Ride selected, its edition and folder, Play, and a tile per game](docs/images/launcher-games.jpg) | ![The Controls page: the controllers found, the pad layout and a live check of steering, pedals and buttons](docs/images/launcher-controls.jpg) | ![The Settings page for F-Zero AX Monster Ride: look, render and output size, upscaler, sharpness, fullscreen and dead zone](docs/images/launcher-settings.jpg) |
+
 | | |
 |---|---|
 | ![F-Zero AX Monster Ride, racing](docs/images/fzax-race.jpg) | ![Mario Kart Arcade GP 2, racing](docs/images/mkgp2-race.jpg) |
