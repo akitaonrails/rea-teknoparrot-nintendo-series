@@ -6,6 +6,18 @@ All notable changes to this launcher. The format follows
 
 ## Unreleased
 
+## 0.5.4 - 2026-11-22
+
+### Fixed
+
+- Upgraded to `rea-launcher-sdk v0.12.7`: automatically falls back to the
+  shared `wheel.ini` profile (`%LOCALAPPDATA%\rea\wheel.ini` on Windows,
+  `~/.local/share/rea/wheel.ini` on Linux) when no per-launcher `wheel.ini`
+  exists, so a single wheel wizard run serves every launcher on the machine
+  (#5).
+- Logs a clear diagnostic when a wheel is detected without bound pedals
+  (pedals at rest and no `wheel.ini` found in either location).
+
 ## 0.5.3 - 2026-11-21
 
 ### Fixed

@@ -175,6 +175,19 @@ pub fn prepare(
         segaboot: config.paths[0].clone().filter(|s| s.is_file()),
         wal_port: wal::free_port_block(launch::WAL_PORT),
     };
+    if game.route == Route::Dolphin
+        && let Some(w) = wheel
+        && w.gas.is_none()
+        && w.brake.is_none()
+    {
+        rea_launcher::log::Log::new(paths.log()).warn(&format!(
+            "wheel '{}' has no bound pedals (pedals at rest and no wheel.ini in {} or {}); \
+             run the wheel setup wizard or place wheel.ini there",
+            w.name,
+            paths.wheel_file().display(),
+            HubPaths::shared_wheel_file().display(),
+        ));
+    }
     let plan = launch::plan(
         game,
         &entry.file,
