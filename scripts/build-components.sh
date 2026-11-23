@@ -9,7 +9,7 @@
 #                 arcade-launcher.exe (its Windows build, linked with LLD), payloads/,
 #                 systemprofiles/  (needs Rust with the i686/x86_64-pc-windows-gnu targets, MinGW,
 #                 LLD and mono's mcs); not rebuilt while its commit and patches are unchanged
-#   runner/       GE-Proton 11-12, checked by SHA-256
+#   runner/       GE-Proton 11-13, checked by SHA-256
 #   winetricks    pinned, checked by SHA-256 (windowsarcadeloader installs the game's runtimes)
 #   shaders/      the launcher's own CRT effect
 #   art/          the window's original illustrations (the fonts are in the program)
@@ -31,7 +31,7 @@ DOLPHIN_TAG=2609b
 DOLPHIN_COMMIT=3a5b3743b18da3e8f04cbc44f20dc50fbd3a9ef3
 WAL_REPO=https://github.com/aderumier/windowsarcadeloader
 WAL_COMMIT=4f42c6d86ddaaa9d2e4e8c21e0046bb3027b111d
-RUNNER=GE-Proton11-12-x86_64
+RUNNER=GE-Proton11-13-x86_64
 
 checkout() { # repo commit dir
   [ -d "$3/.git" ] || git clone -q "$1" "$3"

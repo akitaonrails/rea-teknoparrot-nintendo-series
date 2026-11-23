@@ -1,3 +1,3 @@
 # Components the weekly watch-upstream workflow checks, one per line:
 #   name owner/repo asset-name-prefix
-runner GloriousEggroll/proton-ge-custom GE-Proton11-12-x86_64.tar.gz
+runner GloriousEggroll/proton-ge-custom GE-Proton11-13-x86_64.tar.gz
